@@ -105,26 +105,7 @@ Note that comment.created_at will only be defined if the comment did not have an
             {%- endif -%}
           </div>
         </div>
-          <div class="col-30">
-            {% if article.metafields.custom.side_bar_heading_blog_post != blank %}
-          <div class="sidebarblog" style="position: sticky;top: 70px; background-image: url({{ article.metafields.custom.background_image_for_sidebar }});">
-            <div class="sidebarblogheader text-box">
-              <h4>{{ article.metafields.custom.side_bar_heading_blog_post }}</h4>
-            </div>
-            <div class="sidebarblogbottom">
-               <img src="{{ article.metafields.custom.product_image_for_side_bar }}">
-              <a href="{{ article.metafields.custom.product_link_for_shop_now_button }}">
-               
-            
-              <p>{{ section.settings.availbletext }}</p>
-              </a>
-             
-            </div>
-          </div>
-              {% endif %}
-        </div>
-        <!-- old code start -->
-        <!-- <div class="col-30">
+        <div class="col-30">
           <div class="sidebarblog" style="position: sticky;top: 70px;">
             <div class="sidebarblogheader text-box">
               <h4>{{ section.settings.heading }}</h4>
@@ -138,8 +119,7 @@ Note that comment.created_at will only be defined if the comment did not have an
               </ul>
             </div>
           </div>
-        </div> -->
-        <!-- old code end -->
+        </div>
       </div>
     </div>
   </article>

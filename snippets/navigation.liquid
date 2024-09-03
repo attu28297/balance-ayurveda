@@ -35,7 +35,7 @@
 				{%- assign dropdown_trigger = true -%}
 			{%- endif -%}
 
-			<li class="menu-item{% if has_sub_menu %} has-submenu{% endif %} {% if is_meganav %}menu-item--meganav{% else %}menu-item--dropdown{% endif %}"{% if has_sub_menu and is_hamburger_nav == false %} data-dropdown-parent{% endif %}>
+			<li class="{{ link.title | escape }} menu-item{% if has_sub_menu %} has-submenu{% endif %} {% if is_meganav %}menu-item--meganav{% else %}menu-item--dropdown{% endif %}"{% if has_sub_menu and is_hamburger_nav == false %} data-dropdown-parent{% endif %}>
 				<!-- LINKS -->
 				<a href="{{ link.url }}" class="menu-item__link"{% if dropdown_trigger %} data-dropdown-trigger{% endif %}>
 					{{- link.title | escape -}}
@@ -108,7 +108,9 @@
 							{%- render 'icon-arrow' -%}
 						</button>
 					{%- endif -%}
-
+                                  {% if  link.title  == 'Shop' %}
+<img class="right_side_img" src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/ddk.png?v=1716123974">
+                                  {% endif %}
 					<ul class="submenu{% unless is_meganav %} submenu--dropdown{% endunless %} {{ submenuClass }}">
 						{%- comment -%} SUBMENU LINKS {%- endcomment -%}
 						{%- for sublink in link.links -%}
@@ -158,8 +160,8 @@
    
 		{%- endfor -%}
 	{%- endif -%}
-                        <li class="nav-user__item mobile_view"><a href="/pages/balance-ayurveda-brand-story">Why we exist?</a></li>
-                        <li class="nav-user__item mobile_view"><a href="/pages/our-core-philosophy">Why Ayurveda?</a></li>
+                        <!-- <li class="nav-user__item mobile_view"><a href="/pages/balance-ayurveda-brand-story">Why we exist?</a></li>
+                        <li class="nav-user__item mobile_view"><a href="/pages/our-core-philosophy">Why Ayurveda?</a></li> -->
 </ul>
 
 {%- if is_hamburger_nav -%}

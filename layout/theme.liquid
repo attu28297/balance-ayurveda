@@ -273,14 +273,6 @@
         }
       </style>
     {%- endif -%}
-  {%- if template contains 'index' -%}
-  <style>
-    .hpproductpromises ul li{
-          min-width: 178px;
-    max-width: 178px;
-    }
-    </style>
-    {% endif %}
     {%- if template contains 'customers' -%}
       {{- 'shopify_common.js' | shopify_asset_url | script_tag -}}
       {{- 'customer_area.js' | shopify_asset_url | script_tag -}}
@@ -349,7 +341,7 @@
       $('.mostloved-items').slick({
         dots: false,
         infinite: true,
-        slidesToShow: 3,
+        slidesToShow: 4,
         autoplay: false,
         autoplaySpeed: 2000,
         arrows: true,
@@ -585,20 +577,3 @@
     
   </body>
 </html>
-<style>   
-  
-  .jdgm-histogram__row {
-    margin-bottom: 10px !important;
-}
-
-  .jdgm-rev-widg__title,
-  .jdgm-rev-widg__summary-average,
-  .jdgm-rev-widg__summary-text,
-  .jdgm-rev__author,
-  .jdgm-rev__title,
-  .jdgm-rev__body
-  {
-    font-family: Outfit, sans-serif;
-}
-
-</style>

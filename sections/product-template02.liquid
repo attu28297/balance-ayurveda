@@ -162,7 +162,11 @@
                 </div>
               {%- endif -%}
                 <h1 class="product-title">{{ product.title | strip_html }}</h1>
-
+<!-- Start of Judge.me code -->
+      <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
+        {{ product.metafields.judgeme.badge }}
+      </div>
+      <!-- End of Judge.me code -->
                 {%- if show_reviews or enable_yotpo and yotpo_ID != '' -%}
                   <div class="product__badge" style="float: none;">
                     {%- if enable_yotpo and yotpo_ID != '' -%}
@@ -227,7 +231,12 @@
       </div>
     </div>
   {%- endif -%}{%- endcomment -%}
-
+<!-- Start of Judge.me code -->
+      <div style='clear:both'></div>
+      <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}' data-auto-install='false'>
+        {{ product.metafields.judgeme.widget }}
+      </div>
+      <!-- End of Judge.me code -->
   {%- if section.blocks.size > 0 -%}
     {%- for block in section.blocks -%}
       {%- case block.type -%}
