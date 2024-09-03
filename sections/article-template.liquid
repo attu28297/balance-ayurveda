@@ -1,0 +1,196 @@
+{% comment %}
+When a comment has just been submitted, it's not shown right away.
+Shopify needs to wait until it knows for sure that it is not spam to publish it.
+We can still show right away *to its author* the comment he just submitted
+— although that comment may not have been published yet.
+When a comment is submitted, the browser is redirected to a page that
+includes the new comment id in its URL. Example:
+http://shopname.myshopify.com/blogs/news/2022072-my-post?comment=3721372
+When a comment ID is specified in an article URL, that comment is accessible in the
+template through a Liquid object called comment.
+That comment is a full-fledged comment variable that has all the regular comment properties:
+http://docs.shopify.com/themes/liquid-variables/comment.
+Note that comment.created_at will only be defined if the comment did not have any blank field
+— was posted without error.
+{% endcomment %}
+
+{%- capture author -%}{{ article.user.first_name }} {{ article.user.last_name }}{%- endcapture -%}
+<div class="detailblogsec">
+  <article class="article">
+    <div class="container">
+      <div class="page-title text-box">
+
+        <p class="article__meta">
+          <span class="article__meta__date"><img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/calendericon.png" /><time pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time></span>
+          <span class="article__meta__author">{{- 'blog.article.by_author' | t: author: author -}}</span>
+          {%- if blog.comments_enabled? -%}
+          <span class="article__meta__comment-count"><a href="#comments" data-anchor-link>{{ 'blog.blog_list_view.comment_count' | t: count: article.comments_count }}</a></span>
+          {%- endif -%}
+        </p>
+        <h1 class="article__title">{{ article.title }}</h1>
+      </div>
+
+      {%- if article.image -%}
+      <div
+           class="article__image lazyload"
+           data-bgset="{% render 'bgset', image: article.image %}"
+           data-sizes="auto"
+           data-parent-fit="cover"
+           style="padding-top: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;">
+      </div>
+      <noscript>
+        <div class="article__image no-js-image" style="background-image: url({{ article.image | img_url: '1024x' }}); padding-top: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;"></div>
+      </noscript>
+      {%- endif -%}
+      <div class="page-content flex-box">
+        <div class="col-70"> 
+          <div class="article__content">
+            <div class="text-content text-box rte">
+
+              {{- article.content -}}
+            </div>
+            <div class="article__footer">
+              {%- render 'accent-line' -%}
+
+              {%- if article.tags.size > 0 -%}
+              <p class="tags">
+                {{ 'blog.article.tags_label' | t }}:
+                {% for tag in article.tags %}
+                <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %}, {% endunless %}
+                {% endfor %}
+              </p>
+              {%- endif -%}
+
+              {%- if settings.share_on_facebook or settings.share_on_twitter -%}
+              <p class="share-links">
+                {%- render 'site-shareLinks' -%}
+              </p>
+              {%- endif -%}
+
+              {%- if blog.next_article or blog.previous_article -%}
+              <p class="article__controls">
+                {%- if blog.previous_article -%}
+                <a href="{{ blog.previous_article }}" class="article__control article__control--prev">
+                  {%- render 'icon-arrow' -%}
+                  {{- 'blog.article.previous_post' | t -}}
+                </a>
+                {%- endif -%}
+
+                {%- if blog.next_article -%}
+                <a href="{{ blog.next_article }}" class="article__control article__control--next">
+                  {{- 'blog.article.next_post' | t -}}
+                  {%- render 'icon-arrow' -%}
+                </a>
+                {%- endif -%}
+              </p>
+              {%- endif -%}
+            </div>
+            {%- if blog.comments_enabled? -%}
+            {%- paginate article.comments by 4 -%}
+            <div class="article__comments">
+              {%- if blog.comments_enabled? -%}
+              <h4 class="meta-comments">{{ 'blog.article.comment_count' | t: count: article.comments_count }}</h4>
+              {%- endif -%}
+
+              {%- render 'blog-comments' -%}
+
+              <p class="blog-index-link">
+                <a href="{{ blog.url }}">
+                  {%- render 'icon-arrow' -%}
+                  {{- 'blog.article.back_to_all_posts' | t: title: blog.title -}}
+                </a>
+              </p>
+            </div>
+            {%- endpaginate -%}
+            {%- endif -%}
+          </div>
+        </div>
+          <div class="col-30">
+            {% if article.metafields.custom.side_bar_heading_blog_post != blank %}
+          <div class="sidebarblog" style="position: sticky;top: 70px; background-image: url({{ article.metafields.custom.background_image_for_sidebar }});">
+            <div class="sidebarblogheader text-box">
+              <h4>{{ article.metafields.custom.side_bar_heading_blog_post }}</h4>
+            </div>
+            <div class="sidebarblogbottom">
+               <img src="{{ article.metafields.custom.product_image_for_side_bar }}">
+              <a href="{{ article.metafields.custom.product_link_for_shop_now_button }}">
+               
+            
+              <p>{{ section.settings.availbletext }}</p>
+              </a>
+             
+            </div>
+          </div>
+              {% endif %}
+        </div>
+        <!-- old code start -->
+        <!-- <div class="col-30">
+          <div class="sidebarblog" style="position: sticky;top: 70px;">
+            <div class="sidebarblogheader text-box">
+              <h4>{{ section.settings.heading }}</h4>
+            </div>
+            <div class="sidebarblogbottom">
+              <p>{{ section.settings.availbletext }}</p>
+              <ul>
+                <li><a href="{{ section.settings.brandurl }}"><img src="{{ section.settings.brandlogo | img_url: 'master' }}" alt="brand logo"/></a></li>
+                <li><a href="{{ section.settings.brandurl2 }}"><img src="{{ section.settings.brandlogo2 | img_url: 'master' }}" alt="brand logo"/></a></li>
+                <li><a href="{{ section.settings.brandurl3 }}"><img src="{{ section.settings.brandlogo3 | img_url: 'master' }}" alt="brand logo"/></a></li>
+              </ul>
+            </div>
+          </div>
+        </div> -->
+        <!-- old code end -->
+      </div>
+    </div>
+  </article>
+</div>
+
+{% schema %}
+  {
+    "name": "Blog Sidebar",
+    "settings": [
+	{
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Balance Your Body, Mind & Spirit"
+    },
+	{
+      "type": "text",
+      "id": "availbletext",
+      "label": "Show Now",
+      "default": "Show Now"
+    },
+	{
+      "type": "image_picker",
+      "id": "brandlogo",
+      "label": "Brand Logo"
+    },
+	{
+      "type": "url",
+      "id": "brandurl",
+      "label": "Brand Url"
+    },
+	{
+      "type": "image_picker",
+      "id": "brandlogo2",
+      "label": "Brand Logo"
+    },
+	{
+      "type": "url",
+      "id": "brandurl2",
+      "label": "Brand Url"
+    },
+	{
+      "type": "image_picker",
+      "id": "brandlogo3",
+      "label": "Brand Logo"
+    },
+	{
+      "type": "url",
+      "id": "brandurl3",
+      "label": "Brand Url"
+    }
+	]
+   }
+{% endschema %}

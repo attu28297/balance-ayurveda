@@ -1,0 +1,77 @@
+<div class="whyusbapromises hpimagecontentblock">
+  <div class="container">
+    <div class="text-box hpimagecntntinnr show-500">
+      <h2><span class="smhead">{{ section.settings.subtitle }}</span>{{ section.settings.title }}</h2>
+    </div>
+    <div class="hpvideolock show-500">
+      {%- assign video = section.settings.video_url -%}
+      <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%"  poster="{{ block.settings.image | img_url: 'master'}}">
+        <source src="{{ video }}" type="video/mp4">
+      </video>          
+    </div>
+    <div class="flex-box">
+      <div class="col-48">
+        <div class="hpimagecntnt">
+          <div class="text-box hpimagecntntinnr">
+            <h2 class="hide-500"><span class="smhead">{{ section.settings.subtitle }}</span>{{ section.settings.title }}</h2>
+            {{ section.settings.description }}
+          </div>
+        </div>
+      </div>
+      <div class="col-52">
+        {% comment %}
+        <div class="hpimageblock hide-500">
+          <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.title }}">
+        </div>
+        {% endcomment %}
+        <div class="hpvideolock hide-500">
+          {%- assign video = section.settings.video_url -%}
+          <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%"  poster="{{ block.settings.image | img_url: 'master'}}">
+            <source src="{{ video }}" type="video/mp4">
+          </video>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>   
+{% schema %}
+  {
+    "name": "Our Promise",
+    "settings": [
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub Title",
+        "default": "Our Promise"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "What Is The <strong>State Of Balance</strong>"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Description",
+        "default": "<p>Balance is the equilibrium between maintaining good physical as well as mental health. One cannot co-exist without the other. As the adage says: a healthy mind resides in a healthy body. There are three forms of life forces Vata (air-equated with the nervous system), Pitta (fire-equated with enzymes), Kapha (earth and water- equated with mucus) that make up the physical attributes of a body. The three forms of mental energies Satogun, Rajogun, Tamogun make up the psychology of a human being.</p>"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "video_url",
+        "label": "Video Url"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

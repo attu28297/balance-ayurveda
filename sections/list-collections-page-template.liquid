@@ -1,0 +1,238 @@
+{%- comment -%} Colors {%- endcomment -%}
+{%- assign text_color = section.settings.text_color -%}
+{%- assign overlay_color = section.settings.overlay_color -%}
+{%- assign overlay_opacity = section.settings.overlay_opacity | times: 0.01 | round: 2 -%}
+
+{%- style -%}
+  #CollectionModule-{{ section.id }} .collection-block--has-image .collection-block__info { color: {{ text_color }}; }
+  #CollectionModule-{{ section.id }} .collection-block--has-image .collection-block__image::after { background-color: {{ overlay_color }}; opacity: {{ overlay_opacity }}; }
+{%- endstyle -%}
+
+{%- paginate collections by 12 -%}
+<section class="collection-listmy collection-list container-wrap" id="CollectionModule-{{ section.id }}" data-section-type="collection-grid" data-section-id="{{ section.id }}">
+  <div class="container">
+  <div class="morecntntcat collection-list__header row">
+    <div class="block s1 text-box">
+      {%- comment -%}<h1>{{ 'collections.listing_page.title' | t }}</h1>{%- endcomment -%}
+      <p>Ayurveda is not just a practice of healing, it’s a habit and lifestyle equilibrium. Maintaining this balance requires diligent steps towards the adaptation of Ayurveda into our lives. With a touch of nature, the knowledge of Ayurveda, and the profoundness of modern times, we intend to deliver balanced products for healthy well-being.</p>
+    </div>
+  </div>
+
+  <div class="collection-list__row row{% if settings.enable_infinity_scroll %} EndlessScroll{% endif %}">
+    {%- comment -%} Collection Block, contains .js-quickView {%- endcomment -%}
+
+    {%- liquid
+      if section.settings.display_type == 'all' or section.blocks.size == 0
+        for collection in collections
+          unless collection.image == blank
+            assign image = collection.image
+              assign image1 = block.settings.image1
+              assign image2 = block.settings.image2
+          else
+            assign image = collection.products.first.featured_media.preview_image
+          endunless
+
+          render 'collection-grid-item', collection: collection, image: image, image_position: 'center-center', unique: forloop.index0
+        endfor
+      else
+        for block in section.blocks
+          assign collection = collections[block.settings.collection]
+          assign image = block.settings.image
+          assign image1 = block.settings.image1
+          assign image2 = block.settings.image2
+          assign image_position = block.settings.image_position
+
+          if image == blank
+            unless collection.image == blank
+              assign image = collection.image
+              assign image1 = block.settings.image1
+              assign image2 = block.settings.image2
+            else
+              assign image = collection.products.first.featured_media.preview_image
+            endunless
+          endif
+
+          render 'collection-grid-item', collection: collection, image: image, image1: image1, image_position: image_position, unique: forloop.index0
+        endfor
+      endif
+    -%}
+
+    {%- comment -%} Spacers for inline-block based collection-list {%- endcomment -%}
+    <div class="gridSpacer item block s1 sm_s12 lg_s14"></div>
+    <div class="gridSpacer item block s1 sm_s12 lg_s14"></div>
+
+    {%- liquid
+      if section.settings.display_type == 'all' or section.blocks.size == 0
+        render 'pagination', paginate: paginate
+      endif
+    -%}
+  </div>
+  </div>
+</section>
+{%- endpaginate -%}
+
+{%- comment -%} Schema {%- endcomment -%}
+{% schema %}
+{
+  "name": "Collections list",
+  "class": "shopify-section--list-collections",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections."
+    },
+    {
+      "type": "radio",
+      "id": "display_type",
+      "label": "Select collections to show",
+      "default": "all",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "selected",
+          "label": "Selected"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show descriptions",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "collections_columns",
+      "label": "Collections per row",
+      "default": 2,
+      "min": 2,
+      "max": 4,
+      "step": 1
+    },
+    {
+      "type": "select",
+      "id": "coll_text_position",
+      "label": "Collections text position",
+      "default": "center",
+      "options": [
+        { "label": "Top left", "value": "top_left" },
+        { "label": "Top right", "value": "top_right" },
+        { "label": "Center", "value": "center" },
+        { "label": "Bottom left", "value": "bottom_left" },
+        { "label": "Bottom right", "value": "bottom_right" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button label",
+      "default": "View products"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        { "label": "Primary", "value": "primary" },
+        { "label": "Secondary", "value": "secondary" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Colors",
+      "info": "For collection blocks"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "step": 5,
+      "max": 95,
+      "min": 0,
+      "unit": "%",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Replacement image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image1",
+          "label": "Second image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image2",
+          "label": "Icon"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image position",
+          "default": "center-center",
+          "options": [
+            { "label": "Top", "value": "top-center" },
+            { "label": "Right", "value": "right-center" },
+            { "label": "Center", "value": "center-center" },
+            { "label": "Left", "value": "left-center" },
+            { "label": "Bottom", "value": "bottom-center" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay",
+          "default": "#333333"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay opacity",
+          "step": 5,
+          "max": 95,
+          "min": 0,
+          "unit": "%",
+          "default": 0
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

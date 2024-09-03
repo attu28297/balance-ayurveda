@@ -1,0 +1,61 @@
+{% comment %}
+    Renders list of collections in grid layout
+
+    Accepts:
+    - collection: {Object} collection
+    - image: {Object} image
+    - image_position: {Object} image_position
+    - unique: {String} id
+
+    Usage:
+    {% render 'collection-grid-item', collection: collection, image: image, image_position: image_position, unique: unique %}
+{% endcomment %}
+
+{%- liquid
+  assign button_text = section.settings.button_text
+  assign button_style = section.settings.button_style
+  assign collections_columns = section.settings.collections_columns | plus: 0
+  assign columns_size = collections_columns | replace: '1', ''
+  assign grid_block_size = 'block s1 lg_s1' | append: columns_size | append: ' med_s12'
+  assign image_position = image_position | default: 'center-center'
+
+  unless collection == empty
+    assign title = collection.title | strip_html | truncate: 150
+    assign description = collection.description | strip_html | truncate: 250
+    assign url = collection.url
+  else
+    assign title = 'onboarding.collection' | t
+    assign description = 'onboarding.collection_description' | t
+    assign url = '#'
+  endunless
+-%}
+
+<li id="CollectionBlock--{{ section.id }}-{{ unique }}" class="collection-block js-collection-block collection-block--{% if collection != empty and image == blank %}no-image{% else %}has-image{% endif %} {% if settings.transition_grid_items %} will-animate{% endif %}"{% if settings.transition_grid_items %} data-animation="moFadeInUp"{% endif %} {{ block.shopify_attributes }}>
+  <div class="collectioninnr">
+  <a href="{{ url }}" aria-label="{{ title }}" class="collection-block__link">
+    {%- if image != blank -%}
+      <div class="collectionicon"><img src="{{ image | img_url: '1024x' }}" alt="{{ title }}"/></div>
+    {%- else -%}
+      {%- if collection == empty -%}
+        <div class="collection-block__image{% if settings.transition_collections_list %} collection-block__image--zoom{% endif %}">
+          <div class="collection-block__image-bg svg-placeholder">
+            {%- capture current -%}{% cycle 'current': 1, 2, 3, 4, 5 %}{%- endcapture -%}
+            {{- 'collection-' | append: current | placeholder_svg_tag -}}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    <div class="collection-block_info text-position--{{ section.settings.coll_text_position }}">
+      <div>
+        <h3 class="collection-block__title">{{ title }}</h3>
+        {%- if section.settings.show_description and description != blank -%}
+          <p class="collection-block__description">
+            {{- description -}}
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+  </a>
+  </div>
+</li>

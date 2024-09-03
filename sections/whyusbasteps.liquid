@@ -1,0 +1,83 @@
+<div class="whyusbastepssec">
+  <div class="container">
+    <div class="text-box howtousecntnt headingBox">
+      <h2><span class="smhead">{{ section.settings.subtitle }}</span>{{ section.settings.mainheading }}</h2>
+      {{ section.settings.content }}
+    </div>
+    <div class="ulstepspro">
+      <ul>
+        {% for block in section.blocks %}
+        <li>
+          <div class="linnr">
+            <div class="iconimg">
+              <img src="{{ block.settings.image | img_url: 'master' }}" />
+            </div>
+            <div class="licntnt text-box">
+              <h5>{{ block.settings.heading }}</h5>
+              <p>{{ block.settings.contnt }}</p>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": " Balance Ayurveda steps",
+    "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sub Title",
+      "default": "Why us"
+    },
+	{
+      "type": "text",
+      "id": "mainheading",
+      "label": "Heading",
+      "default": "Our name & philosophy are based on one of the core principles of Ayurveda"
+    },
+	{
+      "type": "richtext",
+      "id": "content",
+      "label": "content",
+      "default": "<p>Any imbalance in the natural rhythm of the body sooner or later leads to manifesting itself in the form of a disease. The state of balance is the centre point of holistic health and building resilience.</p>"
+    }
+],
+
+"blocks": [
+            {
+              "type": "steps",
+              "name": "Steps",			  
+              "settings": [
+                  
+				{
+                  "id": "image",
+                  "type": "image_picker",
+                  "label": "image"
+                },
+				{
+                  "id": "heading",
+                  "type": "text",
+                  "label": "Heading",
+                  "default": "Hadjod"
+                },
+				{
+                  "id": "contnt",
+                  "type": "text",
+                  "label": "Content",
+                  "default": "Has analgesic and anti-inflammatory properties. It has been used for centuries in treating wounds and reducing pain."
+                }
+              ]
+            }
+          ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,112 @@
+ {%- assign smalldata = product.metafields.custom.content_for_video_section | split: ",_"%}
+    {%- assign smalldatastrong = smalldata[1]  | split: "&& "%}
+        {%- assign video = product.metafields.custom.video_url -%}
+<div class="whyusbmodern hpimagecontentblock mobile+desktop">
+  <div class="container">
+    <div class="text-box show-500">
+                 <h2 class="show-500"><span class="smhead">{{ section.settings.subtitle }}</span>{{ section.settings.title }}</h2>
+    </div>  
+    <div class="hpvideolock show-500">
+      {%- assign video = section.settings.video_url -%}
+          <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%"  poster="{{ block.settings.image | img_url: 'master'}}">
+            <source src="{{ video }}" type="video/mp4">
+          </video>          
+    </div>
+    <div class="flex-box">
+      <div class="col-50">
+        <div class="hpimagecntnt">
+          <div class="text-box hpimagecntntinnr">
+              {% if template contains 'product' %}
+           {%- assign smalldata = product.metafields.custom.content_for_video_section | split: ",_"%}
+                  {%- assign smalldatastrong = smalldata[1]  | split: "&& "%}
+                
+                <h2 class="hide-500"><span class="smhead"> {{ smalldata[0] }}</span>
+                {{ smalldatastrong[0] }} 
+                  <strong>{{ smalldatastrong[1]}}</strong></h2>
+            <p> {{ smalldata[2] }}</p>
+                {% else %}
+            <h2 class="hide-500"><span class="smhead">{{ section.settings.subtitle }}</span>{{ section.settings.title }}</h2>
+            {{ section.settings.description }}
+               
+                {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-50">
+        {% comment %}
+        <div class="hpimageblock hide-500">
+          <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.title }}">
+        </div>
+        {% endcomment %}
+   {% if template contains 'product' %}
+       <div class="hpvideolock hide-500 product_only">
+          {%- assign video = product.metafields.custom.video_url -%}
+          <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%"  poster="{{ block.settings.image | img_url: 'master'}}">
+            <source src="{{ video }}" type="video/mp4">
+          </video>          
+        </div>
+          {% else %}
+        <div class="hpvideolock hide-500">
+          {%- assign video = section.settings.video_url -%}
+          <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%"  poster="{{ block.settings.image | img_url: 'master'}}">
+            <source src="{{ video }}" type="video/mp4">
+          </video>          
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>   
+<style>
+@media (max-width:760px){
+  
+.whyusbmodern .hpimagecntnt{
+  padding-top:0px !important;
+}
+  .whyusbmodern.hpimagecontentblock{
+    padding-bottom:4rem;
+  }
+}
+  
+</style>
+{% schema %}
+  {
+    "name": "The New Modern Why us",
+    "settings": [
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub Title",
+        "default": "Why us"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "The Ancient Is The <strong>New Modern</strong>"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Description",
+        "default": "<p><strong>A perfect balance between ancient and modern</strong> In today's fast-paced world, everyone wants a magic pill to eliminate any disease or discomfort that slows them down.Most often, these quick-fix medicines only do symptom management. The root of the problem keeps getting ignored and ultimately takes the form of a deadly disease that is beyond cure.One needs not an alternative medicine but an alternative mindset before approaching healing.</p>"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "video_url",
+        "label": "Video Url"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

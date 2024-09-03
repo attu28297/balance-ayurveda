@@ -1,0 +1,430 @@
+<!------- /section/revieslider.liquid ------------->
+
+<div class="page-width state__{{ section.id }} discover_all_state">
+   <h2 class="main-head-sl">{{ section.settings.heading }}</h2>
+  {% if section.settings.heading != blank %}
+  <div class="header_title">
+      <h2></h2>
+  </div>
+    {% endif %}
+  <div class="main_re_sec">
+      <div class="state__blocks state_slider review_Slider">
+        {% for block in section.blocks %}
+          {% if block.type == 'state' %}
+            {% if block.settings.state_svg != blank %}
+              {% assign page_title = collection.handle %}
+          <div class="state_inner {% if page_title == block_title %} active_collection{% endif %}">
+           
+            {% assign block_title = block.settings.title |handle %}
+            <div class="state_icon">
+              
+            <div class="img_div">
+              <img src="{{ block.settings.state_svg  | img_url:'550X' }}" class="first_state_image">
+              <div class="paragraph_contain state_name">{{ block.settings.title }}</div>
+            </div>
+              
+              <p class="content-sl">{{ block.settings.content }}</p>
+            </div>
+        </div>
+        {% endif %}
+            {% endif %}
+          {% endfor %}
+      </div>
+    <div class="img_sec_re">
+      <div class="img_sr">
+         <!-- <img id="myDIV" class="small_img_2 " src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/WhatsApp_Image_2024-05-10_at_15.27.10.jpg?v=1715336033">
+ -->
+        <img class="large_im vert-move-down" src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/pr-removebg-preview.png?v=1717826441">
+       
+        <img class="small_im vert-move" src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/pr2-removebg-preview.png?v=1717826396">
+     <img class="shado_bottom" src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/shadow.png?v=1717827283">
+      </div>
+    </div>
+  </div>
+ 
+</div>
+<style>
+  #myDIV {
+  animation: mymove 5s infinite;
+}
+
+@keyframes mymove {
+  50% {transform: rotate(20deg);}
+}
+    img.vert-move-down {
+    -webkit-animation: mover-down 1s infinite  alternate;
+    animation: mover-down 1s infinite  alternate;
+}
+img.vert-move-down {
+    -webkit-animation: mover-down 1s infinite  alternate;
+    animation: mover-down 1s infinite  alternate;
+}
+   @-webkit-keyframes mover-down {
+    0% { transform: translateY(-30px); }
+    100% { transform: translateY(0); }
+}
+@keyframes mover-down {
+    0% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+  img.vert-move {
+    -webkit-animation: mover 1s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+img.vert-move {
+    -webkit-animation: mover 1s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+ 
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+  
+a.fullingridenttarget {
+    color: #ad683f;
+}
+  .page-width.discover_all_state .note {
+    text-align: justify;
+    letter-spacing: -.02em;
+    color: #626262;
+    font-size: 2rem;
+    line-height: 1.5;
+    padding-bottom: 30px;
+    text-align: center;
+}
+     @media (min-width: 768px) {
+       img.shado_bottom {
+    position: absolute;
+    width: 520px;
+    bottom: -75px;
+    left: -45px;
+}
+       .img_sec_re{
+         flex:1;
+       }
+       img.small_img_2 {
+    height: 140px;
+                 left: -120px;
+        position: relative;
+}
+       .state_slider button.prev.slick-prev.slick-arrow{
+           left: 0;
+        right: 50%;
+     }
+       
+      .state_slider button.next.slick-next.slick-arrow{
+                   right: 0;
+        left: 50%;
+     }
+       .state_icon {
+    position: relative;
+          
+         padding-left: 10px;
+}
+           p.content-sl {
+                position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 100%;
+        bottom: 0;
+
+    }
+       .img_div {
+
+        width: 55%;
+        max-width:450px;
+        margin: 0 auto !important;
+}
+       .paragraph_contain.state_name {
+    position: absolute;
+    top: 0;
+    left: 15%;
+}
+       p.content-sl {
+                 border-radius: 20px;
+    background: white;
+             max-width: 40%;
+}
+       .img_sr {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+                 max-width: 50%;
+                 position: relative;
+}
+       img.large_im {
+    height: 420px;
+                 position: relative;
+        top: -38px;
+}
+   
+       img.small_im {
+    height: 420px;
+                 left: -120px;
+        position: relative;
+}
+       .page-width.discover_all_state {
+    padding-bottom: 50px;
+    padding-top: 80px !important;
+    background-color: #fcf4ea;
+}
+       .main_re_sec {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+       .state_slider .slick-arrow:after{
+         content: unset;
+       }
+      body button.next.slick-next.slick-arrow, body .state_slider button.prev.slick-prev.slick-arrow {
+ 
+    display: block !important;
+    visibility: visible;
+                 top: 60%;
+}
+       .page-width.discover_all_state .state__blocks.state_slider{
+                flex: 1;
+    max-width: 60%;
+       }
+     }
+   @media (max-width: 768px) {
+     .img_div {
+
+    max-width: 100%;
+    margin: 0 auto !important;
+}
+.state_icon {
+    position: relative;
+    height: 300px;
+}
+     img#myDIV {
+            z-index: 1;
+        width: 60px;
+        position: absolute;
+        bottom: 20%;
+        left: 9%;
+}
+     img.large_im.vert-move-down {
+    width: 200px;
+}
+     img.small_im.vert-move, img.large_im.vert-move-down {
+    width: 150px;
+}
+     .img_sr {
+    display: flex;
+               position: relative;
+    justify-content: center;
+    align-items: baseline;
+               padding: 40px 0px !important;
+}
+     body h2.main-head-sl span{
+       display:block;
+     }
+       h2.main-head-sl {
+    margin-bottom: 2.4rem!important;
+       }
+     .page-width.discover_all_state {
+    padding-top: 40px;
+    background-color: #fcf4ea;
+}
+     body .content-sl{
+           box-shadow: 0 4px 60px #0000000d;
+               border-radius: 20px;
+             width: 86%;
+        position: absolute !important;
+        bottom: 0;
+        background: white;
+        font-size: 18px;
+        text-align: center;
+        padding: 10px;
+        margin: 0 auto !important;
+        padding-bottom: 40px;
+        font-weight: normal;
+        left: 50%;
+        transform: translate(-50%, 0);
+     }
+body .state_slider button.prev.slick-prev.slick-arrow {
+            top: 82%;
+        left: 5px;
+        display: block !important;
+        visibility: visible;
+}
+     body .state_slider .slick-arrow:after, body .state_slider .slick-arrow:before{
+       z-index:6;
+     }
+    
+     body .state_slider button.next.slick-next.slick-arrow{
+              top: 80%;
+        right: 5px;
+        display: block !important;
+        visibility: visible;
+     }
+   }
+  .content-sl {
+        box-shadow: 0 4px 60px #0000000d;
+        color: #313d49;
+    font-size: 18px;
+    text-align: left;
+    padding: 3rem 5rem;
+    max-width: 600px;
+    margin: 0 auto !important;
+    padding-bottom: 40px;
+    font-weight: normal;
+}
+  h2.main-head-sl {
+    font-size: 4rem;
+    letter-spacing: -.04em;
+    color: #313d49;
+    margin-bottom: 6.4rem!important;
+    text-align: center;
+}
+   h2.main-head-sl span {
+    color: #ad683f;
+    font-weight: bold;
+}
+  .paragraph_contain.state_name {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #ad683f;
+    padding-top:40px;
+}
+  .state_icon img {
+    margin: 0 auto;
+}
+   .page-width.discover_all_state {
+    padding-top: 60px;
+    background-color: #fcf4ea;
+}
+ 
+</style>
+<script>
+   $('.state_slider').slick({
+  dots: false,
+  arrows:true,
+  infinite: true,
+  autoplaySpeed: 1000,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  prevArrow: '<button type="button" class="prev slick-prev"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none"><path d="M10 17.63L2.185 9.815L10 2" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>',
+  nextArrow: '<button type="button" class="next slick-next"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none"><path d="M2 17.63L9.815 9.815L2 2" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>',
+  responsive: [
+     {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: false,
+         arrows:true
+      }
+     },
+    {
+      breakpoint: 481,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: false,
+         arrows:true
+      }
+    }
+  ]
+});
+</script>
+
+{% schema %}
+  {
+    "name": "Review slider",
+    "settings": [
+      {
+        "type":"richtext",
+        "id":"heading",
+        "label":"Heading"
+      },
+      {
+        "type":"range",
+        "id":"top_padding",
+        "min":0,
+        "max":100,
+        "step":1,
+        "unit":"px",
+        "label":"Top Padding",
+        "default":18
+      },
+      {
+        "type":"range",
+        "id":"bottom_padding",
+        "min":0,
+        "max":100,
+        "step":1,
+        "unit":"px",
+        "label":"Bottom Padding",
+        "default":18
+      },
+      {
+        "type":"range",
+        "id":"top_padding_mobile",
+        "min":0,
+        "max":100,
+        "step":1,
+        "unit":"px",
+        "label":"Top Padding Mobile",
+        "default":18
+      },
+      {
+        "type":"range",
+        "id":"bottom_padding_mobile",
+        "min":0,
+        "max":100,
+        "step":1,
+        "unit":"px",
+        "label":"Bottom Padding Mobile",
+        "default":18
+      },
+      {
+        "type": "header",
+        "content": "Section Background Color"
+      },
+      {
+        "type":"color",
+        "id":"background_color",
+        "label":"Background Color"
+      }
+    ],
+    "blocks":[
+      {
+      "type":"state",
+      "name":"State",
+      "settings":[
+        {
+          "type":"image_picker",
+          "id":"state_svg",
+          "label":"State Image Grey"
+        },
+        {
+          "type":"text",
+          "id":"title",
+          "label":"State Name"
+        },
+        {
+          "type":"textarea",
+          "id":"content",
+          "label":"Content Area"
+        }
+      ]
+    }
+    ],
+    "presets":[
+      {
+        "name":"Review Slider"
+      }
+    ]
+  }
+{% endschema %}

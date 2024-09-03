@@ -1,0 +1,248 @@
+<!------- /section/discover-all-states.liquid ------------->
+<div class="page-width state__{{ section.id }} discover_all_state">
+   <h2 class="main-head-sl">Ingredient Spotlight: <span>No Secrets, Just Goodness</span></h2>
+  {% if section.settings.heading != blank %}
+  <div class="header_title">
+      <h2>{{ section.settings.heading }}</h2>
+  </div>
+    {% endif %}
+  <div class="state__blocks state_slider">
+    {% for block in section.blocks %}
+      {% if block.type == 'state' %}
+        {% if block.settings.state_svg != blank %}
+          {% assign page_title = collection.handle %}
+      <div class="state_inner {% if page_title == block_title %} active_collection{% endif %}">
+       
+        {% assign block_title = block.settings.title |handle %}
+        <div class="state_icon">
+          <img src="{{ block.settings.state_svg  | img_url:'300X' }}" class="first_state_image">
+              <div class="paragraph_contain state_name">{{ block.settings.title }}</div>
+          <p class="content-sl">{{ block.settings.content }}</p>
+        </div>
+    </div>
+    {% endif %}
+        {% endif %}
+      {% endfor %}
+  </div>
+<p class="note"><a class="fullingridenttarget" href="javascript:;">View full list of Ingredients</a></p>
+  
+</div>
+<style>
+  
+a.fullingridenttarget {
+    color: #ad683f;
+}
+  .page-width.discover_all_state .note {
+    text-align: justify;
+    letter-spacing: -.02em;
+    color: #626262;
+    font-size: 2rem;
+    line-height: 1.5;
+    padding-bottom: 30px;
+    text-align: center;
+}
+     @media (min-width: 768px) {
+       .page-width.discover_all_state {
+    padding-bottom: 50px;
+    padding-top: 80px !important;
+    background-color: #fcf4ea;
+}
+     }
+   @media (max-width: 768px) {
+     body h2.main-head-sl span{
+       display:block;
+     }
+       h2.main-head-sl {
+    margin-bottom: 2.4rem!important;
+       }
+     .page-width.discover_all_state {
+    padding-top: 40px;
+    background-color: #fcf4ea;
+}
+     body .content-sl{
+       font-size: 18px;
+    text-align: center;
+    padding: 10px;
+    max-width: 350px;
+    margin: 0 auto !important;
+    padding-bottom: 40px;
+    font-weight: normal;
+     }
+body .state_slider button.prev.slick-prev.slick-arrow {
+    left: -15%;
+    display: block !important;
+    visibility: visible;
+}
+     body .state_slider .slick-arrow:after, body .state_slider .slick-arrow:before{
+       z-index:6;
+     }
+    
+     body .state_slider button.next.slick-next.slick-arrow{
+       right: -15%;
+    display: block !important;
+    visibility: visible;
+     }
+   }
+  .content-sl {
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+    max-width: 600px;
+    margin: 0 auto !important;
+    padding-bottom: 40px;
+    font-weight: normal;
+}
+  h2.main-head-sl {
+    font-size: 4rem;
+    letter-spacing: -.04em;
+    color: #313d49;
+    margin-bottom: 6.4rem!important;
+    text-align: center;
+}
+   h2.main-head-sl span {
+    color: #ad683f;
+    font-weight: bold;
+}
+  .paragraph_contain.state_name {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #ad683f;
+    padding-top:40px;
+}
+  .state_icon img {
+    width: 300px;
+    margin: 0 auto;
+}
+   .page-width.discover_all_state {
+    padding-top: 60px;
+    background-color: #fcf4ea;
+}
+  .page-width.discover_all_state .state__blocks.state_slider{
+        max-width: 60%;
+    margin: 0 auto !important;
+  }
+</style>
+<script>
+   $('.state_slider').slick({
+  dots: false,
+  arrows:true,
+  infinite: true,
+  autoplaySpeed: 1000,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  prevArrow: '<button type="button" class="prev slick-prev"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none"><path d="M10 17.63L2.185 9.815L10 2" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>',
+  nextArrow: '<button type="button" class="next slick-next"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none"><path d="M2 17.63L9.815 9.815L2 2" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>',
+  responsive: [
+     {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: false,
+         arrows:true
+      }
+     },
+    {
+      breakpoint: 481,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: false,
+         arrows:true
+      }
+    }
+  ]
+});
+</script>
+{% schema %}
+  {
+    "name": "Discover All Ingredients",
+    "settings": [
+      {
+        "type":"richtext",
+        "id":"heading",
+        "label":"Heading"
+      },
+      {
+        "type":"range",
+        "id":"top_padding",
+        "min":0,
+        "max":100,
+        "step":1,
+        "unit":"px",
+        "label":"Top Padding",
+        "default":18
+      },
+      {
+        "type":"range",
+        "id":"bottom_padding",
+        "min":0,
+        "max":100,
+        "step":1,
+        "unit":"px",
+        "label":"Bottom Padding",
+        "default":18
+      },
+      {
+        "type":"range",
+        "id":"top_padding_mobile",
+        "min":0,
+        "max":100,
+        "step":1,
+        "unit":"px",
+        "label":"Top Padding Mobile",
+        "default":18
+      },
+      {
+        "type":"range",
+        "id":"bottom_padding_mobile",
+        "min":0,
+        "max":100,
+        "step":1,
+        "unit":"px",
+        "label":"Bottom Padding Mobile",
+        "default":18
+      },
+      {
+        "type": "header",
+        "content": "Section Background Color"
+      },
+      {
+        "type":"color",
+        "id":"background_color",
+        "label":"Background Color"
+      }
+    ],
+    "blocks":[
+      {
+      "type":"state",
+      "name":"State",
+      "settings":[
+        {
+          "type":"image_picker",
+          "id":"state_svg",
+          "label":"State Image Grey"
+        },
+        {
+          "type":"text",
+          "id":"title",
+          "label":"State Name"
+        },
+        {
+          "type":"textarea",
+          "id":"content",
+          "label":"Content Area"
+        }
+      ]
+    }
+    ],
+    "presets":[
+      {
+        "name":"Discover All Ingredients"
+      }
+    ]
+  }
+{% endschema %}

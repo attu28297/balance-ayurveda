@@ -1,0 +1,144 @@
+{%- comment -%} Logos List {%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+<div data-section-id="{{ section.id }}" data-section-type="logo-list" data-style="{{ section.settings.color_style }}">
+  <div class="logo-list"{% if section.settings.color_logos_bg != blank %} style="background-color: {{ section.settings.color_logos_bg }};"{% endif %}>
+    <div class="logo-list__slider" data-logo-list-slider>
+      {%- for block in section.blocks -%}
+        {%- assign image = block.settings.logo_image -%}
+        {%- assign image_widths = '[100,120,140,160,180,200,240,280,320,360]' -%}
+        {%- assign image_url_pattern = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        {%- assign logo_url = block.settings.logo_url -%}
+        {%- assign logo_width = block.settings.logo_width -%}
+        {%- assign logo_aspect_ratio = image.aspect_ratio | default: 1.333 -%}
+        {%- assign padding_top = 1 | divided_by: logo_aspect_ratio | times: 100 | round: 2 -%}
+
+        <div class="logo-list__slide" data-slide-index="{{ forloop.index0 }}" data-block="logo-list-slide" {{ block.shopify_attributes }}>
+          <div class="logo-list__item" style="width: {{ logo_width }}px">
+            <div class="logo-list__item-container" style="padding-top: {{ padding_top }}%">
+              {%- if image != blank -%}
+                {%- capture logo_image -%}
+                  <img
+                    class="logo-list__item-image lazyload"
+                    src="{{ 'blank.gif' | asset_img_url: '1x1' }}"
+                    data-src="{{ image_url_pattern }}"
+                    data-widths= "{{ image_widths }}"
+                    data-aspectratio="{{ image.aspect_ratio }}"
+                    data-sizes="auto"
+                    loading="lazy"
+                    alt="{{ image.alt | escape }}">
+                  <noscript>
+                    <img src="{{ image | img_url: '380x' }}" alt="{{ image.alt | escape }}">
+                  </noscript>
+                {%- endcapture -%}
+
+                {%- if logo_url != blank -%}
+                  <a href="{{ logo_url }}" class="logo-list__item-link" title="{{ image.alt | escape }}">
+                    {{- logo_image -}}
+                  </a>
+                {%- else -%}
+                  {{- logo_image -}}
+                {%- endif -%}
+              {%- else -%}
+                {%- if logo_url != blank -%}
+                  <a href="{{ logo_url }}" class="logo-list__item-link">
+                    {{- 'logo' | placeholder_svg_tag -}}
+                  </a>
+                {%- else -%}
+                  <div class="logo-list__item-image svg-placeholder">
+                    {{- 'logo' | placeholder_svg_tag -}}
+                  </div>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Logo list",
+  "class": "shopify-section--logo-list",
+  "max_blocks": 25,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_style",
+      "label": "Arrows style",
+      "default": "black",
+      "options": [
+        {
+          "value": "white",
+          "label": "Light"
+        },
+        {
+          "value": "black",
+          "label": "Dark"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "color_logos_bg",
+      "label": "Background color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item_logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "logo_width",
+          "label": "Logos width",
+          "min": 100,
+          "max": 180,
+          "step": 10,
+          "unit": "px",
+          "default": 120
+        },
+        {
+          "type": "url",
+          "id": "logo_url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo list",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "item_logo"
+        },
+        {
+          "type": "item_logo"
+        },
+        {
+          "type": "item_logo"
+        },
+        {
+          "type": "item_logo"
+        },
+        {
+          "type": "item_logo"
+        },
+        {
+          "type": "item_logo"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

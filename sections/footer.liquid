@@ -1,0 +1,564 @@
+{%- assign color_footer_text = section.settings.color_footer_text -%}
+{%- assign color_footer_bg = section.settings.color_footer_bg -%}
+{%- assign color_footer_bottom_bg = section.settings.color_bottom_bar_bg -%}
+{%- assign color_footer_bottom_contrast = color_footer_bottom_bg | color_contrast: color_footer_text -%}
+{%- if color_footer_bottom_contrast < 4.5 -%}
+{%- assign color_footer_bottom_bg_lightness = color_footer_bottom_bg | color_brightness -%}
+{%- if color_footer_bottom_bg_lightness < 50 -%}
+{%- assign color_footer_bottom_text = color_footer_bottom_bg | color_lighten: 70 -%}
+{%- else -%}
+{%- assign color_footer_bottom_text = color_footer_bottom_bg | color_darken: 70 -%}
+{%- endif -%}
+{%- else %}
+    {%- assign color_footer_bottom_text = color_footer_text | color_modify: 'alpha', 0.7 -%}
+{%- endif %}
+
+<style>
+  :root {
+    ---color-footer-text: {{ color_footer_text }};
+      ---color-footer-placeholder-text: {{ color_footer_text | color_modify: 'alpha', 0.5 }};
+      ---color-footer-bg: {{ color_footer_bg }};
+      ---color-footer-bg-hover: {{ color_footer_text | color_modify: 'alpha', 0.05 }};
+      ---color-footer-bottom-text: {{ color_footer_bottom_text }};
+      ---color-footer-bottom-bg: {{ color_footer_bottom_bg }};
+      ---color-footer-bottom-bg-hover: {{ color_footer_bottom_text | color_modify: 'alpha', 0.05 }};
+      ---color-footer-bottom-border: {{ color_footer_bottom_text | color_modify: 'alpha', 0.1 }};
+
+      --footer-grid: repeat({{ section.blocks.size }}, minmax(0, auto));
+    }
+</style>
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">^</button>
+<footer class="site-footer" data-section-type="footer" data-section-id="{{ section.id }}">
+  <div class="container">
+
+    {% comment %} Footer top - logo, menus, text, newsletter {% endcomment %}
+    <div class="footer__inner">
+      {%- if section.blocks.size > 0 -%}
+      <div class="footer__blocks">
+        <div class="flex-box footersight">
+
+        {%- for block in section.blocks -%}
+        {%- assign mobile_hide_block = block.settings.mobile_hide_block -%}
+
+        {%- case block.type -%}
+          {%- when 'menu' -%}
+          {%- assign menu = block.settings.menu -%}
+          {%- assign title = block.settings.title -%}          
+          <div class="col-20">
+            <div class="footer-first-col footer__block footer__block--menus {% if mobile_hide_block %}med_hide{% endif %}" {{ block.shopify_attributes }}>
+              {%- if menu != blank or title != blank -%}
+              <div class="footer__block-menu" >
+                {%- if title != blank -%}
+                <p class="footer__block__title">{{ title }}</p>
+                {%- endif -%}
+
+                {%- if menu != blank -%}
+                <ul>
+                  {%- for link in linklists[menu].links -%}
+                  <li class="footer__block__menu-link">
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                  </li>
+                  {%- endfor -%}
+                </ul>
+                {%- endif -%}
+              </div>
+              {%- endif -%}
+            </div>
+          </div>                  				
+          <div class="col-60">
+            <div class="logomenu">
+              {%- when 'logo' -%}
+              <div class="footer__block footer__block--logo {% if mobile_hide_block %}med_hide{% endif %}" {{ block.shopify_attributes }}>
+                {%- if block.settings.logo -%}
+                <a href="{{ routes.root_url }}" class="footer__logo">
+                  {%- assign image = block.settings.logo -%}
+                  {%- assign image_widths = '[295,394,590,700,800,1000,1200,1500,1800,2000,2400]' -%}
+                  {%- assign image_url_pattern = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+                  <img
+                       class="lazyload"
+                       src="{{ 'blank.gif' | asset_img_url: '1x1' }}"
+                       data-src="{{ image_url_pattern }}"
+                       data-widths= "{{ image_widths }}"
+                       data-aspectratio="{{ image.aspect_ratio }}"
+                       data-sizes="auto"
+                       width="{{ block.settings.logo_width }}"
+                       alt="{{ shop.name }}">
+                  <noscript>
+                    <img width="{{ block.settings.logo_width }}" src="{{ block.settings.logo | img_url: '360x' }}" title="{{ shop.name }}">
+                  </noscript>
+                </a>
+                {%- else -%}
+                <div class="placeholder-wrapper--footer" style="width: {{ block.settings.logo_width | append: 'px' }};">
+                  <div class="footer__logo--placeholder">
+                    {{- 'image' | placeholder_svg_tag: 'placeholder-svg' -}}
+                  </div>
+                </div>
+                {%- endif -%}
+              </div>
+              {%- when 'menu1' -%}
+              {%- assign menu1 = block.settings.menu1 -%}
+              {%- assign title1 = block.settings.title1 -%}
+              <div class="footer__block footer__block--menus {% if mobile_hide_block1 %}med_hide{% endif %}" {{ block.shopify_attributes }}>
+                {%- if menu1 != blank or title1 != blank -%}
+                <div class="footer__block-menu" >
+                  {%- if title1 != blank -%}
+                  <p class="footer__block__title">{{ title1 }}</p>
+                  {%- endif -%}
+
+                  {%- if menu1 != blank -%}
+                  <ul>
+                    {%- for link in linklists[menu1].links -%}
+                    <li class="footer__block__menu-link">
+                      <a href="{{ link.url }}">{{ link.title }}</a>
+                    </li>
+                    {%- endfor -%}
+                  </ul>
+                  {%- endif -%}
+                </div>
+                {%- endif -%}
+              </div>
+            </div>
+            `</div>
+          <div class="col-20">
+            <div class="menmusupport">
+              {%- when 'menu2' -%}
+              {%- assign menu2 = block.settings.menu2 -%}
+              {%- assign title2 = block.settings.title2 -%}
+              <div class="footer__block footer__block--menus {% if mobile_hide_block2 %}med_hide{% endif %}" {{ block.shopify_attributes }}>
+                {%- if menu2 != blank or title2 != blank -%}
+                <div class="footer__block-menu" >
+                  {%- if title != blank -%}
+                  <p class="footer__block__title">{{ title2 }}</p>
+                  {%- endif -%}
+
+                  {%- if menu2 != blank -%}
+                  <ul>
+                    {%- for link in linklists[menu2].links -%}
+                    <li class="footer__block__menu-link">
+                      <a href="{{ link.url }}">{{ link.title }}</a>
+                    </li>
+                    {%- endfor -%}
+                  </ul>
+                  {%- endif -%}
+                </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+        <div class="newslettersearch">
+          <div class="flex-box">
+            <div class="col-30">
+              {%- when 'newsletter' -%}
+              <div class="footer__block footer__block--newsletter {% if mobile_hide_block %}med_hide{% endif %}" {{ block.shopify_attributes }}>
+                {%- assign show_newsletter = true -%}
+                {%- assign title = block.settings.title -%}
+                {%- assign content = block.settings.content -%}
+
+                {%- if title != blank -%}
+                <p class="footer__block__title">{{ title }}</p>
+                {%- endif -%}
+
+                {%- if content != blank -%}
+                <p class="footer__block__text">{{ content }}</p>
+                {%- endif -%}
+
+                {%- render 'newsletter' -%}
+              </div>
+            </div>
+          <div class="col-40">
+              
+              </div> 
+            <div class="col-30">
+            <p class="footer__block__title follo">Follow us:</p>
+              <div class="sociallink">
+        
+                <div class="sociallinkinnr">
+                  <a href="{{ section.settings.facebookurl }}"><img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/facebook.png" alt="Facebook"/></a>
+                  <a href="{{ section.settings.instaurl }}"><img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/insta.png" alt="Instagram"/></a>
+                  <a href="{{ section.settings.twitterurl }}"><img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/twitter.png" alt="Twitter"/></a>
+                  <a href="{{ section.settings.quoraurl }}"><img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/quora.png" alt="Qura"/></a>
+                </div>
+              </div>            
+            </div>
+                       
+            </div>
+          </div>
+
+        {%- when 'text' -%}
+        <div class="footer__block footer__block--text {% if mobile_hide_block %}med_hide{% endif %}" {{ block.shopify_attributes }}>
+          {%- assign title = block.settings.title -%}
+          {%- assign text = block.settings.text -%}
+          {%- if text != blank -%}
+          {%- if title != blank -%}
+          <p class="footer__block__title">{{ title }}</p>
+          {%- endif -%}
+
+          {%- if text != blank -%}
+          <div class="footer__block__text" >{{ text }}</div>
+          {%- endif -%}
+          {%- endif -%}
+        </div>
+
+        {%- endcase -%}
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+
+    </div>
+
+  {% comment %} Bottom bar - Payment icons, text, copyright, social icons, menu {% endcomment %}
+  {%- assign footer_text = section.settings.text -%}
+  {%- assign menu = section.settings.menu -%}
+  {%- assign menu1 = section.settings.menu1 -%}
+  {%- assign show_social_icons = section.settings.show_social_icons -%}
+
+  <div class="footer__bottom">
+    <div class="container">
+      <div class="footer__bottom__wrapper">
+        <div class="footer__bottom__right">
+          {%- render 'cross-border' -%}
+
+          {%- if show_social_icons or menu -%}
+
+          {%- if show_social_icons -%}
+          {%- render 'social-links' -%}
+          {%- endif -%}
+
+          {%- if menu -%}
+          {%- if linklists[menu].links != empty -%}
+          <div class="footer__menu">
+            <ul class="footer__menu__links">
+              {%- for link in linklists[menu].links -%}
+              <li class="footer__menu__item{% if forloop.first %} footer__menu__item--first{% endif %}">
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+          {%- endif -%}
+          {%- endif -%}
+          {%- endif -%}
+        </div>
+
+        <div class="footer__bottom__left">
+          {%- if section.settings.show_payment_icons -%}
+          <div class="footer__payment">
+            {%- render 'payment-icons' -%}
+          </div>
+          {%- endif -%}
+        </div>
+      </div>           
+      <div class="footer__copyright">
+        <p>© Copyright All Rights Reserved,Balance Ayurveda Pvt Ltd</p>
+        <p style="display: none;">Design Credits <a href="https://www.artattackk.com/" target="_blank">: Art Attackk</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+<style>
+   @media (min-width: 725px) {
+button.toggle-submenu {
+    display: none;
+}
+     ul.submenu.submenu--dropdown{
+    display: none;
+       
+     }
+     
+   }
+#myBtn {
+  font-weight:bold;
+        display: none;
+    position: fixed;
+    bottom: 87%;
+    right: 17px;
+    z-index: 99;
+    font-size: 21px;
+    border: none;
+    outline: none;
+    background-color: unset;
+    color: #b16f48;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+#myBtn:hover {
+  background-color: #555;
+}
+</style>
+<script>
+// Get the button
+let mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
+{% schema %}
+{
+	"name": "Footer",
+	"max_blocks": 5,
+	"settings": [
+		{
+			"type": "header",
+			"content": "Colors"
+		},
+		{
+			"type": "color",
+			"id": "color_footer_text",
+			"label": "Text",
+			"default": "#222222"
+		},
+		{
+			"type": "color",
+			"id": "color_footer_bg",
+			"label": "Background",
+			"default": "#ffffff"
+		},
+		{
+			"type": "color",
+			"id": "color_bottom_bar_bg",
+			"label": "Bottom bar background",
+			"default": "#fafafa"
+		},
+        {
+          "type": "text",
+          "id": "facebookurl",
+          "label": "Facebook Url"
+        },
+        {
+          "type": "text",
+          "id": "instaurl",
+          "label": "Instagram Url"
+        },
+        {
+          "type": "text",
+          "id": "twitterurl",
+          "label": "twitter Url"
+        },
+        {
+          "type": "text",
+          "id": "quoraurl",
+          "label": "Quore Url"
+        },
+		{
+			"type": "header",
+			"content": "Bottom bar"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_payment_icons",
+			"label": "Show payment icons",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "show_social_icons",
+			"label": "Show social icons",
+			"default": true
+		},
+		{
+			"type": "link_list",
+			"id": "menu",
+			"label": "Choose Menu",
+			"default": "footer",
+			"info": "This menu won't show dropdown items"
+		},
+		{
+			"type": "header",
+			"content": "language selector",
+			"info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_locale_selector",
+			"label": "Show language selector",
+			"default": true
+		},
+		{
+			"type": "header",
+			"content": "Currency selector",
+			"info": "To add a currency, go to your [currency settings.](/admin/settings/payments)"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_currency_selector",
+			"label": "Show currency selector",
+			"default": true
+		}
+	],
+	"blocks": [
+		{
+			"type": "logo",
+			"name": "Logo",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "logo",
+					"label": "Logo"
+				},
+				{
+					"type": "range",
+					"id": "logo_width",
+					"min": 60,
+					"max": 180,
+					"step": 10,
+					"unit": "px",
+					"label": "Logo width",
+					"default": 150
+				},
+				{
+					"type": "checkbox",
+					"id": "mobile_hide_block",
+					"label": "Hide block on mobile",
+					"default": false
+				}
+			]
+		},
+		{
+			"type": "menu",
+			"name": "Menu",
+			"limit": 5,
+			"settings": [
+				{
+					"type": "link_list",
+					"id": "menu",
+					"default":"main-menu",
+					"label": "Choose Menu",
+					"info": "This menu won't show dropdown items"
+				},
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Heading"
+				},
+				{
+					"type": "checkbox",
+					"id": "mobile_hide_block",
+					"label": "Hide block on mobile",
+					"default": false
+				}
+			]
+		},
+		{
+			"type": "menu1",
+			"name": "Menu1",
+			"limit": 5,
+			"settings": [
+				{
+					"type": "link_list",
+					"id": "menu1",
+					"default":"main-menu",
+					"label": "Choose Menu",
+					"info": "This menu won't show dropdown items"
+				},
+				{
+					"type": "text",
+					"id": "title1",
+					"label": "Heading"
+				},
+				{
+					"type": "checkbox",
+					"id": "mobile_hide_block1",
+					"label": "Hide block on mobile",
+					"default": false
+				}
+			]
+		},
+		{
+			"type": "menu2",
+			"name": "Menu2",
+			"limit": 5,
+			"settings": [
+				{
+					"type": "link_list",
+					"id": "menu2",
+					"default":"main-menu",
+					"label": "Choose Menu",
+					"info": "This menu won't show dropdown items"
+				},
+				{
+					"type": "text",
+					"id": "title2",
+					"label": "Heading"
+				},
+				{
+					"type": "checkbox",
+					"id": "mobile_hide_block2",
+					"label": "Hide block on mobile",
+					"default": false
+				}
+			]
+		},
+		{
+			"type": "text",
+			"name": "Text",
+			"limit": 5,
+			"settings": [
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Title",
+					"default": "Information"
+				},
+				{
+					"type": "richtext",
+					"id": "text",
+					"label": "Text",
+					"default":"<p>This text block is a great place to discuss shipping policies, or terms and conditions info.</p>"
+				},
+				{
+					"type": "checkbox",
+					"id": "mobile_hide_block",
+					"label": "Hide block on mobile",
+					"default": false
+				}
+			]
+		},
+		{
+			"type": "newsletter",
+			"name": "Newsletter",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Heading",
+					"default": "Newsletter"
+				},
+				{
+					"type": "textarea",
+					"id": "content",
+					"label": "Text"
+				},
+				{
+					"type": "checkbox",
+					"id": "mobile_hide_block",
+					"label": "Hide block on mobile",
+					"default": false
+				}
+			]
+		}
+	]
+}
+{% endschema %}

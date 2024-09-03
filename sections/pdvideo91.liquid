@@ -1,0 +1,74 @@
+{%- if section.settings.show_video -%}
+<section class="product-video align-center justify-center bg-style flex-box">
+  <div class="video-image">
+  	<img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/video-play-icon.png?v=1645540442">
+  </div>
+  {%- if section.settings.videomp4 != blank -%}
+  <video class="video-for" width="100%" height="100%" preload="auto" autoplay="" playsinline="" muted="" loop="" style="object-fit: cover;width:100%;">
+    <source src="{{ section.settings.videomp4 }}" type="video/mp4">
+  </video>
+  {%- endif -%}
+  {%- if section.settings.vimeo != blank -%}
+  <div class="youtubevideo video-for">
+    {{ section.settings.vimeo }}
+  </div>
+  {%- endif -%}
+  {%- if section.settings.youtube != blank -%}
+  <div class="vimeovideo video-for">
+    {{ section.settings.youtube }}
+  </div>
+  {%- endif -%}
+</section>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Video",
+    "settings": [
+    {
+        "type": "checkbox",
+        "id": "show_video",
+        "label": "Show Video",
+        "default": false
+    },
+	{
+      "type": "text",
+      "id": "videomp4",
+      "label": "Mp4 Video Link"
+    },
+	{
+      "type": "text",
+      "id": "vimeo",
+      "label": "Vimeo Video Link"
+    },
+	{
+      "type": "text",
+      "id": "youtube",
+      "label": "Youtube Iframe"
+    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+<style>
+  
+.product-video .video-for {
+  display: block !important;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+}
+.product-video {
+  overflow: hidden;
+  position: relative;
+}
+.product-video .video-for iframe, .product-video .video-for >  div {
+  width: 100% !important;
+  height: 100% !important;
+}
+</style>
+{% javascript %}
+{% endjavascript %}

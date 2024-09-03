@@ -1,0 +1,110 @@
+
+<section class="catfaqsec pl-faqs com-padding">
+  <div class="wrapper">
+    <div class="text-box faq-top-heading text-center">
+      <h3>{{ section.settings.faq-sub-heading }}</h3>
+      <h2>{{ section.settings.faq-heading}}</h2>
+    </div>
+    <div class="flex-box">
+      <div class="col-70">
+        <div class="faq-wrapper">
+          {% for block in section.blocks %}
+          {% case block.type %}
+          {% when 'faq-group-box' %}
+          <div class="faq-group text-box">
+            <h5>{{ block.settings.faq-question }}</h5>
+            {{ block.settings.faq-answer }}
+          </div>
+          {% endcase %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-30">
+        <div class="sidebarblog" style="position: sticky;top: 70px;">
+          <div class="sidebarblogheader text-box">
+            <div class="sidebarblogheaderinnr">
+              <p>{{ section.settings.availbletext }}</p>
+              <h4>{{ section.settings.heading }}</h4>
+            </div>
+          </div>
+          <div class="sidebarblogbottom">
+            <div class="coupon">
+              <div class="couponinnr" id="myInput" value="{{ section.settings.availbletext2 }}">{{ section.settings.availbletext2 }}</div>
+              <span class="copycode" onclick="myFunction()">Copy Code</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Faq Box Cat",
+	"max_blocks": 6,
+	"settings": [
+
+	{
+		"type" : "text",
+		"id" : "faq-sub-heading",
+		"label": "Sub Heading",
+		"default" : "Need Help ?"
+	},
+
+	{
+		"type" : "text",
+		"id" : "faq-heading",
+		"label": "Heading",
+		"default" : "Frequently Asked Question"
+	},
+	{
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "50% Special Discount Offer This Month"
+    },
+	{
+      "type": "text",
+      "id": "availbletext",
+      "label": "Announcement",
+      "default": "Announcement"
+    },
+	{
+      "type": "text",
+      "id": "availbletext2",
+      "label": "coupon",
+      "default": "HAPPY MONTH"
+    }
+],
+"blocks": [
+            {
+              "type": "faq-group-box",
+              "name": "Question & Answer",
+			  
+              "settings": [
+                  
+				{
+                  "id": "faq-question",
+                  "type": "text",
+                  "label": "Heading",
+				  "default": "Question : Do you sell any Medication or Supplements over-the-counter?"
+                },
+				{
+                  "id": "faq-answer",
+                  "type": "richtext",
+                  "label": "Description",
+				  "default": "<p><span>Answer :</span> No. We do NOT operate a Storefront or a Pharmacy like setting where general public can purchase products. As a Holistic Practice, we provide many services including consultations and therapies to improve general well-being.</p>"
+                }
+               
+              ]
+            }
+          ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+

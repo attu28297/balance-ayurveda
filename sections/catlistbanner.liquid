@@ -1,0 +1,46 @@
+<section class="innrbanner catlistbanner blogbanner" style="background-color: #FCF4EA;">
+    <div class="container">
+        <div class="innrbannercntnt">
+            <div class="bannercntnt">
+                <h1><span class="smhead">{{ section.settings.subtitle }}</span> {{ section.settings.mainheading }}</h1>
+            </div>
+        </div>
+    </div>
+  <div class="desktopbanner hide-500" style="background-image: url('{{ section.settings.desktopimage | img_url: 'master' }}')"></div>
+  <div class="desktopbanner show-500" style="background-image: url('{{ section.settings.mobileimage | img_url: 'master' }}');"></div>
+</section> 
+{% schema %}
+  {
+    "name": "Banner",
+    "settings": [	
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub Heading",
+        "default": "Why Us?"
+      },	
+      {
+        "type": "text",
+        "id": "mainheading",
+        "label": "Heading",
+        "default": "Our Philosophy"
+      },                  
+      {
+        "id": "desktopimage",
+        "type": "image_picker",
+        "label": "Desktop Banner"
+      },                  
+      {
+        "id": "mobileimage",
+        "type": "image_picker",
+        "label": "Mobile Banner"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

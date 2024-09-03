@@ -1,0 +1,55 @@
+<div class="ayurvedanewpage"  style="padding-bottom: 100px;">
+  <div class="container">
+    <div class="faq-group howtousecntnt text-left">
+      <h2><span class="smhead">{{ section.settings.subtitle }}</span>{{ section.settings.mainheading }}</h2>
+      {{ section.settings.content }}
+    </div>
+    {% comment %}
+    <div class="brandstorywomanarmyimg">
+      <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%">
+        <source src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/Storyline_GIF.mp4?v=1649767970" type="video/mp4">
+      </video> 
+    </div>
+    <div class="text-box morecontent howtousecntnt text-center">
+      {{ section.settings.morecontent }}
+      <div class="vector"><img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/vector-1.png?v=1646738382" alt="Vector" /></div>
+    </div>
+    {% endcomment %}
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "ayurvedanew page",
+    "settings": [
+
+      
+	{
+      "type": "text",
+      "id": "mainheading",
+      "label": "Heading",
+      "default": "<strong>What Is Balance Ayurveda?</strong>"
+    },
+	{
+      "type": "richtext",
+      "id": "content",
+      "label": "content",
+      "default": "<p>In today’s day and age, maintaining a balanced life is becoming increasingly important for every individual’s personal health and well-being. Bringing this balance and sustaining it throughout our lives is what we, at Balance Ayurveda specialize in, with our range of unadulterated ayurvedic products. </p></br></br>"
+    },
+	{
+      "type": "richtext",
+      "id": "morecontent",
+      "label": "content",
+      "default": "<p>Balance Ayurveda products are curated with the purest elements and backed by the oldest medicinal system in the world to provide effective medical benefits as well as nutritional replenishment. </p>"
+    }
+      
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

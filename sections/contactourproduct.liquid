@@ -1,0 +1,73 @@
+<div class="contactourproduct" style="background-image: url('{{ section.settings.background | img_url: 'master' }}');">
+  <div class="container">
+    <div class="text-box headingBox">
+      <h2><strong>{{ section.settings.subtitle }}</strong> {{ section.settings.title }} </h2>
+    </div>
+    <ul class="flex-box">
+      {% for block in section.blocks %}
+      <li>
+        <div class="linnr">
+          <a href="{{ block.settings.url }}"><img src="{{ block.settings.image | img_url: 'master' }}"></a>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="productimage">
+    	<img src="{{ section.settings.productimage | img_url: 'master' }}" />
+    </div>
+  </div>
+</div>   
+{% schema %}
+  {
+    "name": "Shop our Products",
+    "settings": [
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub Title",
+        "default": "Shop Our"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Products"
+      },                  
+      {
+        "id": "background",
+        "type": "image_picker",
+        "label": "Background"
+      },                  
+      {
+        "id": "productimage",
+        "type": "image_picker",
+        "label": "Products"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "Onlinestore",
+        "name": "Onlinestore",			  
+        "settings": [
+
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "image"
+          },
+          {
+            "id": "url",
+            "type": "url",
+            "label": "url"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

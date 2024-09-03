@@ -1,0 +1,212 @@
+{%- liquid
+  assign banner_image = section.settings.banner_image
+  assign banner_heading = section.settings.banner_heading | default: page.title
+  assign contact_heading = page.title
+  assign contact_content = page.content
+  assign transparent_header = true
+
+  unless show_title
+    assign banner_heading = ''
+  endunless
+-%}
+
+{%- capture form_fields -%}
+  {%- for block in section.blocks -%}
+
+    {%- case block.type -%}
+
+      {%- when 'heading' -%}
+        <div class="text-box form-item form-item--heading" {{ block.shopify_attributes }}>
+          <h2 class="form__heading">{{ block.settings.title }}</h2>
+        </div>
+
+      {%- when 'heading_small' -%}
+        <div class="text-box form-item form-item--heading" {{ block.shopify_attributes }}>
+          <h4 class="form__heading">{{ block.settings.title }}</h4>
+        </div>
+
+      {%- when 'email' -%}
+        <div class="form-field" {{ block.shopify_attributes }}>
+          <label for="Form-{{ section.id }}-{{ forloop.index0 }}">{{ block.settings.title }}</label>
+          <input type="email" class="contactFormEmail" id="Form-{{ section.id }}-{{ forloop.index0 }}" name="contact[email]" autocorrect="off" autocapitalize="off" />
+        </div>
+
+      {%- when 'body' -%}
+        <div class="form-field" {{ block.shopify_attributes }}>
+          <label for="Form-{{ section.id }}-{{ forloop.index0 }}">{{ block.settings.title }}</label>
+          <textarea rows="10" id="Form-{{ section.id }}-{{ forloop.index0 }}" class="contactFormMessage" name="contact[body]"></textarea>
+        </div>
+
+      {%- when 'text' -%}
+        <div class="form-field" {{ block.shopify_attributes }}>
+          <label for="Form-{{ section.id }}-{{ forloop.index0 }}">{{ block.settings.title }}</label>
+          <input type="text" class="contactFormText" id="Form-{{ section.id }}-{{ forloop.index0 }}" name="contact[{{ block.settings.title | handleize }}]" autocapitalize="words" value="" />
+        </div>
+
+      {%- when 'textarea' -%}
+        <div class="form-field" {{ block.shopify_attributes }}>
+          <label for="Form-{{ section.id }}-{{ forloop.index0 }}">{{ block.settings.title }}</label>
+          <textarea rows="10" id="Form-{{ section.id }}-{{ forloop.index0 }}" class="contactFormMessage" name="contact[{{ block.settings.title | handleize }}]"></textarea>
+        </div>
+
+      {%- when 'telephone' -%}
+        <div class="form-field" {{ block.shopify_attributes }}>
+          <label for="Form-{{ section.id }}-{{ forloop.index0 }}">{{ block.settings.title }}</label>
+          <input type="tel" id="Form-{{ section.id }}-{{ forloop.index0 }}" class="contactFormPhone" name="contact[telephone]" value="" />
+        </div>
+
+      {%- when 'spacer' -%}
+        {%- assign hr_class = 'hr--clear' -%}
+        {%- if block.settings.line-%}
+          {%- assign hr_class = '' -%}
+        {%- endif -%}
+        <div class="form-item">
+          <hr class="{{ hr_class }}" {{ block.shopify_attributes }}>
+        </div>
+
+      {%- when 'checkbox' -%}
+        <div class="form-item" {{ block.shopify_attributes }}>
+          <label for="Form-{{ section.id }}-{{ forloop.index0 }}">
+            <input type="checkbox" id="Form-{{ section.id }}-{{ forloop.index0 }}" class="contactFormCheckbox" name="contact[{{ block.settings.title | handleize }}]" value="{{ block.settings.title }}"></input>
+            {{ block.settings.title }}
+          </label>
+        </div>
+
+      {%- when 'radio' -%}
+        <fieldset class="form-item" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <legend class="form-item__label">{{ block.settings.title }}</legend>
+          {%- endif -%}
+
+          {%- for i in (1..6) -%}
+            {%- capture index -%}label-{%- cycle 'one', 'two', 'three', 'four', 'five', 'six' -%}{%- endcapture -%}
+
+            {%- if block.settings[index] != blank -%}
+              <div>
+                <label for="Form-{{ section.id }}-{{ forloop.index0 }}-{{ i }}">
+                  <input type="radio" id="Form-{{ section.id }}-{{ forloop.index0 }}-{{ i }}" class="contactFormRadio" name="contact[{{ block.settings.title | handleize }}]" value="{{ block.settings[index] }}">
+                  {{ block.settings[index] }}
+                </label>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </fieldset>
+
+      {%- when 'select' -%}
+        <fieldset class="form-item" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <label for="Form-{{ section.id }}-{{ forloop.index0 }}" class="form-item__label label--block">{{ block.settings.title }}</label>
+          {%- endif -%}
+          <div class="selector-wrapper">
+            {%- render "icon-arrow" -%}
+
+            <select id="Form-{{ section.id }}-{{ forloop.index0 }}" class="contactFormSelect" name="contact[{{ block.settings.title | handleize }}]">
+              {%- for i in (1..6) -%}
+                {%- capture index -%}label-{%- cycle 'one', 'two', 'three', 'four', 'five', 'six' -%}{%- endcapture -%}
+
+                {%- if block.settings[index] != blank -%}
+                  <option value="{{ block.settings[index] }}">{{ block.settings[index] }}</option>
+                {%- endif -%}
+              {%- endfor -%}
+            </select>
+          </div>
+        </fieldset>
+    {%- endcase -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+<section data-section-id="{{ section.id }}" data-section-type="contact-section">
+  {%- if banner_image -%}
+    {%- render 'banner',
+      image: banner_image,
+      height: section.settings.banner_height,
+      transparent_header: transparent_header,
+      subheading: section.settings.banner_subheading,
+      heading: banner_heading,
+      text: section.settings.banner_text,
+      text_position: section.settings.banner_text_position,
+      image_position: section.settings.image_position,
+      color_text: section.settings.banner_color_text,
+      color_overlay: section.settings.banner_color_overlay,
+      overlay_opacity: section.settings.banner_overlay_opacity,
+      unique: section.id
+    -%}
+  {%- endif -%}
+
+  {%- comment -%} Don't show page title if it's already shown on the Banner {%- endcomment -%}
+  {%- if banner_image -%}
+    {%- assign contact_heading = '' -%}
+  {%- endif -%}
+
+  <div class="container">
+    <div class="page-contentt">
+      <div class="contact-form__container">
+
+        {%- if contact_heading != blank or contact_content != blank-%}
+          <div class="contact-text text-box">
+            {%- if contact_heading != blank -%}
+              <h2>{{ contact_heading }}</h2>
+            {%- endif -%}
+
+            {%- if contact_content != blank -%}
+              <div class="content-wrapper text-content rte">
+                {{- contact_content -}}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <div class="contact-form">
+          {%- form 'contact', id: form.id -%}
+
+            <div class="contact-form__wrapper">
+              {%- if form.posted_successfully? -%}
+                <div class="contact-form__success feedback">
+                  <p>{{ 'contact.form.submit_success' | t }}</p>
+                </div>
+              {%- else -%}
+                {%- if form.errors -%}
+                  <div class="feedback error p">
+                    {{- form.errors | default_errors -}}
+                  </div>
+                {%- endif -%}
+              {%- endif -%}
+
+              {{- form_fields -}}
+
+              {%- assign types = '' -%}
+              {%- for block in section.blocks -%}
+                {%- assign types = types | append: block.type -%}
+              {%- endfor -%}
+
+              {%- unless types contains "text" -%}
+                <div class="form-field">
+                  <label for="Form-{{ section.id }}-name">{{ 'contact.form.name_field' | t }}</label>
+                  <input type="text" class="contactFormText" id="Form-{{ section.id }}-name" name="contact[name]" autocapitalize="words" value="" />
+                </div>
+              {%- endunless -%}
+
+              {%- unless types contains "email" -%}
+                <div class="form-field">
+                  <label for="Form-{{ section.id }}-email">{{ 'contact.form.email_field' | t }}</label>
+                  <input type="email" class="contactFormEmail" id="Form-{{ section.id }}-email" name="contact[email]" autocorrect="off" autocapitalize="off" required />
+                </div>
+              {%- endunless -%}
+
+              {%- unless types contains "body" -%}
+                <div class="form-fields">
+                  <label for="Form-{{ section.id }}-body">{{ 'contact.form.message_field' | t }}</label>
+                  <textarea rows="10" id="Form-{{ section.id }}-body" class="contactFormMessage" name="contact[body]"></textarea>
+                </div>
+              {%- endunless -%}
+
+              <div><input type="submit" id="contactFormSubmit" class="btn btn-primary" value="{{ 'contact.form.submit_button' | t }}" /></div>
+            </div>
+
+          {%- endform -%}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

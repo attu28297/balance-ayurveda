@@ -1,0 +1,185 @@
+<div class="whyusbahelpssec" style="background-color: #FCF4EA;">
+  <div class="container">
+    <div class="text-box howtousecntnt headingBox" style="padding-right: 0;">
+      <h2><span class="smhead">{{ section.settings.subtitle }}</span>{{ section.settings.mainheading }}</h2>
+      {{ section.settings.content }}
+    </div>
+    <div class="prakurtisec flex-box">
+      <div class="col-30">
+        <div class="prakurtipoints">
+          <div class="leftvector"><img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/leftfocus.png?v=1646823235" alt="Left"/></div>
+          <ul>
+            <li>
+              <div class="liinnr">
+                <div class="text-box">
+                  <h5>{{ section.settings.pontstitle }}</h5>
+                  <p>{{ section.settings.pointscontent }}</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="liinnr">
+                <div class="text-box">
+                  <h5>{{ section.settings.pontstitle2 }}</h5>
+                  <p>{{ section.settings.pointscontent2 }}</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="liinnr">
+                <div class="text-box">
+                  <h5>{{ section.settings.pontstitle3 }}</h5>
+                  <p>{{ section.settings.pointscontent3 }}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-40">
+        <div class="prakurtisecimg">
+          <div class="image">
+          	<img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/prakrutiimg.png?v=1646811643" alt="Prakruti"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-30">
+        <div class="prakurtipoints">
+          <div class="rightvector"><img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/rightfocus.png" alt="Left"/></div>
+          <ul>
+            <li>
+              <div class="liinnr">
+                <div class="text-box">
+                  <h5>{{ section.settings.pontstitle4 }}</h5>
+                  <p>{{ section.settings.pointscontent4 }}</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="liinnr">
+                <div class="text-box">
+                  <h5>{{ section.settings.pontstitle5 }}</h5>
+                  <p>{{ section.settings.pointscontent5 }}</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="liinnr">
+                <div class="text-box">
+                  <h5>{{ section.settings.pontstitle6 }}</h5>
+                  <p>{{ section.settings.pointscontent6 }}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Balance Ayurveda Helps In",
+    "settings": [
+        {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Sub Title",
+            "default": "A healthy mind resides in a healthy body"
+        },
+        {
+            "type": "text",
+            "id": "mainheading",
+            "label": "Heading",
+            "default": "Balance Ayurveda <Strong>Helps In</Strong>"
+        },
+        {
+            "type": "richtext",
+            "id": "content",
+            "label": "content",
+            "default": "<p> Each of them has its attributes and a natural predominance of one over another makes up the unique physical and personality traits of a human (the Prakruti).  Any imbalance in the above energy forms (doshas) is the beginning of ailments and disease.</p>"
+        },
+        {
+            "type": "text",
+            "id": "pontstitle",
+            "label": "Title",
+            "default": "Vata"
+        },
+        {
+            "type": "text",
+            "id": "pointscontent",
+            "label": "content",
+            "default": "(air-equated with the nervous system)"
+        },
+        {
+            "type": "text",
+            "id": "pontstitle2",
+            "label": "Title",
+            "default": "Pitta "
+        },
+        {
+            "type": "text",
+            "id": "pointscontent2",
+            "label": "content",
+            "default": "(fire-equated with enzymes)"
+        },
+        {
+            "type": "text",
+            "id": "pontstitle3",
+            "label": "Title",
+            "default": "Kapha"
+        },
+        {
+            "type": "text",
+            "id": "pointscontent3",
+            "label": "content",
+            "default": "(earth and water- equated with mucus)"
+        },
+        {
+            "type": "text",
+            "id": "pontstitle4",
+            "label": "Title",
+            "default": " Satogun"
+        },
+        {
+            "type": "text",
+            "id": "pointscontent4",
+            "label": "content",
+            "default": "Dominated sustainer of this world is Vishnu"
+        },
+        {
+            "type": "text",
+            "id": "pontstitle5",
+            "label": "Title",
+            "default": "Rajogun"
+        },
+        {
+            "type": "text",
+            "id": "pointscontent5",
+            "label": "content",
+            "default": "Dominated Brahma"
+        },
+        {
+            "type": "text",
+            "id": "pontstitle6",
+            "label": "Title",
+            "default": "Tamogun"
+        },
+        {
+            "type": "text",
+            "id": "pointscontent6",
+            "label": "content",
+            "default": "Dominated Rudra (Shiv)"
+        }
+    ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.whyusbahelpssec .headingBox h2 strong {
+	display: inline-block;
+}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

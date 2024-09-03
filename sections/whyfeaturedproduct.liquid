@@ -1,0 +1,46 @@
+<div class="productshowinner com-padding hb-listing-section">
+  <div class="container warpper">
+    <div class="text-box">
+      <h2>{{section.settings.heading}}</h2>
+    </div>
+    {%- assign collectionone = collections[section.settings.collection_one] -%}
+    {% if collectionone != blank %}
+    <div class="mostloved-items prdctlisting-items grid grid--uniform grid--view-items">
+      {% for product in collectionone.products limit:5 %}
+      {% include 'product-grid-item' %}
+      {% endfor %}
+    </div>
+    <div class="nav_featured"></div>
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Our Product",
+    "settings": [
+      {
+        "id": "heading",
+        "type": "text",
+        "label": "Heading",
+        "default": "Browse Related Product"
+      },
+      {
+        "id": "collection_one",
+        "type": "collection",
+        "label": "Collection"
+      }
+	],
+    "presets": [
+        {
+          "name"	 : "Featured collection",
+          "category" : "Collection"
+        }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,61 @@
+
+<div class="hpproductpromises">
+  <div class="container">
+    <div class="headingBox text-box common-heading-color">
+      <h2>{{ section.settings.heading }}</h2>          
+    </div>
+    <ul class="flex-box">
+      {% for block in section.blocks %}
+      <li>
+        <div class="iconbox">
+          <div class="iconboxinner">
+            <div class="iconimage">
+              <img src="{{ block.settings.icon | img_url: 'master' }}" alt="{{ block.settings.video_title }}"/>
+            </div>
+            <div class="iconboxcntnt">
+              <h6>{{ block.settings.icon_title }}</h6>
+            </div>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Promises Point",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Why trust us? <strong>We Promise Our Products Are</strong>"
+      }
+	],
+    "blocks": [
+      {
+        "type": "icon-box",
+        "name": "Icon Box",
+        "settings": [
+          {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+          },
+          {
+          "type": "text",
+          "id": "icon_title",
+          "label": "Title"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

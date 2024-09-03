@@ -1,0 +1,73 @@
+<div class="productsingredientami">
+  <div class="howtousecntnt">
+    <h2>{{ section.settings.mainheading }}</h2>
+  </div>
+  <ul>
+    {% for block in section.blocks %}
+    <li>
+      <div class="linnr">
+        <div class="iconimg">
+          <img src="{{ block.settings.image | img_url: 'master' }}" />
+        </div>
+        <div class="licntnt">
+          <h5>{{ block.settings.heading }}</h5>
+          <p>{{ block.settings.contnt }}</p>
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <p class="note">{{ section.settings.subheading }} <a class="fullingridenttarget" href="javascript:;">View full list of Ingredients</a></p>
+</div>
+{% schema %}
+  {
+    "name": "Ingredients",
+    "settings": [
+	{
+      "type": "text",
+      "id": "mainheading",
+      "label": "Heading",
+      "default": "What's Inside That <strong>Really Matters</strong>"
+    },
+	{
+      "type": "text",
+      "id": "subheading",
+      "label": "content",
+      "default": "To see for full ingredient panels"
+    }
+],
+
+"blocks": [
+            {
+              "type": "ingredient",
+              "name": "Ingredients",			  
+              "settings": [
+                  
+				{
+                  "id": "image",
+                  "type": "image_picker",
+                  "label": "image"
+                },
+				{
+                  "id": "heading",
+                  "type": "text",
+                  "label": "Heading",
+                  "default": "Hadjod"
+                },
+				{
+                  "id": "contnt",
+                  "type": "text",
+                  "label": "Content",
+                  "default": "Has analgesic and anti-inflammatory properties. It has been used for centuries in treating wounds and reducing pain."
+                }
+              ]
+            }
+          ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,56 @@
+<div class="brandstorywomanarmysec whyusbastepssec"  style="padding-bottom: 0px;">
+  <div class="container">
+    <div class="text-box howtousecntnt text-center">
+      <h2><span class="smhead">{{ section.settings.subtitle }}</span>{{ section.settings.mainheading }}</h2>
+      {{ section.settings.content }}
+    </div>
+    {% comment %}
+    <div class="brandstorywomanarmyimg">
+      <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%">
+        <source src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/Storyline_GIF.mp4?v=1649767970" type="video/mp4">
+      </video> 
+    </div>
+    <div class="text-box morecontent howtousecntnt text-center">
+      {{ section.settings.morecontent }}
+      <div class="vector"><img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/vector-1.png?v=1646738382" alt="Vector" /></div>
+    </div>
+    {% endcomment %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "One woman army",
+    "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sub Title",
+      "default": "What Got Us Started ?"
+    },
+	{
+      "type": "text",
+      "id": "mainheading",
+      "label": "Heading",
+      "default": "Commando Dadi : <strong>Our one-woman army</strong>"
+    },
+	{
+      "type": "richtext",
+      "id": "content",
+      "label": "content",
+      "default": "<p>Balance Ayurveda is a result of a spirit of service and a commitment to bring back 'balance to being'.</p>"
+    },
+	{
+      "type": "richtext",
+      "id": "morecontent",
+      "label": "content",
+      "default": "<p>It is the <strong>legacy</strong> of our <strong>great-great-grandmother passed on to us from generations.</strong> Born in 1895, widowed at the age of 19, she refused to adhere to the norms prescribed for widows at that time. She escaped her in-law's village with a young infant to start a new life and raise her child on her terms.</p>"
+    }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

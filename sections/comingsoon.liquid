@@ -1,0 +1,24 @@
+{%- if section.settings.show_comingsoon -%}
+<div class="commingsoon">
+  <h4 class="h3">Coming Soon...</h4>
+</div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Coming Soon",
+    "settings": [
+		{
+			"type": "checkbox",
+			"id": "show_comingsoon",
+			"label": "Show ComingSoon",
+			"default": true
+		}
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

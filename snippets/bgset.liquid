@@ -1,0 +1,4 @@
+{%- if image != blank -%}
+    
+    {{ image | img_url: 'master' }} {{ image.width }}w {{ image.height }}h
+{%- endif -%}

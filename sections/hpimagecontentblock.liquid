@@ -1,0 +1,89 @@
+<div class="hpimagecontentblock">
+  <div class="container">
+    {% for block in section.blocks %}
+    <div class="flex-box">
+      <div class="col-48">
+        <div class="hpimagecntnt">
+          <div class="text-box hpimagecntntinnr">
+            <h2>{{ block.settings.title }}</h2>
+            <p>{{ block.settings.description }}</p>
+            <a href="{{ block.settings.btnurl }}" class="btn">{{ block.settings.btnlabel }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-52">
+        {% comment %}
+        <div class="hpimageblock">
+          <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.title }}">
+        </div>
+        {% endcomment %}
+        {% if block.settings.video_url != '' %}
+        <div class="hpvideolock">
+          {%- assign video = block.settings.video_url -%}
+          <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%"  poster="{{ block.settings.image | img_url: 'master'}}">
+            <source src="{{ video }}" type="video/mp4">
+          </video>          
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>   
+{% schema %}
+  {
+    "name": "Image Content Block",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "imagecntnt-box",
+        "name": "Image Content Box",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "What got us started? <strong>Commando Dadi: Our One Woman Army</strong>"
+          },
+          {
+            "type": "text",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "text",
+            "id": "btnlabel",
+            "label": "Btn Label"
+          },
+          {
+            "type": "url",
+            "id": "btnurl",
+            "label": "Btn Url"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "video_url",
+            "label": "Video Url"
+          }
+        ]
+      }
+    ],
+	"presets": [
+      {
+      "name": "Image Content Block",
+      "category": "ADVANCED LAYOUT"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

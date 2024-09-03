@@ -1,0 +1,110 @@
+<div class="onewomanarmysecrepeatsec">
+  <div class="container">
+    {% for block in section.blocks %}
+    <div class="flex-box">
+      <div class="col-5">
+        <div class="onewomanarmysecrepeat">
+          <div class="text-box hpimagecntntinnr">
+            <h4>{{ block.settings.title }}</h4>
+            {{ block.settings.description }}            
+          </div>
+        </div>
+      </div>
+      <div class="col-5">
+        {% if block.settings.video_url != '' %}
+        <div class="hpvideolock">
+          {%- assign video = block.settings.video_url -%}
+          <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%"  poster="{{ block.settings.image | img_url: 'master'}}">
+            <source src="{{ video }}" type="video/mp4">
+          </video>          
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+    <img class="img_abou"  src="{{ section.settings.image_main | img_url: 'master' }}">
+  <div class="text-box morecontent howtousecntnt text-center">
+    {{ section.settings.morecontent }}
+    <div class="vector"><img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/vector-1.png?v=1646738382" alt="Vector" /></div>
+  </div>
+  </div>
+</div>   
+<style>
+   @media only screen and (max-width: 750px) {
+img.img_abou {
+    border-radius: 10px;
+    padding: 0;
+}
+       .morecontent p{
+         font-size: 15px;
+    text-align: left;
+       }
+   }
+  @media only screen and (min-width: 751px) {
+    img.img_abou {
+    padding: 20px;
+    border-radius: 40px !important;
+}
+  .morecontent p{
+        font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1.6;
+    letter-spacing: -.02em;
+    text-align: left;
+    padding-left: 20px;
+  }
+  }
+</style>
+{% schema %}
+  {
+    "name": "Image Content Block",
+    "settings": [
+	{
+      "type": "richtext",
+      "id": "morecontent",
+      "label": "content",
+      "default": "<p>It is the <strong>legacy</strong> of our <strong>great-great-grandmother passed on to us from generations.</strong> Born in 1895, widowed at the age of 19, she refused to adhere to the norms prescribed for widows at that time. She escaped her in-law's village with a young infant to start a new life and raise her child on her terms.</p>"
+    },
+      {
+            "type": "image_picker",
+            "id": "image_main",
+            "label": "Image"
+          }
+    ],
+    "blocks": [
+      {
+        "type": "imagecntnt-box",
+        "name": "Image Content Box",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "What got us started? <strong>Commando Dadi: Our One Woman Army</strong>"
+          },
+          {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "text",
+            "id": "video_url",
+            "label": "Video Url"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

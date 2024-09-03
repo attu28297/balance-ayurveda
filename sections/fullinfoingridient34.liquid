@@ -1,0 +1,35 @@
+<div class="ingredientmodal">
+  <div class="ingredientmodalinnr">
+    <div class="ingredientmodalcntnt">
+      <div class="headingBox">
+        <h2>{{ section.settings.modaltitle }} <span class="close">X</span></h2>
+        {{ section.settings.modalcontent }}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Ingredients",
+    "settings": [
+	{
+      "type": "text",
+      "id": "modaltitle",
+      "label": "Modal Title",
+      "default": "Full List Of Ingredients"
+    },
+	{
+      "type": "richtext",
+      "id": "modalcontent",
+      "label": "content",
+"default": "<p>Vitamin A, Vitamin C, Vitamin E, Vitamin B1, Vitamin B2, Niacin, Vitamin B6, Biotin, Pantothenic Acid, Calcium, Magnesium, Zinc, Selenium, Chromium, L-Lysine HCI, L-Proline, Burdock (Arctium lapp) 4:1 Root Extract, Yellow Dock (Rumex crispus L.) 4:1 Root Extract, Horsetail (Equisetum arvense L.) 6:1 Shoot Extract, Grape (Vitis vinifera L.) Seed Extract, dl-Alpha Tocopheryl Acetate, Microcrystalline Cellulose, Calcium Ascorbate, Magnesium Oxide, Caramel Color, Stearic Acid, Ascorbic Acid, Croscarmellose Sodium, Zinc Glycinate Chelate, Pyridoxine HCl, Niacin, Magnesium Stearate, Selenomethionine, Silicon Dioxide, d-Calcium Pantothenate, Biotin, Thiamine HCl, Riboflavin, Beta Carotene, Vitamin A Palmitate, Dicalcium Phosphate, Chromium Polynicotinate, Chromium Picolinate</p>"
+    }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

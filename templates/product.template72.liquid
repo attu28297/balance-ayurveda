@@ -1,0 +1,107 @@
+{%- section 'product-template72' -%}
+{%- section 'section-four-icon-72' -%}
+{%- section 'pd-testimonialssec72' -%}
+<script>
+  function myfunction_one(){
+    $('.pddescriptionall .slick-track').css('left','-60px');
+  }
+  function myfunction_two(){
+    $('.pddescriptionall .slick-track').css('left','0px');
+  }
+</script>
+<div class="pddescriptionall unic_{{ section.id }}">
+  <div class="container">
+    <div class="pddescriptionallinnr">
+      <ul class="pd-tab-list dropdescriptiontabs drop scroll">
+
+        <li class="talink" data-tab="tab-1"><a href="javascript:;">Description</a></li>
+        <li class="talink" data-tab="tab-2"><a href="javascript:;">Indication</a></li>
+
+        <li class="talink" data-tab="tab-3"><a href="javascript:;">How to use</a></li>
+      </ul>
+        <div class="pddescriptiontabcontent"> 
+        <div id="tab-1" class="tab-content" style="display: none;">
+          <div class="tab-contentinnr">
+              <h2>Description</h2>
+            {% section 'section-six-small-icon-72' %}
+            {%- section 'ami-productsdescription72' -%}
+          </div>
+        </div>
+        <div id="tab-2" class="tab-content" style="display: none;">
+          <div class="tab-contentinnr">
+            {%- section 'ami-productsindication72' -%}
+          </div>
+        </div>
+
+        <div id="tab-3" class="tab-content" style="display: none;">
+          <div class="tab-contentinnr">
+            {%- section 'ami-productshowtouse72' -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% section 'slider-slick-image-72' %}
+{%- section 'pd-productpromises' -%}
+{%- section 'pdnewfaq72' -%}
+{%- section 'productreviewsec' -%}
+{%- section 'related-products' -%}
+{%- section 'otherblog_72' -%}
+{%- section 'pdvideo72' -%}
+
+{% section 'whyusbmodern' %}
+
+{%- section 'fullinfoingridient72' -%}
+
+<script>
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+</script>
+<script type="application/ld+json">
+  {
+  	"@context": "http://schema.org/",
+  	"@type": "Product",
+  	"name": {{ product.title | json }},
+  	"url": {{ shop.url | append: product.url | json }},
+  	{%- if product.featured_media -%}
+  		{%- assign media_size = product.featured_media.preview_image.width | append: 'x' -%}
+  		"image": [
+  			{{ product.featured_media | img_url: media_size | prepend: "https:" | json }}
+  		],
+  	{%- endif -%}
+  	"description": {{ product.description | strip_html | json }},
+  	{%- if current_variant.sku != blank -%}
+  		"sku": {{ current_variant.sku | json }},
+  	{%- endif -%}
+  	"brand": {
+  		"@type": "Thing",
+  		"name": {{ product.vendor | json }}
+  	},
+  	{%- if current_variant.barcode -%}
+  		"gtin8": "{{ product.variants.first.barcode }}",
+  	{%- endif -%}
+  	{%- if current_variant.barcode.size == 12 -%}
+  		"gtin12": "{{ product.variants.first.barcode }}",
+  	{%- endif -%}
+  	{%- if current_variant.barcode.size == 13 -%}
+  		"gtin13": "{{ product.variants.first.barcode }}",
+  	{%- endif -%}
+  	{%- if current_variant.barcode.size == 14 -%}
+  		"gtin14": "{{ product.variants.first.barcode }}",
+  	{%- endif -%}
+  	"offers": [
+  		{%- for variant in product.variants -%}
+  			{
+  				"@type" : "Offer",
+  				{%- if variant.sku != blank -%}
+  					"sku": {{ variant.sku | json }},
+  				{%- endif -%}
+  				"availability" : "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+  				"price" : {{ variant.price | divided_by: 100.00 | json }},
+  				"priceCurrency" : {{ cart.currency.iso_code | json }},
+  				"url" : {{ shop.url | append: variant.url | json }}
+  			}{% unless forloop.last %},{% endunless %}
+  		{%- endfor -%}
+  	]
+  }
+</script>

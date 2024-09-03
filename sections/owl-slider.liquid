@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"
+    >
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="custom.js"></script>
+  </head>
+  <body></body>
+</html>
+<div class="desktopview">
+  <div class="brand-carousel section-padding owl-carousel">
+    {%- if section.settings.bannerslide1 != blank -%}
+      <div class="single-logo logo1">
+        <a href=" {{ section.settings.bannerslide1link }} " class="linkbanner">
+      <img style="width:100%;" src="{{ section.settings.bannerslide1 | img_url: 'master' }}">
+          
+          
+        </a>
+      </div>
+    {% endif %}
+    {%- if section.settings.bannerslide2 != blank -%}
+      <div class="single-logo logo2">
+        <a href=" {{ section.settings.bannerslide2link }} " class="linkbanner">
+      <img style="width:100%;" src="{{ section.settings.bannerslide2 | img_url: 'master' }}">
+          
+          
+        </a>
+      </div>
+    {% endif %}
+    {%- if section.settings.bannerslide3 != blank -%}
+      <div class="single-logo logo3">
+        <a href=" {{ section.settings.bannerslide3link }} " class="linkbanner">
+      <img style="width:100%;" src="{{ section.settings.bannerslide3 | img_url: 'master' }}">
+          
+         
+        </a>
+      </div>
+    {% endif %}
+    {%- if section.settings.bannerslide4 != blank -%}
+      <div class="single-logo logo4">
+        <a href=" {{ section.settings.bannerslide4link }} " class="linkbanner">
+      <img style="width:100%;" src="{{ section.settings.bannerslide4 | img_url: 'master' }}">
+          
+  
+        </a>
+      </div>
+    {% endif %}
+    {%- if section.settings.bannerslide5 != blank -%}
+      <div class="single-logo logo5">
+        <a href=" {{ section.settings.bannerslide5link }} " class="linkbanner">
+      <img style="width:100%;" src="{{ section.settings.bannerslide5 | img_url: 'master' }}">
+          
+    
+        </a>
+      </div>
+    {% endif %}
+    {%- if section.settings.bannerslide6 != blank -%}
+      <div class="single-logo logo6">
+        <a href=" {{ section.settings.bannerslide6link }} " class="linkbanner">
+      <img style="width:100%;" src="{{ section.settings.bannerslide6 | img_url: 'master' }}">
+          
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- start for mobile view -->
+<div class="mobileviews">
+  <div class="brand-carousel section-padding owl-carousel">
+    {%- if section.settings.bannerslide11 != blank -%}
+      <div class="single-logo">
+        <a href=" {{ section.settings.bannerslide1link }} " class="linkbanner">
+          {{- section.settings.bannerslide11 | img_url: '2048x' | img_tag -}}
+        </a>
+      </div>
+    {% endif %}
+    {%- if section.settings.bannerslide22 != blank -%}
+      <div class="single-logo">
+        <a href=" {{ section.settings.bannerslide2link }} " class="linkbanner">
+          {{ section.settings.bannerslide22 | img_url: '2048x' | img_tag }}
+        </a>
+      </div>
+    {% endif %}
+    {%- if section.settings.bannerslide33 != blank -%}
+      <div class="single-logo">
+        <a href=" {{ section.settings.bannerslide3link }} " class="linkbanner">
+          {{ section.settings.bannerslide33 | img_url: '2048x' | img_tag }}
+        </a>
+      </div>
+    {% endif %}
+    {%- if section.settings.bannerslide44 != blank -%}
+      <div class="single-logo">
+        <a href=" {{ section.settings.bannerslide4link }} " class="linkbanner">
+          {{ section.settings.bannerslide44 | img_url: '2048x' | img_tag }}
+        </a>
+      </div>
+    {% endif %}
+    {%- if section.settings.bannerslide55 != blank -%}
+      <div class="single-logo">
+        <a href=" {{ section.settings.bannerslide5link }} " class="linkbanner">
+          {{ section.settings.bannerslide55 | img_url: '2048x' | img_tag }}
+        </a>
+      </div>
+    {% endif %}
+    {%- if section.settings.bannerslide66 != blank -%}
+      <div class="single-logo">
+        <a href=" {{ section.settings.bannerslide6link }} " class="linkbanner">
+          {{ section.settings.bannerslide66 | img_url: '2048x' | img_tag }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+<!-- end mobile view -->
+
+<style>
+      .owl-dots {
+        position: absolute;
+    bottom: 20px;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+      }
+      .owl-dot {
+      display: inline-block;
+      height: 15px !important;
+      width: 15px !important;
+      background-color: #878787 !important;
+      opacity: 0.8;
+      border-radius: 50%;
+      margin: 0 5px;
+      }
+      .owl-dot.active {
+      background-color: #000 !important;
+      }
+  @media only screen and (max-width: 750px) {
+    .desktopview{
+      display:none;
+    }
+  }
+   @media only screen and (min-width: 750px) {
+    .mobileviews{
+      display:none;
+    }
+  }
+</style>
+
+<script>
+  $('.brand-carousel').owlCarousel({
+    loop:true,
+  // contain: true,
+  // wrapAround: true,
+    // arrowShape:true,
+    autoplay:true,
+     nav:false,
+    // autoplayTimeout:1000,
+    selectedAttraction: 0.001,
+    draggable: true,
+    freeScroll:false,
+    autoplayHoverPause:false,
+    responsive:{
+      0:{
+        items:1
+      },
+      600:{
+        items:1
+      },
+      1000:{
+        items:1
+      }
+    }
+  })
+</script>
+
+{% schema %}
+{
+  "name": "banner-slider",
+  "settings": [
+     {
+      "type": "image_picker",
+      "id": "bannerslide1",
+      "label": "Banner-1"
+    },
+    {
+      "type": "url",
+      "id": "bannerslide1link",
+      "label": "Banner-1-link"
+    },
+    {
+      "type": "image_picker",
+      "id": "bannerslide2",
+      "label": "Banner-2"
+    },
+     {
+      "type": "url",
+      "id": "bannerslide2link",
+      "label": "Banner-2-link"
+    },
+     {
+      "type": "image_picker",
+      "id": "bannerslide3",
+      "label": "Banner-3"
+    },
+     {
+      "type": "url",
+      "id": "bannerslide3link",
+      "label": "Banner-3-link"
+    },
+     {
+      "type": "image_picker",
+      "id": "bannerslide4",
+      "label": "Banner-4"
+    },
+     {
+      "type": "url",
+      "id": "bannerslide4link",
+      "label": "Banner-4-link"
+    },
+     {
+      "type": "image_picker",
+      "id": "bannerslide5",
+      "label": "Banner-5"
+    },
+     {
+      "type": "url",
+      "id": "bannerslide5link",
+      "label": "Banner-5-link"
+    },
+     {
+      "type": "image_picker",
+      "id": "bannerslide6",
+      "label": "Banner-6"
+    },
+     {
+      "type": "url",
+      "id": "bannerslide6link",
+      "label": "Banner-6-link"
+    },
+
+ {
+      "type": "image_picker",
+      "id": "bannerslide11",
+      "label": "Mobile Banner-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "bannerslide22",
+      "label": "Mobile Banner-2"
+    },
+     {
+      "type": "image_picker",
+      "id": "bannerslide33",
+      "label": "Mobile Banner-3"
+    },
+     {
+      "type": "image_picker",
+      "id": "bannerslide44",
+      "label": "Mobile Banner-4"
+    },
+     {
+      "type": "image_picker",
+      "id": "bannerslide55",
+      "label": "Mobile Banner-5"
+    },
+     {
+      "type": "image_picker",
+      "id": "bannerslide66",
+      "label": "Mobile Banner-6"
+    }
+
+
+  ],
+
+  "presets": [
+      {
+        "name": "banner-slider",
+        "category":"Custom"
+      }
+    ]
+}
+{% endschema %}

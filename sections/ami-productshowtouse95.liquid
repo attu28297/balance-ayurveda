@@ -1,0 +1,84 @@
+<div class="howtousestabcntnt">
+  <div class="flex-box">
+    <div class="col-40">
+      <div class="howtousecntnt">
+        <h2><span class="smhead">{{ section.settings.subheading }}</span>{{ section.settings.mainheading }}</h2>
+        <div class="howtousecntntinnr">{{ section.settings.cntntheading }}</div>
+      </div>
+    </div>
+    <div class="col-60">
+      <ul>
+        {% for block in section.blocks %}
+        <li>
+          <div class="li-innr">
+            <div class="li-img">
+              <img src="{{ block.settings.image | img_url: 'master' }}" />
+            </div>
+            <div class="li-cntnt">
+              <h3>{{ block.settings.heading }}</h3>
+              <p>{{ block.settings.contnt }}</p>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "How to use",
+    "settings": [
+
+	{
+      "type": "text",
+      "id": "subheading",
+      "label": "Sub Heading",
+      "default": "How to use"
+    },
+	{
+      "type": "text",
+      "id": "mainheading",
+      "label": "Heading",
+      "default": "Take Control Of Your Health, <strong>From The Inside Out.</strong>"
+    },
+	{
+      "type": "richtext",
+      "id": "cntntheading",
+      "label": "Content",
+      "default": "<p>One capsule twice a day with water or warm cow milk or as directed by a physician.</p>"
+    }
+],
+
+"blocks": [
+            {
+              "type": "howtouse-slide",
+              "name": "how To use",			  
+              "settings": [
+                  
+				{
+                  "id": "image",
+                  "type": "image_picker",
+                  "label": "image"
+                },
+				{
+                  "id": "heading",
+                  "type": "text",
+                  "label": "Heading"
+                },
+				{
+                  "id": "contnt",
+                  "type": "text",
+                  "label": "Content"
+                }
+              ]
+            }
+          ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

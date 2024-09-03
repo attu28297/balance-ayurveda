@@ -1,0 +1,216 @@
+
+  <style>
+    .item-si{
+      gap:10px;
+    }
+    body p.text.descr {
+    text-align: center !important;
+    font-size: 12px !important;
+}
+     div#shopify-section-section-small-icon-30{
+       background-color:#ffffff;
+     }
+       .box-si {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 80px;
+             padding-bottom: 20px;
+
+}
+
+
+
+        .container-item {
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .item-si {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .img-si {
+            width: 60px;
+            height: auto;
+        }
+
+        .descr {
+        
+            font-size: 12px;
+            text-align: center;
+            color: darkgreen;
+            font-weight: bold;
+        }
+.item{
+            gap:10px;
+          }
+        @media screen and (max-width: 767px) {
+          .item{
+            gap:10px;
+          }
+          body .img-si {
+    width: 60px;
+    height: auto;
+}
+          body .container-si {
+    padding-bottom: 30px;
+                padding-top: 20px;
+}
+          body .item-si {
+    display: flex;
+    width: 20%;
+    align-items: center;
+    justify-content: center;
+}
+          body .box-si {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+                gap: 40px;
+}
+        
+            .box {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .container-item {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <div class="container-si">
+        <div class="box-si">
+           
+                <div class="item-si">
+                    <img class="img-si"
+                          src="{{ section.settings.Icon_One_img | img_url }}"
+                        alt=" ">
+                    <p class=" text descr">{{ section.settings.Icon_one_text }}</p>
+                </div>
+
+
+                <div class="item-si">
+                    <img class="img-si"
+                       src="{{ section.settings.Icon_Sec_img | img_url }}"
+                        alt=" ">
+                    <p class=" text descr">{{ section.settings.Icon_Sec_text }}</p>
+                </div>
+
+
+                <div class="item-si">
+                    <img class="img-si"
+                       src="{{ section.settings.Icon_third_img | img_url }}"
+                        alt="">
+                    <p class=" text descr">{{ section.settings.Icon_Third_text }}</p>
+                </div>
+     
+
+       
+                <div class="item-si">
+                    <img class="img-si"
+                       src="{{ section.settings.Icon_Fourth_img | img_url }}"
+                        alt=" ">
+                    <p class=" text descr">{{ section.settings.Icon_Fourth_text }}</p>
+                </div>
+
+
+                <div class="item-si">
+                    <img class="img-si"
+                        src="{{ section.settings.Icon_Fifth_img | img_url }}"
+                        alt=" ">
+                    <p class=" text descr">{{ section.settings.Icon_Fifth_text }}</p>
+                </div>
+
+
+                <div class="item-si">
+                    <img class="img-si"
+                       src="{{ section.settings.Icon_Six_img | img_url }}"
+                        alt="">
+                    <p class=" text descr">{{ section.settings.Icon_Six_text }}</p>
+                </div>
+            </div>
+        </div>
+
+{% schema %}
+  {
+    "name": "Six Icon Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "Icon_one_text",
+        "label": "Icon One Text"
+    },
+      {
+        "type": "image_picker",
+        "id": "Icon_One_img",
+        "label": "Icon One Image"
+    },
+      {
+        "type": "text",
+        "id": "Icon_Sec_text",
+        "label": "Icon Sec Text"
+    },
+      {
+        "type": "image_picker",
+        "id": "Icon_Sec_img",
+        "label": "Icon Sec Image"
+    },
+      {
+        "type": "text",
+        "id": "Icon_Third_text",
+        "label": "Icon Third Text"
+    },
+      {
+        "type": "image_picker",
+        "id": "Icon_third_img",
+        "label": "Icon Third Image"
+    },
+      {
+        "type": "text",
+        "id": "Icon_Fourth_text",
+        "label": "Icon Fourth Text"
+    },
+      {
+        "type": "image_picker",
+        "id": "Icon_Fourth_img",
+        "label": "Icon Fourth Image"
+    },
+      {
+        "type": "text",
+        "id": "Icon_Fifth_text",
+        "label": "Icon Fifth Text"
+    },
+      {
+        "type": "image_picker",
+        "id": "Icon_Fifth_img",
+        "label": "Icon Fifth Image"
+    },
+      {
+        "type": "text",
+        "id": "Icon_Six_text",
+        "label": "Icon Six Text"
+    },
+      {
+        "type": "image_picker",
+        "id": "Icon_Six_img",
+        "label": "Icon Six Image"
+    }
+      
+    
+    ],
+    "presets": [{
+        "name": "Six-Icon-Section"
+    }]
+}
+{% endschema %}

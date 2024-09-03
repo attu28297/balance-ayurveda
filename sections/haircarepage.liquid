@@ -1,0 +1,55 @@
+<div class="haircarepage"  style="padding-bottom: 100px;">
+  <div class="container">
+    <div class="faq-group howtousecntnt text-left>
+      <h2><span class="smhead">{{ section.settings.subtitle }}</span>{{ section.settings.mainheading }}</h2>
+      {{ section.settings.content }}
+    </div>
+    {% comment %}
+    <div class="brandstorywomanarmyimg">
+      <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%">
+        <source src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/Storyline_GIF.mp4?v=1649767970" type="video/mp4">
+      </video> 
+    </div>
+    <div class="text-box morecontent howtousecntnt text-center">
+      {{ section.settings.morecontent }}
+      <div class="vector"><img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/vector-1.png?v=1646738382" alt="Vector" /></div>
+    </div>
+    {% endcomment %}
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "haircare page",
+    "settings": [
+
+      
+	{
+      "type": "text",
+      "id": "mainheading",
+      "label": "Heading",
+      "default": "<strong>What Causes Hairfall?</strong>"
+    },
+	{
+      "type": "richtext",
+      "id": "content",
+      "label": "content",
+      "default": "<p>There comes a point in every single one of our lives, where we frantically search for the best hair fall solution that gives us answers to all our hair growth prayers. While stressing out may no doubt add to your hair fall, let’s address a few reasons why hair loss happens.</p></br></br>"
+    },
+	{
+      "type": "richtext",
+      "id": "morecontent",
+      "label": "content",
+      "default": "<p>Hairfall Among Women: The number one reason why women may be left hunting for the best hair care products is because of the hair fall that comes with their genes. Hereditary hair loss also called androgenetic alopecia, happens to about 50% of women and can set off at any age. This being said, with the right Ayurvedic products from Balance Ayurveda, this problem can be tackled. Other reasons for hair loss among women include medical conditions, vitamin deficiencies, pregnancy, tight hairstyles, and excessive use of heating tools. </p>"
+    }
+      
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

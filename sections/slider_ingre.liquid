@@ -1,0 +1,265 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/g/bootstrap@4.0.0"></script>
+<link re="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.6/assets/owl.theme.default.min.css">
+<link re="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.6/assets/owl.carousel.min.css">
+<link re="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+  .container-fluid.slider-sec-sl {
+    padding: 60px 0px;
+    background: #fcf4ea;
+}
+  .container-fluid.slider-sec-sl {
+    padding: 60px 0px;
+}
+  /* Equal Heights for OwlCarousel 2 */
+  h2.main-head-sl {
+    font-size: 4rem;
+    letter-spacing: -.04em;
+    color: #313d49;
+    margin-bottom: 3.4rem!important;
+    text-align: center;
+}
+  h2.main-head-sl span {
+    color: #ad683f;
+    font-weight: bold;
+}
+  article.thumbnail.item img {
+    height: 400px;
+}
+  #owl-demo-2{
+    position:relative;
+  }
+  #owl-demo-2 button.owl-next {
+    left: 1200px;
+}
+  #owl-demo-2 button.owl-prev {
+    left: 100px;
+}
+  #owl-demo-2 .owl-nav {
+    position: absolute;
+    top: 43%;
+    font-size: 20px;
+    transform: translate(-50%, -50%);
+}
+.owl-carousel {
+	.owl-stage {
+		display: flex;
+	}
+  .caption h4 {
+        font-size: 32px;
+    text-align: center;
+    color: #ad683f;
+    font-weight: bolder;
+}
+  .caption p {
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+	.owl-item {
+		display: flex;
+		flex: 1 0 auto;
+        justify-content:center;
+	}
+	.thumbnail {
+		display: flex;
+		flex-direction: column;
+		margin: 0 15px;
+      justify-content: center;
+    align-items: center;}
+		.caption {
+			display: flex;
+			flex: 1 0 auto;
+			flex-direction: column;
+			.flex-text {
+				flex-grow: 1;
+			}
+		}
+	}
+}
+
+</style>
+{% liquid
+  assign my_variable = product.metafields.custom.slider_content_for_ingredients 
+assign oneVar = my_variable | split: "&&&& "
+  assign onevarpart0 = oneVar[0] | split: "&& "
+   assign onevarpart1 = oneVar[1] | split: "&& "
+   assign onevarpart2 = oneVar[2] | split: "&& "
+     assign onevarpart3 = oneVar[3] | split: "&& "
+     assign onevarpart4 = oneVar[4] | split: "&& "
+     assign onevarpart5 = oneVar[5] | split: "&& "
+     assign onevarpart6 = oneVar[6] | split: "&& "
+     assign onevarpart7 = oneVar[7] | split: "&& "
+%}
+<section>
+	<div class="container-fluid slider-sec-sl">
+      <h2 class="main-head-sl">Ingredient Spotlight: <span>No Secrets, Just Goodness</span></h2>
+		<div id="owl-demo-2" class="owl-carousel owl-theme">
+
+			<article class="thumbnail item">
+				<a href="#!">
+					<img src="{{ onevarpart0[0] }}" class="img-responsive" />
+				</a>
+				<div class="caption">
+					<h4>{{ onevarpart0[1] }}</h4>
+					<p>{{ onevarpart0[2] }}</p>
+				</div>
+			</article>
+
+			<article class="thumbnail item">
+				<a href="#!">
+					<img src="{{ onevarpart1[0] }}" class="img-responsive" />
+				</a>
+				<div class="caption">
+					<h4>{{ onevarpart1[1] }}</h4>
+					<p>{{ onevarpart1[2] }} </p>
+                </div>
+			</article>
+
+			<article class="thumbnail item">
+				<a href="#!">
+					<img src="{{ onevarpart2[0] }}" class="img-responsive" />
+				</a>
+				<div class="caption">
+					<h4>{{ onevarpart2[1] }}</h4>
+					<p>{{ onevarpart2[2] }}</p>
+					
+				</div>
+			</article>
+
+			<article class="thumbnail item">
+				<a href="#!">
+					<img src="{{ onevarpart3[0] }}" class="img-responsive" />
+				</a>
+				<div class="caption">
+					<h4>{{ onevarpart3[1] }}</h4>
+					<p>{{ onevarpart3[2] }}</p>
+					
+				</div>
+			</article>
+
+			<article class="thumbnail item">
+				<a href="#!">
+					<img src="{{ onevarpart4[0] }}" class="img-responsive" />
+				</a>
+				<div class="caption">
+					<h4>{{ onevarpart4[1] }}</h4>
+					<p>{{ onevarpart4[2] }}</p>
+					
+				</div>
+			</article>
+
+			<article class="thumbnail item">
+				<a href="#!">
+					<img src="{{ onevarpart5[0] }}" class="img-responsive" />
+				</a>
+				<div class="caption">
+					<h4>{{ onevarpart5[1] }}</h4>
+					<p>{{ onevarpart5[2] }}</p>
+					
+				</div>
+			</article>
+          <article class="thumbnail item">
+				<a href="#!">
+					<img src="{{ onevarpart6[0] }}" class="img-responsive" />
+				</a>
+				<div class="caption">
+					<h4>{{ onevarpart6[1] }}</h4>
+					<p>{{ onevarpart6[2] }}</p>
+					
+				</div>
+			</article>
+
+			<article class="thumbnail item">
+				<a href="#!">
+					<img src="{{ onevarpart7[0] }}" class="img-responsive" />
+				</a>
+				<div class="caption">
+					<h4>{{ onevarpart7[1] }}</h4>
+					<p>{{ onevarpart7[2] }}</p>
+					
+				</div>
+			</article>
+
+		</div><!-- #owl-demo-2 -->
+	</div><!-- .container -->
+</section>
+  
+<script>
+  jQuery(document).ready(function ($) {
+	var owl = $("#owl-demo-2");
+	owl.owlCarousel({
+		autoplay: false,
+		autoplayTimeout: 1000,
+		autoplayHoverPause: true,
+		items: 1,
+		loop: true,
+		center: false,
+		rewind: false,
+		mouseDrag: true,
+		touchDrag: true,
+		pullDrag: true,
+		freeDrag: false,
+		margin: 0,
+		stagePadding: 0,
+		merge: false,
+		mergeFit: true,
+		autoWidth: false,
+		startPosition: 0,
+		rtl: false,
+		smartSpeed: 250,
+        dots: false,
+		fluidSpeed: false,
+		dragEndSpeed: false,
+		responsive: {
+			0: {
+				items: 1,
+				  nav: true
+			},
+			480: {
+				items: 2,
+					  nav: true
+			},
+			768: {
+				items: 3,
+    				  nav: true,
+				loop: false
+			},
+			992: {
+				items: 1,
+					  nav: true,
+				loop: false
+			}
+		},
+		responsiveRefreshRate: 200,
+		responsiveBaseElement: window,
+		fallbackEasing: "swing",
+		info: false,
+		nestedItemSelector: false,
+		itemElement: "div",
+		stageElement: "div",
+		refreshClass: "owl-refresh",
+		loadedClass: "owl-loaded",
+		loadingClass: "owl-loading",
+		rtlClass: "owl-rtl",
+		responsiveClass: "owl-responsive",
+		dragClass: "owl-drag",
+		itemClass: "owl-item",
+		stageClass: "owl-stage",
+		stageOuterClass: "owl-stage-outer",
+		grabClass: "owl-grab",
+		autoHeight: false,
+		lazyLoad: false
+	});
+
+	$(".next").click(function () {
+		owl.trigger("owl.next");
+	});
+	$(".prev").click(function () {
+		owl.trigger("owl.prev");
+	});
+});
+
+</script>

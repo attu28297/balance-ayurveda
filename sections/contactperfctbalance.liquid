@@ -1,0 +1,66 @@
+<div class="whymultipurposetreatment contactperfctbalancese">
+  <div class="container">
+    <div class="text-box">
+      <h2><strong>{{ section.settings.subtitle }}</strong> {{ section.settings.title }} </h2>
+    </div>
+    <ul>
+      {% for block in section.blocks %}
+      <li>
+        <div class="linnr">
+          <div class="iconimg">
+            <img src="{{ block.settings.image | img_url: 'master' }}" />
+          </div>
+          <div class="licntnt">
+            <h5>{{ block.settings.heading }}</h5>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>   
+{% schema %}
+  {
+    "name": "Multipurpose Treatment",
+    "settings": [
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub Title",
+        "default": "The Perfect Balance"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Of Mind, Body & Spirit "
+      }
+    ],
+    "blocks": [
+      {
+        "type": "steps",
+        "name": "Steps",			  
+        "settings": [
+
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "image"
+          },
+          {
+            "id": "heading",
+            "type": "text",
+            "label": "Heading",
+            "default": "Hadjod"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

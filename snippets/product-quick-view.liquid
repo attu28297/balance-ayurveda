@@ -1,0 +1,61 @@
+{%- assign arrows = settings.show_slideshow_arrows -%}
+{%- assign dots = settings.show_slideshow_dots -%}
+{%- assign dots_style = settings.dots_style -%}
+{%- if dots_style == 'hidden' -%}
+	{%- assign dots = false -%}
+{%- else -%}
+	{%- assign dots = true -%}
+{%- endif -%}
+
+<script id="ProductQuickViewTemplate--{{ section.id }}" type="text/x-template">
+	<div class="quickView">
+		<div class="quickView-wrap">
+			<div class="quickView-inner-wrap">
+				<div class="container">
+					<div class="row">
+						<div class="quickView-img block">
+							<div class="productImgSlider{% raw %}{{ @if (it.isProductMediaSingle) }} productImgSlider--single{{ /if }}{% endraw %}" data-product-single-media-group>
+								<div class="js-productImgSlider js-productImgContainer" data-gallery="none" data-dots="{{ dots }}" data-arrows="{{ arrows }}" data-product-single-media-slider data-dots-style="{{ dots_style }}" id="js-productImgSlider--{{ section.id }}">
+									{% raw %}{{* it.productMediaSlider }}{% endraw %}
+								</div>
+							</div>
+							{% raw %}
+								{{ @if (it.productMediaThumbs) }}
+								<div class="productImgSlider-nav js-productImgSlider-nav" data-product-single-media-thumbs>
+									{{* it.productMediaThumbs }}
+								</div>
+								{{ /if }}
+							{% endraw %}
+						</div>
+						<div class="quickView-info block">
+							<a href="#" class="quickView-close js-quickView-close" aria-label="{{ 'general.accessibility.close' | t }}">
+								{%- render 'icon-close' -%}
+							</a>
+							<div class="product-info">
+								<div class="quickView-info-container">
+									{% raw %}
+									<div class="product-title__wrapper block s1">
+										{{* it.productTitle }}
+									</div>
+									<div class="product-form block s1">
+										{{* it.productFormContainer }}
+									</div>
+
+									{{ @if (it.productDescription) }}
+									<div class="product-description rte">
+										{{* it.productDescription }}
+									</div>
+									{{ /if }}
+
+									{% endraw %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="application/json" id="ModelJson-product-template" hidden>{% raw %}{{* it.productMediaJson }}{% endraw %}</script>
+
+</script>

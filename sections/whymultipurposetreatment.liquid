@@ -1,0 +1,84 @@
+<div class="whymultipurposetreatment">
+  <div class="container">
+    <div class="flex-box">
+      <div class="col-40">
+        <div class="hpimagecntnt">
+          <div class="text-box">
+            <h2><span class="smhead">{{ section.settings.subtitle }}</span>{{ section.settings.title }}</h2>
+            {{ section.settings.description }}
+          </div>
+          <div class="vector">
+         	<img src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/flowervector_55b679c5-af4f-4b79-9683-b70bd1c60d1a.png" alt="Vector"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-60">
+        <ul>
+          {% for block in section.blocks %}
+          <li>
+            <div class="linnr">
+              <div class="iconimg">
+                <img src="{{ block.settings.image | img_url: 'master' }}" />
+              </div>
+              <div class="licntnt">
+                <h5>{{ block.settings.heading }}</h5>
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>   
+{% schema %}
+  {
+    "name": "Multipurpose Treatment",
+    "settings": [
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub Title",
+        "default": "That’s Why We Have"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Created products aimed at <strong>multipurpose treatment</strong>"
+      },
+      {
+        "type": "richtext",
+        "id": "description",
+        "label": "Description",
+        "default": "<p>At the heart of our products is a keen awareness that a one size fits all model does not work. It is neither sustainable nor healthy in the long term. We take care of the physical aspect of your well-being. But it doesn't end there. We promise that your mental well-being will be a by product of that healthy and harmonious body.</p>"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "steps",
+        "name": "Steps",			  
+        "settings": [
+
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "image"
+          },
+          {
+            "id": "heading",
+            "type": "text",
+            "label": "Heading",
+            "default": "Hadjod"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,99 @@
+<section class="corporatebacontactsec">
+  <div class="container">
+    <div class="flex-box">
+      <div class="col-48">
+        <div class="text-box headingBox">
+          <h2><span class="smhead">{{ section.settings.subtitle }}</span>{{ section.settings.mainheading }}</h2>
+          <p>{{ section.settings.content }}</p>
+          <ul>
+            <li>
+              <span>
+                <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 1H19C20.1 1 21 1.9 21 3V15C21 16.1 20.1 17 19 17H3C1.9 17 1 16.1 1 15V3C1 1.9 1.9 1 3 1Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M21 3L11 10L1 3" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              Email: {{ section.settings.email }}
+            </li>
+            <li>
+              <span>
+               <svg width="19" height="21" viewBox="0 0 19 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <path d="M11.4725 4.63148C12.2631 4.80449 12.9897 5.23817 13.5593 5.87702C14.1289 6.51586 14.5155 7.33081 14.6698 8.21756M11.4725 1C13.1151 1.20467 14.6468 2.02968 15.8161 3.33959C16.9855 4.64949 17.7229 6.36643 17.9075 8.20848M17.0981 15.4533V18.1769C17.099 18.4297 17.0528 18.68 16.9625 18.9117C16.8722 19.1433 16.7397 19.3513 16.5736 19.5222C16.4075 19.6932 16.2114 19.8233 15.9978 19.9043C15.7843 19.9853 15.558 20.0154 15.3335 19.9926C12.8427 19.6891 10.4502 18.7345 8.34811 17.2055C6.39238 15.8116 4.73427 13.9518 3.49152 11.7583C2.12357 9.38981 1.27226 6.69324 1.00657 3.88702C0.986343 3.63597 1.01294 3.38294 1.08468 3.14405C1.15642 2.90515 1.27172 2.68563 1.42324 2.49946C1.57476 2.31328 1.75918 2.16453 1.96477 2.06268C2.17035 1.96083 2.39259 1.90811 2.61734 1.90787H5.04563C5.43845 1.90353 5.81928 2.05956 6.11712 2.34685C6.41497 2.63415 6.60951 3.03313 6.66449 3.46941C6.76699 4.34102 6.95706 5.19683 7.23109 6.02052C7.34 6.34547 7.36357 6.69862 7.29901 7.03813C7.23445 7.37764 7.08448 7.68928 6.86685 7.93612L5.83887 9.08912C6.99114 11.362 8.66901 13.2439 10.6955 14.5363L11.7234 13.3833C11.9435 13.1392 12.2214 12.971 12.5241 12.8986C12.8268 12.8262 13.1416 12.8527 13.4313 12.9748C14.1657 13.2822 14.9287 13.4954 15.7058 13.6103C16.099 13.6725 16.4581 13.8947 16.7148 14.2345C16.9715 14.5743 17.1079 15.008 17.0981 15.4533Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              Phone: {{ section.settings.phone }}
+            </li>
+            <li>
+              <span>
+                <svg width="17" height="21" viewBox="0 0 17 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.1895 8.77273C16.1895 14.8182 8.49907 20 8.49907 20C8.49907 20 0.808594 14.8182 0.808594 8.77273C0.808594 6.71127 1.61884 4.73425 3.06108 3.27658C4.50333 1.81891 6.45943 1 8.49907 1C10.5387 1 12.4948 1.81891 13.9371 3.27658C15.3793 4.73425 16.1895 6.71127 16.1895 8.77273Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M8.50019 10.9524C9.7494 10.9524 10.7621 9.93971 10.7621 8.69049C10.7621 7.44128 9.7494 6.42859 8.50019 6.42859C7.25097 6.42859 6.23828 7.44128 6.23828 8.69049C6.23828 9.93971 7.25097 10.9524 8.50019 10.9524Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              {{ section.settings.address }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-52">
+        <div class="corporatebacontactimg">
+        	<img src="{{ section.settings.image | img_url: 'master' }}" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Corporate BA",
+    "settings": [	
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub Heading",
+        "default": "Corporate"
+      },	
+      {
+        "type": "text",
+        "id": "mainheading",
+        "label": "Heading",
+        "default": "Balance Ayurveda"
+      },	
+      {
+        "type": "text",
+        "id": "content",
+        "label": "Content",
+        "default": "At Balance ayurveda, we take pride in our team of skilled and dedicated Ayurvedic products who are driven by a passion to bring healing and well-being to thousands of patients."
+      },	
+      {
+        "type": "text",
+        "id": "email",
+        "label": "email",
+        "default": "Support@balanceayurved.com"
+      },	
+      {
+        "type": "text",
+        "id": "phone",
+        "label": "phone",
+        "default": "0129-4189111, 4040404"
+      },	
+      {
+        "type": "text",
+        "id": "address",
+        "label": "Address",
+        "default": "97, First Floor, New Anaj Mandi, Ballabhgarh,Faridabad, Haryana 121004"
+      },                  
+      {
+        "id": "image",
+        "type": "image_picker",
+        "label": "Image"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

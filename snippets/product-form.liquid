@@ -1,0 +1,818 @@
+{%- liquid
+  assign first_variant = product.selected_or_first_available_variant
+  assign variants_count = product.variants.size
+  assign enable_color_swatches = settings.enable_color_swatches
+  assign enable_variant_boxes = settings.enable_variant_boxes
+
+  comment
+    Show payment button if section level setting is true or the global setting for Quick view is true
+    Disable quick buy button if there are subscription options for the product
+  endcomment
+
+  assign show_payment_buttons = false
+  unless settings.enable_accept_terms
+    unless product.selling_plan_groups.size > 0
+      if section.settings.enable_payment_button or settings.enable_payment_button
+        assign show_payment_buttons = true
+      endif
+    endunless
+  endunless
+
+  if first_variant.available
+    assign sold_out = false
+  else
+    assign sold_out = true
+  endif
+-%}
+
+{%- form 'product',
+  product,
+  class: 'productForm',
+  data-enable-color-swatches: enable_color_swatches,
+  data-product-id: product.id,
+  data-product-form: ''
+-%}
+  <div class="shop-pay-terms">{{ form | payment_terms }}</div>
+
+  <div class="productForm-block{% unless enable_variant_boxes %} productForm-block--options-inline{% endunless %}{% if enable_color_swatches %} productForm-block--swatches{% endif %}">
+    {%- unless product.has_only_default_variant -%}
+      {%- if enable_variant_boxes -%}
+        {%- assign color_label = 'color,colour,couleur,colore,farbe,색,色,färg,farve' | split: ',' -%}
+        {%- assign first_variant = product.selected_or_first_available_variant -%}
+
+        {%- for option in product.options_with_values -%}
+          {%- assign option_index = option.position | minus: 1 -%}
+          {%- assign downcased_option = option.name | downcase -%}
+          {%- assign is_color = false -%}
+          {%- if color_label contains downcased_option -%}
+            {%- assign is_color = true -%}
+          {%- endif -%}
+
+          {%- if is_color and enable_color_swatches -%}
+            {%- comment -%} /partials/product-swatch.liquid {%- endcomment -%}
+
+            {%- assign file_extension = 'png' -%}
+            {%- assign first_variant = product.selected_or_first_available_variant -%}
+
+            <div class="variant-wrapper variant-wrapper--color" data-option="option{{ option.position }}">
+              <label class="variant-label--color" for="SingleOptionSelector-{{ forloop.index0 }}-{{ product.id }}">
+                {{- option.name -}}
+                <span class="variant-label__value" data-color-label>
+                  {{- option.selected_value -}}
+                </span>
+              </label>
+
+              <fieldset
+                id="SingleOptionSelector-{{ forloop.index0 }}-{{ product.id }}"
+                class="variant-input-wrap"
+                data-index="option{{ option.position }}"
+              >
+                <div class="swatch swatch--{{ settings.color_swatches_style }}">
+                  {%- for value in option.values -%}
+                    <div data-value="{{ value | escape }}" class="swatch__element">
+                      <input
+                        id="option-{{ value | handle }}-{{ forloop.index0 }}-{{ section.id }}"
+                        class="swatch__input"
+                        type="radio"
+                        name="{{ option.name }}"
+                        value="{{ value | escape }}"
+                        data-color-swatch
+                        data-single-option-selector
+                        data-index="option{{ option.position }}"
+                        {% if first_variant.options[option_index] == value %}
+                          checked="checked"
+                        {% endif %}
+                      >
+                      <label
+                        class="variant__button-label--color swatch__label"
+                        for="option-{{ value | handle }}-{{ forloop.index0 }}-{{ section.id }}"
+                      >
+                        <span
+                          class="swatch__color swatch__color--{{ value | handle }}"
+                          style="background-color: {{ value | split: ' ' | last | handle }}; background-image: url({{ value | handle | append: '.' | append: file_extension | asset_url }})"
+                        ></span>
+                        <span class="accessible-label">{{ value }}</span>
+                      </label>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            </div>
+
+          {%- else -%}
+            <div
+              class="variant-wrapper{% if enable_variant_boxes %} variant-wrapper--boxes{% endif %}"
+              data-option="option{{ option.position }}"
+            >
+              <label class="variant-label" for="SingleOptionSelector-{{ forloop.index0 }}-{{ product.id }}">
+                {{- option.name -}}
+              </label>
+
+              <fieldset
+                id="SingleOptionSelector-{{ forloop.index0 }}-{{ product.id }}"
+                class="variant-input-wrap variant-input-wrap--boxes"
+                data-index="option{{ option.position }}"
+              >
+                {%- for value in option.values -%}
+                  {% assign price_dis_aim = product.metafields.custom.prices_of_products | split: ', ' %}
+                  {% assign secon_lin_sep = product.metafields.custom.second_line_text_area | split: ', ' %}
+                  {% assign price_dis = product.metafields.custom.prices_of_products | split: '|' %}
+
+                  {% assign beatles = product.metafields.custom.quantity_of_variant | split: ', ' %}
+                  <div class="final_parent {% if first_variant.options[option_index] == value %}CSS_proper{% endif %}">
+                    <img class="img_tick" src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/Tick2.png?v=1720024573">
+                    <div class="parent_vl_di">
+                      <div class="variant-field Loop_0{{ forloop.index }}">
+                        <input
+                          id="option-{{ option.position }}-{{ value }}-{{ forloop.index0 }}-{{ section.id }}"
+                          class="visually-hidden variant-input"
+                          type="radio"
+                          name="{{ option.name }}"
+                          value="{{ value | escape }}"
+                          data-single-option-selector
+                          data-index="option{{ option.position }}"
+                          {% if first_variant.options[option_index] == value %}
+                            checked="checked"
+                          {% endif %}
+                        >
+                        <label
+                          class="variant__button-label"
+                          for="option-{{ option.position }}-{{ value }}-{{ forloop.index0 }}-{{ section.id }}"
+                        >
+                          {{- value -}}
+                        </label>
+
+                        {% if product.metafields.custom.quantity_of_variant != blank %}
+                          {% if forloop.index == 1 %}
+                            <p class="incr_p"><span class="sinle_hide"></span>{{ beatles[0] }}</p>
+                            <p>{{ secon_lin_sep[0] }}</p>
+
+                          {% elsif forloop.index == 2 %}
+                            <p class="incr_p">{{ beatles[1] }}</p>
+                                 <p>{{ secon_lin_sep[1] }}</p>
+                          {% elsif forloop.index == 3 %}
+                            <p class="incr_p"> {{ beatles[2] }}</p>
+                                 <p>{{ secon_lin_sep[2] }}</p>
+                          {% endif %}
+                        {% endif %}
+                      </div>
+
+                      {% assign price_dis_value = price_dis[0] | split: ', ' %}
+                      {% assign price_dis_per = price_dis[1] | split: ', ' %}
+                      {% assign price_dis_actual_vale = price_dis[2] | split: ', ' %}
+                      {% assign price_dis_save_amount = price_dis[3] | split: ', ' %}
+
+                      <div class="center_di">
+                        {% if product.metafields.custom.nodiscount != blank %}
+                          <style>
+                            .final_parent:hover {
+    background: unset !important;
+}
+                            .final_parent.CSS_proper {
+    border: unset;
+                            }
+                            img.img_tick {
+    display: none !important;
+}
+                                   @media only screen and (max-width: 600px) {
+                                     .variant-field.Loop_01::after{
+                                       width:2.5px !important;
+                                     }
+
+                                   }
+                                    .productForm-block .variant-wrapper .final_parent.CSS_proper .center_di p{
+                                     font-size:20px !important;
+                                color: #313d49 !important;
+                                     width:100% !important;
+
+                                   }
+                                   .final_parent.CSS_proper .center_di p {
+                                font-size: 30px !important;
+                                color: #313d49 !important;
+                            }
+                                   p.noddis_p {
+                                font-size: 18px;
+                            }
+                                 .incr_p{
+                                 display:none;
+                                 }
+                                 .incr_p.nodiscount{
+                                 display:block;
+                                 }
+                                 .first_div_p, .second_div_p, p.second_ele_div_p{
+                                 visibility: hidden !important;
+                                 }
+                          </style>
+
+                          {% if product.metafields.custom.quantity_of_variant != blank %}
+                            {% if forloop.index == 1 %}
+                              <p class="incr_p nodiscount">
+                                <span class="sinle_hide">Quantity: </span>{{ beatles[0] }}
+                              </p>
+
+                            {% elsif forloop.index == 2 %}
+                              <p class="incr_p nodiscount">Quantity: {{ beatles[1] }}</p>
+                            {% elsif forloop.index == 3 %}
+                              <p class="incr_p nodiscount">Quantity: {{ beatles[2] }}</p>
+                            {% endif %}
+                          {% endif %}
+                        {% endif %}
+                        {% if forloop.index == 1 %}
+                          <p class="first_div_p">Price: ₹{{ price_dis_value[0] }}</p>
+                          <p class="second_div_p">-{{ price_dis_per[0] }}</p>
+                        {% elsif forloop.index == 2 %}
+                          <p class="first_div_p">Price: ₹{{ price_dis_value[1] }}</p>
+                          <p class="second_div_p">-{{ price_dis_per[1] }}</p>
+                        {% elsif forloop.index == 3 %}
+                          <p class="first_div_p">Price: ₹{{ price_dis_value[2] }}</p>
+                          <p class="second_div_p">-{{ price_dis_per[2] }}</p>
+                        {% endif %}
+                      </div>
+                      <div class="right_di">
+                        {% if product.metafields.custom.nodiscount != blank %}
+                          <p class="noddis_p">Price:</p>
+                        {% endif %}
+                        {% if forloop.index == 1 %}
+                          <p class="first_ele_div_p">₹{{ price_dis_actual_vale[0] }}</p>
+                          <p class="second_ele_div_p">Save ₹{{ price_dis_save_amount[0] }}</p>
+                        {% elsif forloop.index == 2 %}
+                          <p class="first_ele_div_p">₹{{ price_dis_actual_vale[1] }}</p>
+                          <p class="second_ele_div_p">Save ₹{{ price_dis_save_amount[1] }}</p>
+                        {% elsif forloop.index == 3 %}
+                          <p class="first_ele_div_p">₹{{ price_dis_actual_vale[2] }}</p>
+                          <p class="second_ele_div_p">Save ₹{{ price_dis_save_amount[2] }}</p>
+                        {% endif %}
+                      </div>
+                    </div>
+                    {% if forloop.index == 2 %}
+                      <div><p class="thir_link_text">Money Saver Pack</p></div>
+                    {% elsif forloop.index == 1 %}
+                      <div><p class="thir_link_text">Assured Results</p></div>
+                    {% endif %}
+                  </div>
+                {%- endfor -%}
+              </fieldset>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for option in product.options_with_values -%}
+          {%- if enable_color_swatches -%}
+            {%- assign color_label = 'color,colour,couleur,colore,farbe,색,色,färg,farve' | split: ',' -%}
+            {%- assign downcased_option = option.name | downcase -%}
+            {%- assign option_index = option.position | minus: 1 -%}
+
+            {%- if color_label contains downcased_option -%}
+              {%- comment -%} /partials/product-swatch.liquid {%- endcomment -%}
+
+              {%- assign file_extension = 'png' -%}
+              {%- assign first_variant = product.selected_or_first_available_variant -%}
+
+              <div class="variant-wrapper variant-wrapper--color" data-option="option{{ option.position }}">
+                <label class="variant-label--color" for="SingleOptionSelector-{{ forloop.index0 }}-{{ product.id }}">
+                  {{- option.name -}}
+                  <span class="variant-label__value" data-color-label>
+                    {{- option.selected_value -}}
+                  </span>
+                </label>
+
+                <fieldset
+                  id="SingleOptionSelector-{{ forloop.index0 }}-{{ product.id }}"
+                  class="variant-input-wrap"
+                  data-index="option{{ option.position }}"
+                >
+                  <div class="swatch swatch--{{ settings.color_swatches_style }}">
+                    {%- for value in option.values -%}
+                      <div data-value="{{ value | escape }}" class="swatch__element">
+                        <input
+                          id="option-{{ value | handle }}-{{ forloop.index0 }}-{{ section.id }}"
+                          class="swatch__input"
+                          type="radio"
+                          name="{{ option.name }}"
+                          value="{{ value | escape }}"
+                          data-color-swatch
+                          data-single-option-selector
+                          data-index="option{{ option.position }}"
+                          {% if first_variant.options[option_index] == value %}
+                            checked="checked"
+                          {% endif %}
+                        >
+                        <label
+                          class="variant__button-label--color swatch__label"
+                          for="option-{{ value | handle }}-{{ forloop.index0 }}-{{ section.id }}"
+                        >
+                          <span
+                            class="swatch__color swatch__color--{{ value | handle }}"
+                            style="background-color: {{ value | split: ' ' | last | handle }}; background-image: url({{ value | handle | append: '.' | append: file_extension | asset_url }})"
+                          ></span>
+                          <span class="accessible-label">{{ value }}</span>
+                        </label>
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                </fieldset>
+              </div>
+
+            {%- else -%}
+              {%- comment -%} /partials/product-option.liquid {%- endcomment -%}
+              {%- capture selector_id -%}
+	{%- if shop_bar -%}
+		ShopBar-
+	{%- else -%}
+		Product-
+	{%- endif -%}
+	SingleOptionSelector-{{- forloop.index0 -}}-{{- product.id -}}
+{%- endcapture -%}
+
+              <div class="selector-wrapper" data-option="option{{ option.position }}">
+                <label for="{{ selector_id }}">
+                  {{- option.name -}}
+                </label>
+
+                <select
+                  id="{{ selector_id }}"
+                  data-single-option-selector
+                  data-index="option{{ option.position }}"
+                >
+                  {%- for value in option.values -%}
+                    <option
+                      value="{{ value | escape }}"
+                      {% if option.selected_value == value %}
+                        selected="selected"
+                      {% endif %}
+                    >
+                      {{- value -}}
+                    </option>
+                  {%- endfor -%}
+                </select>
+                {%- render 'icon-arrow' -%}
+              </div>
+            {%- endif -%}
+          {%- else -%}
+            {%- comment -%} /partials/product-option.liquid {%- endcomment -%}
+            {%- capture selector_id -%}
+	{%- if shop_bar -%}
+		ShopBar-
+	{%- else -%}
+		Product-
+	{%- endif -%}
+	SingleOptionSelector-{{- forloop.index0 -}}-{{- product.id -}}
+{%- endcapture -%}
+
+            <div class="selector-wrapper" data-option="option{{ option.position }}">
+              <label for="{{ selector_id }}">
+                {{- option.name -}}
+              </label>
+
+              <select
+                id="{{ selector_id }}"
+                data-single-option-selector
+                data-index="option{{ option.position }}"
+              >
+                {%- for value in option.values -%}
+                  <option
+                    value="{{ value | escape }}"
+                    {% if option.selected_value == value %}
+                      selected="selected"
+                    {% endif %}
+                  >
+                    {{- value -}}
+                  </option>
+                {%- endfor -%}
+              </select>
+              {%- render 'icon-arrow' -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endunless -%}
+
+    <label for="product-select--{{ section.id }}" class="accessible-label">
+      {{- 'general.accessibility.select_variant' | t -}}
+    </label>
+    {%- if variants_count > 1 -%}
+      <select
+        name="id"
+        id="product-select--{{ section.id }}"
+        class="product-single__variants"
+        data-product-id="{{ product.id }}"
+        data-product-select
+      >
+        {%- for variant in product.variants -%}
+          {%- if variant.available -%}
+            <option
+              {% if variant == first_variant %}
+                selected="selected"
+              {% endif %}
+              data-sku="{{ variant.sku }}"
+              value="{{ variant.id }}"
+            >
+              {{ variant.title }} - {{ variant.price | money_with_currency }}
+            </option>
+          {%- else -%}
+            <option disabled="disabled">{{ variant.title }} - {{ 'products.labels.sold_out' | t }}</option>
+          {%- endif -%}
+        {%- endfor -%}
+      </select>
+    {%- else -%}
+      <input
+        name="id"
+        id="product-select--{{ section.id }}"
+        data-product-id="{{ product.id }}"
+        type="hidden"
+        value="{{ first_variant.id }}"
+      >
+    {%- endif -%}
+  </div>
+  {% if product.handle == 'test-of-the-balance-beard-oil' %}
+    <style>
+      label.variant-label{
+      display:none !important;
+      }
+      .product__price{
+      display:none !important;
+
+
+      }
+      .qty__adjust{
+      display:none !important;
+      }
+    </style>
+  {% endif %}
+  <div class="productForm-block">
+    <div class="veri_tr">
+      <p class="lo_qty" style="display:none;">Quantity:</p>
+      <div class="qty__adjust">
+        <input
+          type="number"
+          class="qty__adjust-input"
+          name="quantity"
+          id="quantity--{{ section.id }}"
+          value="1"
+          min="1"
+        >
+        <button
+          type="button"
+          class="qty__adjust-btn js-qty__adjust-btn decrease"
+          aria-label="{{ 'general.accessibility.decrease' | t }}"
+        >
+          {% render 'icon-minus' %}
+        </button>
+        <button
+          type="button"
+          class="qty__adjust-btn js-qty__adjust-btn increase"
+          aria-label="{{ 'general.accessibility.increase' | t }}"
+        >
+          {% render 'icon-plus' %}
+        </button>
+      </div>
+    </div>
+    <div class="desing_pat">
+      <div class="productForm-buttons{% if settings.color_button_primary_bg == settings.color_background_new %} productForm-buttons--alt{% endif %}">
+        <button
+          class="productForm-submit{% if show_payment_buttons %} button--alt{% endif %}"
+          type="submit"
+          name="add"
+          data-ajax="{{ settings.enable_ajax_cart }}"
+          data-handle="{{ product.handle }}"
+          {% if sold_out %}
+            disabled
+          {% endif %}
+          data-add-to-cart
+        >
+          <span data-add-to-cart-text>
+            {%- unless sold_out -%}
+              {{- 'products.form.submit' | t -}}
+            {% else %}
+              {{- 'products.form.sold_out' | t -}}
+            {%- endunless -%}
+          </span>
+          {%- render 'icon-check' -%}
+        </button>
+      </div>
+
+      <div
+        class="productForm-buttons{% if settings.color_button_primary_bg == settings.color_background_new %} productForm-buttons--alt{% endif %}"
+        data-payment-button="{{ section.settings.enable_payment_button }}"
+        data-payment-button-quickview="{{ settings.enable_payment_button }}"
+      >
+        {{- form | payment_button -}}
+      </div>
+    </div>
+  </div>
+{%- endform -%}
+{% for t in product.tags %}
+  {% unless product.tags contains 'SingleVariant' %}
+    {% if product.metafields.custom.nodiscount != blank %}
+      <style>
+                .productForm-block .variant-wrapper .final_parent.CSS_proper .center_di p {
+                  font-size: 12px !important;
+                  color: white !important;
+                  width:105px;
+              }
+              .incr_p.nodiscount{
+                  font-size: 12px !important;
+
+
+              }
+                      @media (max-width: 725px) {
+                .productForm-block .variant-wrapper .final_parent.CSS_proper .center_di p {
+                  width:105px !important;
+
+                }
+
+
+        .incr_p.nodiscount{
+                  font-size: 12px !important;
+                    width: 105px;
+
+              }
+
+                      }
+      </style>
+    {% endif %}
+  {% endunless %}
+{% endfor %}
+
+{% for t in product.tags %}
+  {% if t contains 'SingleVariant' %}
+    {% if product.metafields.custom.nodiscount != blank %}
+      <style>
+        @media screen and (min-width: 700px) {
+
+        .productForm-block .variant-wrapper .final_parent.CSS_proper .center_di p{
+          font-size:30px !important;
+        }
+        }
+        p.second_div_p, p.noddis_p{
+           display:none !important;
+
+        }
+         p.first_div_p{
+           display:none !important;
+         }
+      </style>
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% for t in product.tags %}
+  {% if t contains 'SingleVariant' %}
+    <style>
+               .product-info{
+                 padding: 4rem 0px 4rem 4rem;
+      }
+              .qty__adjust{
+             display:block !important;
+         }
+             .buy-on.text-box {
+          display: none !important;
+      }
+            [data-show_quantity=false] .qty__adjust{
+             display:block !important;
+            }
+             .parent_vl_di{
+                 column-gap: 0%!important;
+             }
+          .final_parent .center_di{
+             padding:0px !important;
+          }
+             .variant-field.Loop_01{
+             position:relative;
+             }
+             .center_di{
+             position:relative;
+
+             }
+             .variant-field.Loop_01::after {
+          content: "";
+          height: 46px;
+          width: 2px;
+          background: #313d49;
+          right: 0;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+      }
+            .center_di::after {
+          content: "";
+          height: 46px;
+          width: 1.3px;
+          background: #313d49;
+          right: 0;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+      }
+              @media (max-width: 725px) {
+              .product-info {
+          padding: 4rem 2rem 4rem 2rem!important;
+      }
+             .parent_vl_di{
+             padding-left:0px !important;
+             }
+             .parent_vl_di .right_di p.first_ele_div_p{
+                 font-size: 26px !important;
+             }
+             .parent_vl_di .right_di p.second_ele_div_p{
+                 font-size: 16px !important;
+
+             }
+             .center_di{
+                 line-height: 23px !important;
+             }
+             .variant-field.Loop_01 label.variant__button-label {
+          font-size: 20px !important;
+      }
+             .parent_vl_di .variant-field.Loop_01 p{
+          font-size: 20px !important;
+
+             }
+             .variant-wrapper .final_parent.CSS_proper .center_di p {
+          font-size: 16px !important;
+             }
+             .productForm-block .variant-wrapper .final_parent.CSS_proper .center_di p.second_div_p{
+          font-size: 20px !important;
+
+             }
+             .right_di{
+            line-height: 23px !important;
+             text-align:center;
+
+             }
+              }
+
+             p.lo_qty{
+             font-size:22px !important;
+             }
+             .qty__adjust-btn{
+                 width: 27px !important;
+             }
+             qty__adjust {
+             width:98px !important;
+             }
+             .right_di{
+
+          flex: 1;
+          text-align: center;
+
+            line-height: 47px;
+
+             }
+             .right_di p.second_ele_div_p {
+          font-size: 20px!important;
+          line-height: 20px;
+      }
+             .right_di p.first_ele_div_p {
+          font-size: 35px !important;
+          color: #ad683f;
+      }
+             .variant-wrapper .final_parent.CSS_proper .center_di p.second_div_p {
+          text-align: center;
+          font-size: 30px !important;
+          color: #ad683f !important;
+      }
+             .center_di{
+            line-height: 47px;
+             flex: 1.5;
+          text-align: center;
+             }
+             .final_parent.CSS_proper .center_di p{
+
+             font-size: 23px !important;
+          font-weight: bold;
+
+             }
+             label.variant__button-label{
+          font-size: 30px !important;
+
+             }
+             .variant-field.Loop_01 p{
+            font-weight: bold;
+          font-size: 30px !important;
+          padding-top: 0px !important;
+          text-align: center;
+
+             }
+          span.sinle_hide {
+             display: none !important;
+      }
+             .product__price {
+          display: none !important;
+      }
+             label.variant-label{
+          display: none !important;
+
+             }
+             p.lo_qty{
+             display:block !important;
+             }
+             .final_parent{
+             margin-bottom: 30px !important;
+             }
+             p.second_div_p{
+                font-size: 14px!important;
+
+             }
+          p.second_ele_div_p{
+                font-size: 12px!important;
+
+          }
+          p.first_ele_div_p{
+                font-size: 16px!important;
+          }
+        .variant-input-wrap--boxes{
+                    display:block;
+                    }
+          .final_parent{
+            width:100%;
+          }
+          .variant-field.Loop_01{
+                 flex: 1;
+          text-align: center;
+            display:inline-block;
+
+
+          }
+          .center_di{
+                padding-bottom: 0px;
+          display: inline-block;
+
+
+           }
+          .final_parent{
+            border:unset;
+          }
+          p.first_ele_div_p {
+          color: #ad683f;
+      }
+          .final_parent.CSS_proper .center_di p{
+            color:grey !important;
+
+          }
+          p.thir_link_text{
+            display:none !important;
+          }
+          p.first_div_p{
+            color:grey !important;
+           }
+          p.second_div_p{
+            color:#ad683f !important;
+          }
+          .right_di{
+           padding-bottom: 0px;
+          display: inline-block;
+
+        }
+          .final_parent.CSS_proper {
+            background:unset;
+          color: #313d49;
+          border-radius: 25px;
+      }
+          .final_parent{
+          margin-bottom: 60px !important;
+          }
+          .parent_vl_di {
+             display: flex;
+          align-items: center;
+          justify-content: space-between;
+          text-align: left;
+          position: relative;
+          margin-top: 10px!important;
+      }
+          @media (max-width: 725px) {
+            .right_di{
+                  padding-left: 2% !important;
+
+            }
+            .center_di{
+                  padding-left: 2% !important;
+          padding-top: 2% !important;
+          padding-bottom: 0% !important;
+          padding-right: 2% !important;
+            }
+            .variant-field.Loop_01{
+              padding-bottom: 2% !important;
+              padding-right:2% !important;
+            }
+      .variant-input-wrap--boxes{
+        overflow: hidden;
+          cursor: pointer;
+          white-space: nowrap;
+          margin-bottom: 10px!important;
+          margin-top: 10px!important;
+      }
+            .final_parent{
+              margin-bottom:20px !important;
+            }
+            .variant-wrapper--boxes {
+          overflow: hidden;
+          display: block;
+          cursor: grab;
+          white-space: nowrap;
+          width: -webkit-fill-available;
+      }
+      }
+          }
+    </style>
+  {% endif %}
+{% endfor %}

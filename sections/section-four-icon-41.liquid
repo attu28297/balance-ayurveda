@@ -1,0 +1,153 @@
+ <style>
+    
+   @media screen and (min-width: 767px) {
+  .img-si {
+    width: 80px !important;
+  }
+  body .box2 {
+    gap: 100px;
+  }
+}
+div#shopify-section-section-four-icon-30 {
+  background-color: #fdf4ea;
+}
+.box2 {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}
+
+.img {
+  width: 60px;
+  height: auto;
+}
+
+.descr {
+  font-size: 12px;
+  text-align: center;
+  color: darkgreen;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 767px) {
+  .box2 {
+    width: 85%;
+    margin: 0 auto !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 30px;
+    padding-bottom: 80px;
+  }
+}
+
+    </style>
+{% if section.settings.First_img != blank %}
+     <div class="container-fs">
+        <div class="box2">
+            <div class="item">
+                <img class="img"
+                    src={{ section.settings.First_img | img_url}}
+                    alt="Ayurveda Bowl">
+                <p class=" text descr">{{ section.settings.First_text }}</p>
+            </div>
+
+{% if section.settings.Second_img != blank %}
+
+            <div class="item">
+                <img class="img"
+                    src={{ section.settings.Second_img | img_url}}
+                    alt="COD Hands">
+                <p class=" text descr">{{ section.settings.Second_text }}</p>
+            </div>
+{% endif %}
+
+{% if section.settings.third_img != blank %}
+  
+            <div class="item">
+                <img class="img"
+                    src={{ section.settings.third_img | img_url}}
+                    alt="Truck">
+                <p class="text descr">{{ section.settings.Third_text }}</p>
+            </div>
+{% endif %}
+
+{% if section.settings.Fourth_img != blank %}
+  
+            <div class="item">
+                <img class="img" src={{ section.settings.Fourth_img | img_url}}
+                    alt="Box">
+                <p class=" text descr">{{ section.settings.Fourth_text }}</p>
+            </div>
+  {% endif %}
+
+        </div>
+    </div>
+
+{% endif %}
+
+
+
+{% schema %}
+  {
+    "name": "Icon Four Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "First_text",
+        "label": "Icon One Text"
+    },
+      {
+        "type": "image_picker",
+        "id": "First_img",
+        "label": "Icon One Image"
+    },
+      {
+        "type": "text",
+        "id": "Second_text",
+        "label": "Icon Sec Text"
+    },
+      {
+        "type": "image_picker",
+        "id": "Second_img",
+        "label": "Icon Sec Image"
+    },
+      {
+        "type": "text",
+        "id": "Third_text",
+        "label": "Icon Third Text"
+    },
+      {
+        "type": "image_picker",
+        "id": "third_img",
+        "label": "Icon Third Image"
+    },
+      {
+        "type": "text",
+        "id": "Fourth_text",
+        "label": "Icon Fourth Text"
+    },
+      {
+        "type": "image_picker",
+        "id": "Fourth_img",
+        "label": "Icon Fourth Image"
+    }
+    ],
+    
+    "presets":[
+      {
+        "name":"Four-Icon-Section"
+      }
+    ]
+    
+  }
+{% endschema %}

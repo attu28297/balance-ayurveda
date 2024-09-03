@@ -1,0 +1,96 @@
+<div class="secheader-grp">
+  <ul class="pd-tab-list tabscroller" style="display: block;">     
+    {% if section.settings.title != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-1">{{ section.settings.title }}</a></li>{%- endif -%}
+    {% if section.settings.title1 != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-2">{{ section.settings.title1 }}</a></li>{%- endif -%}
+    {% if section.settings.title2 != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-3">{{ section.settings.title2 }}</a></li>{%- endif -%}
+    {% if section.settings.title3 != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-4">{{ section.settings.title3 }}</a></li>{%- endif -%}
+    {% if section.settings.title4 != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-5">{{ section.settings.title4 }}</a></li>{%- endif -%}
+    {% if section.settings.title5 != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-6">{{ section.settings.title5 }}</a></li>{%- endif -%}
+    {% if section.settings.title6 != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-7">{{ section.settings.title6 }}</a></li>{%- endif -%}
+    {% if section.settings.title7 != '' %} <li class="talink" data-tab="tab-a"><a href="#blog-module-8">{{ section.settings.title7 }}</a></li>{%- endif -%}
+    {% if section.settings.title8 != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-9">{{ section.settings.title8 }}</a></li>{%- endif -%}
+    {% if section.settings.title9 != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-10">{{ section.settings.title9 }}</a></li>{%- endif -%}
+    {% if section.settings.title10 != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-11">{{ section.settings.title10 }}</a></li>{%- endif -%}
+    {% if section.settings.title11 != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-12">{{ section.settings.title11 }}</a></li>{%- endif -%}
+    {% if section.settings.title12 != '' %}<li class="talink" data-tab="tab-a"><a href="#blog-module-13">{{ section.settings.title12 }}</a></li>{%- endif -%}
+  </ul>
+</div>
+{% schema %}
+  {
+    "name": "Tabs",
+    "settings": [
+		
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title1",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title2",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title3",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title4",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title5",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title6",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title7",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title8",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title9",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title10",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title11",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title12",
+        "label": "Heading"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

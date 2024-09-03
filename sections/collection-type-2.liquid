@@ -1,0 +1,1712 @@
+{%- comment -%} Settings {%- endcomment -%}
+{%- assign show_sort_filter = section.settings.show_sort_filter -%}
+{%- assign show_banner = section.settings.show_banner -%}
+{%- assign show_featured_image = section.settings.show_featured_image -%}
+{%- assign filter_mode = section.settings.filter_mode -%}
+{%- unless filter_mode == 'hidden' -%}
+{%- assign enable_filters = true -%}
+{%- else -%}
+{%- assign enable_filters = false -%}
+{%- endunless -%}
+
+{% comment %}
+Set collectionBlock size classes
+These are applied in the collection-grid__block.liquid file
+{% endcomment %}
+{%- assign products_rows = settings.products_rows | plus: 0 -%}
+{%- assign products_columns = settings.products_columns | plus: 0 -%}
+{%- assign products_columns_mobile = settings.products_columns_mobile | plus: 0 -%}
+{%- assign products_limit = products_columns | times: products_rows -%}
+{%- assign columns_size = products_columns | replace: '1', '' -%}
+{%- assign columns_size_mobile = products_columns_mobile | replace: '1', '' -%}
+{%- assign grid_block_size = 'lg_s1' | append: columns_size -%}
+{%- assign grid_block_size_mobile = 's1' | append: columns_size_mobile -%}
+
+{% comment %} Set tablet size to be one-half {% endcomment %}
+{%- if products_columns > 2 -%}
+{%- assign grid_block_size = 'lg_s1' | append: columns_size | append: ' med_s13' -%}
+{%- endif -%}
+
+{%- assign banner_image = collection.image -%}
+{%- if collection.handle == 'all' %}
+  {%- assign banner_image = section.settings.banner_image -%}
+{%- endif %}
+
+{%- comment -%} Assign all selected tags to container data-tags attribute {%- endcomment -%}
+{%- if enable_filters -%}
+{%- assign selected_tags = '' -%}
+
+{%- for tag in current_tags -%}
+{%- assign current_tag_handle = tag | replace: '&#39;', '' | replace: '&#34;', '' | handle -%}
+{%- assign selected_tags = selected_tags | append: current_tag_handle -%}
+
+{%- unless forloop.last -%}
+{%- assign selected_tags = selected_tags | append: '+' -%}
+{%- endunless -%}
+{%- endfor -%}
+{%- endif -%}
+
+<div class="collectiontempmy"
+     data-section-id="{{ section.id }}"
+     data-section-type="collection-template"
+     data-filters="{{ enable_filters }}"
+     data-filter-mode="{{ filter_mode }}">
+  <div class="collectiontempmyinnr">
+    {%- if show_banner and banner_image -%}
+    {%- render 'banner',
+        image: banner_image,
+    height: section.settings.banner_height,
+    transparent_header: true,
+    heading: collection.title,
+    text: collection.description,
+    text_position: section.settings.banner_text_position,
+    image_position: section.settings.image_position,
+    color_text: section.settings.banner_color_text,
+    color_overlay: section.settings.banner_color_overlay,
+    overlay_opacity: section.settings.banner_overlay_opacity,
+    unique: section.id
+    -%}
+    {%- else -%}
+    <div class="page-title headingBox text-box" data-banner-content>
+      <div class="container">
+      
+          {% assign collection_para = collection.metafields.custom.image_url_for_top_banner | split: ", " %}
+      <!-- <p class="para_col">{{ collection_para[0] }}</p> -->
+
+        {%- comment -%}{%- unless collection.description == blank -%}
+        <div class="page-title__text">{{ collection.description }}</div>
+        {%- endunless -%}{%- endcomment -%}
+      </div>
+    </div>
+    {%- endif -%}
+<!-- banner section satrt -->
+    {% if collection.metafields.custom.image_url_for_top_banner != blank %}
+      <style>
+    
+             @media (min-width:760px){
+        
+           .first_gri_two.firs_on {
+    padding: 0px;
+}
+             }
+         @media (max-width:760px){
+     
+           body .main_col_grid_cl .container{
+              display: block;
+           }
+body .main_con_col{
+
+    display: block;
+    padding: 20px;
+}
+           body .right_col_content{
+
+                 width:100%;
+           }
+           body .left_conet_col{
+             width:100%;
+           }
+body h2.page-title__heading {
+        font-size: 20px !important;
+    top: 150px !important;
+    width: 100%;
+    left: 0;
+}
+           body .headingBox h2 strong {
+    display: block;
+    color: #ad683f !important;
+    font-size: 4.9rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+           body p.para_col {
+      position: absolute;
+    top: 110px;
+    left: 0;
+    width: 100%;
+    display: block;
+    font-weight: 300;
+    font-size: 3.3rem;
+    color: #313d49;
+}
+         }
+        h2.page-title__heading {
+    position: absolute;
+    top: 90px;
+}
+        p.para_col {
+    position: absolute;
+    top: 150px;
+}
+        .main_col_grid_cl .main_con_col:nth-child(even) {
+    flex-direction: row-reverse;
+           background: #fefcf3;
+}
+        .img_abnen img {
+    width: 100%;
+    height: auto;
+}
+        .main_col_grid_cl .main_con_col:nth-child(even) .left_conet_col{
+ order: 2;
+        }
+      
+      </style>
+      {% assign collection_para = collection.metafields.custom.image_url_for_top_banner | split: ", " %}
+ <div class="img_abnen hide-500 desk">
+ <img src="{{ collection_para[1] }}">
+ </div>
+       <div class="img_abnen show-500 mob">
+ <img src="{{ collection_para[2] }}">
+ </div>
+{% endif %}
+
+    <!-- grid section start from here -->
+    <style>
+        
+      .first_gri.fisrtone{
+            padding-right: 15px; 
+      }
+      .first_gri {
+         
+    display: flex;
+            width: 100%;
+            height: 350px;
+        gap:15px;
+    align-items: center;
+            border-radius: 20px;
+}
+      .frist_st_gird {
+    display: flex;
+          gap:15px;
+            border-radius: 20px;
+            width: 100%;
+            height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+      .main_first_grid_one {
+    display: flex;
+          /* gap:15px; */
+            border-radius: 20px;
+            width: 100%;
+            height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+    .top-header-sec-grid {
+    padding: 60px 0px;
+}
+      .top-header-sec-grid h2 {
+    font-size: 45px;
+    color: #ad683f;
+    font-weight: bold;
+    padding: 20px 0px;
+}
+      
+.top-header-sec-grid p {
+       font-size: 18px;
+    text-transform: capitalize;
+    font-weight: normal;
+    color: #313d49;
+}
+     .grid_third, .grid_two_two, .grid_one_two, .grid_two, .grid_one {
+    display: flex;
+           border-radius: 20px;
+    align-items: center;
+    width: 100%;
+           height: 100%;
+           justify-content: center;
+}
+      .grid_sec_main h3 {
+    color: black;
+        
+    text-align: left;
+    font-size: 22px;
+}
+      .first_gri_two {
+            padding-right: 15px;
+    display: flex;
+          gap:15px;
+            border-radius: 20px;
+            width: 100%;
+            height: 350px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+      .frist_st_gird_two {
+    display: flex;
+          gap:15px;
+            border-radius: 20px;
+            width: 100%;
+            height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+ .second_grid_main {
+    display: flex;
+    width: 100%;
+      height: 198px;
+    gap: 15px;
+       padding: 15px 0px;
+
+}
+      .second_grid {
+    display: flex;
+    gap: 15px;
+        width: 50%;
+}
+      .sec_grid_third {
+               width: 50%;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    justify-content: space-around;
+        cursor: pointer;
+}
+      .secon_gri_ywo, .seco_grid_one {
+        cursor: pointer;
+    display: flex;
+            border-radius: 20px;
+    width: 100%;
+            justify-content: center;
+    align-items: center;
+      }
+      .container.section-grid {
+    padding-bottom: 120px;
+}
+      .frist_st_gird_two h3, .frist_st_gird h3, .second_grid h3, .frist_st_gird_two h3, .frist_st_gird h3 {
+    flex: 1; 
+          padding-left: 30px;
+          font-weight: 700;}
+            .sec_grid_third h3 {
+    flex: 3;
+              font-weight:700;
+}
+            .first_gri_two .grid_third{
+              
+            }
+            .first_gri_two .grid_third h3 {
+    flex: 3;
+              font-weight:700;
+                  padding-left: 30px;
+              text-align: left;
+}
+        
+.sec_grid_third h3 {
+    padding-left: 30px;
+}
+
+          @media (min-width:760px){
+            p.para_col {
+    left: 50px !important;
+            }
+            h2.page-title__heading {
+left: 50px !important;
+            }
+            .grid_third.last_on_gr {
+    flex-direction: column;
+}
+             .grid_third.last_on_gr h3, .grid_third.grid_desk h3 {
+    flex: 2;
+                   font-weight: bold;
+              padding-top:60px;
+}
+ .grid_third.last_on_gr img, .grid_third.grid_desk img {
+   padding-bottom: 25px;
+    flex: 1.6;
+    /* width: 137px; */
+}
+
+            .second_grid_main.grid_m {
+    padding-bottom: 0px;
+                  height: 183px;
+}
+      .grid_third.grid_desk {
+    flex-direction: column;
+        border-radius: 20px !important;
+            padding: 0 !important;
+}
+            .grid_third, .grid_two_two, .grid_one_two, .grid_two, .grid_one{
+               cursor: pointer;
+              /* overflow:scroll; */
+              justify-content: space-around;
+            }
+          }
+        @media (max-width:760px){
+          .first_gri_two .grid_third h3{
+                padding-left: 25px !important;
+          }
+          body .top-header-sec-grid p {
+    font-size: 16px;
+          }
+          body .top-header-sec-grid {
+    padding: 20px 0px;
+}
+          .grid_third, .grid_two_two, .grid_one_two, .grid_two, .grid_one{
+            justify-content: space-between !important;
+          }
+          .grid_third.grid_desk {
+    margin-top: 15px !important;
+}
+          .grid_two, .grid_one, .grid_third.last_on_gr, .grid_two_two, .grid_one_two.one_mor, .grid_third, .secon_gri_ywo, .seco_grid_one, .secon_gri_ywo, .seco_grid_one, .sec_grid_third, .grid_third, .grid_two_two, .grid_one_two, .grid_third.grid_desk, .grid_two, .grid_one{
+
+                min-height: 167px !important;
+          }
+          .first_gri, .first_gri_two, .second_grid{
+                height: 100% !important;
+                padding-right: 0px;
+          }
+          .sec_grid_third{
+              min-height: 167px !important;
+            height: 100% !important;
+                width: 100%;
+          }
+          .first_gri_two.firs_on{
+
+                height: 100% !important;
+                padding-right: 0px !important;
+          }
+          .first_gri.fisrtone{
+    display: block !important;
+    height: 100% !important;
+                padding-right: 0px !important;
+            
+          }
+   
+          .grid_third.grid_desk h3 {
+    flex: 1;
+}
+
+
+
+          body .main_first_grid_one, body .main_first_grid_one{
+display:block;
+                padding-top: 15px;
+          }
+       
+          body .second_grid{
+        
+            width:100% !important;
+            flex-direction: column;
+           
+          }
+          body .grid_sec_main h3{
+                    font-weight: bold;
+    font-size: 20px;
+    padding-left: 25px;
+          }
+          .frist_st_gird_two{
+            flex-direction: column !important;
+          }
+          .first_gri {
+                flex-direction: column !important;
+    margin-top: 20px !important;
+            margin-bottom: 20px !important;
+}
+ 
+          body .second_grid_main{
+                padding-bottom: 0px;
+            flex-direction:column;
+                height: 100% !important;
+            
+          }
+        }
+      .grid_one_two.one_mor h3 {
+    flex: 3;
+}
+ /* .grid_sec_main div {
+    cursor: pointer;
+} */
+      </style>
+  <div class="container section-grid">
+    <div class="top-header-sec-grid">
+      {% assign sub_hea = collection.metafields.custom.heading_subheading_grid | split: "<br />" %}
+      <h2>{{ sub_hea[0] }}</h2>
+      <p>{{ sub_hea[1] }}</p>
+    </div>
+    {% assign grid_details = collection.metafields.custom.grid_item_details | split: "<br />" %}
+    
+    {% assign grid_details_zero = grid_details[0] %}
+{% assign grid_item_zero_deatils = grid_details_zero | split: ", "  %}
+
+    
+    {% assign grid_details_one = grid_details[1] %}
+    {% assign grid_item_one_deatils = grid_details_one | split: ", "  %}
+    
+    {% assign grid_details_two = grid_details[2] %}
+     {% assign grid_item_two_deatils = grid_details_two | split: ", "  %}
+    
+    {% assign grid_details_three = grid_details[3] %}
+ {% assign grid_item_three_deatils = grid_details_three | split: ", "  %}
+    
+    {% assign grid_details_four = grid_details[4] %}
+     {% assign grid_item_four_deatils = grid_details_four | split: ", "  %}
+
+    
+    {% assign grid_details_five = grid_details[5] %}
+{% assign grid_item_five_deatils = grid_details_five | split: ", "  %}
+    
+    {% assign grid_details_six = grid_details[6] %}
+{% assign grid_item_six_deatils = grid_details_six | split: ", "  %}
+    
+    {% assign grid_details_seven = grid_details[7] %}
+    {% assign grid_item_seven_deatils = grid_details_seven | split: ", "  %}
+
+    
+    {% assign grid_details_eight = grid_details[8] %}
+  {% assign grid_item_eight_deatils = grid_details_eight | split: ", "  %}
+    
+    {% assign grid_details_nine = grid_details[9] %}
+  {% assign grid_item_nine_deatils = grid_details_nine | split: ", "  %}
+
+    
+    {% assign grid_details_ten = grid_details[10] %}
+    {% assign grid_item_ten_deatils = grid_details_ten | split: ", "  %}
+    
+    {% assign grid_details_eleven = grid_details[11] %}
+    {% assign grid_item_eleven_deatils = grid_details_eleven | split: ", "  %}
+
+    
+    {% assign grid_details_twelve = grid_details[12] %}
+    {% assign grid_item_twelve_deatils = grid_details_twelve | split: ", "  %}
+
+    
+    {% assign grid_details_thirteen = grid_details[13] %}
+    {% assign grid_item_thirteen_deatils = grid_details_thirteen | split: ", "  %}
+    
+    {% assign grid_details_fourteen = grid_details[14] %}
+    {% assign grid_item_fourteen_deatils = grid_details_fourteen | split: ", "  %}
+    
+    {% assign grid_details_fifteen = grid_details[15] %}
+    {% assign grid_item_fifteen_deatils = grid_details_fifteen | split: ", "  %}
+    
+    {% assign grid_details_sixteen = grid_details[16] %}
+    {% assign grid_item_sixteen_deatils = grid_details_sixteen | split: ", "  %}
+    
+    {% assign grid_details_seventeen = grid_details[17] %}
+    {% assign grid_item_seventeen_deatils = grid_details_seventeen | split: ", "  %}
+    <div class="grid_sec_main">
+          <div class="main_first_grid_one">
+          <div class="first_gri fisrtone {% if grid_item_zero_deatils == blank %}empty_gr{% endif %}">
+                <div class="frist_st_gird">
+                  {% if grid_item_zero_deatils != blank %}
+                
+                  <div onclick="window.location.href = '{{ grid_item_zero_deatils[0] }}'" class="grid_one" style="background-color:{{ grid_item_zero_deatils[1] }};">
+                    <h3 style="color:{{ grid_item_zero_deatils[2] }};">{{ grid_item_zero_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_zero_deatils[4] }}">
+                  </div>
+              
+                    {% endif %}
+                  
+                     {% if grid_item_one_deatils != blank %}
+                  
+                  <div onclick="window.location.href = '{{ grid_item_one_deatils[0] }}'" class="grid_two" style="background-color:{{ grid_item_one_deatils[1] }};">
+                     <h3 style="color:{{ grid_item_one_deatils[2] }};">{{ grid_item_one_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_one_deatils[4] }}">
+                  </div>
+                     
+                       {% endif %}
+                </div>
+            {% if grid_item_two_deatils != blank %}
+                <div onclick="window.location.href = '{{ grid_item_two_deatils[0] }}'" class="grid_third grid_desk" style="background-color:{{ grid_item_two_deatils[1] }};color:{{ grid_item_two_deatils[2] }};"> 
+                    <h3 style="color:{{ grid_item_two_deatils[2] }};">{{ grid_item_two_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_two_deatils[4] }}"></div>
+          </div>
+              {% endif %}
+           <div class="first_gri_two firs_on {% if grid_item_three_deatils == blank %}empty_gr{% endif %}">
+                <div class="frist_st_gird_two">
+                    {% if grid_item_three_deatils != blank %}
+                  <div onclick="window.location.href = '{{ grid_item_three_deatils[0] }}'" class="grid_one_two" style="background-color:{{ grid_item_three_deatils[1] }};color:{{ grid_item_three_deatils[2] }};">
+                    <h3 style="color:{{ grid_item_three_deatils[2] }};">{{ grid_item_three_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_three_deatils[4] }}">
+                  </div>
+                      {% endif %}
+                   {% if grid_item_four_deatils != blank %}
+                  <div onclick="window.location.href = '{{ grid_item_four_deatils[0] }}'" class="grid_two_two" style="background-color:{{ grid_item_four_deatils[1] }};color:{{ grid_item_four_deatils[2] }};">
+                     <h3 style="color:{{ grid_item_four_deatils[2] }};">{{ grid_item_four_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_four_deatils[4] }}">
+                  </div>
+                     {% endif %}
+                </div>
+            
+               {% if grid_item_five_deatils != blank %}
+                <div onclick="window.location.href = '{{ grid_item_five_deatils[0] }}'" class="grid_third" style="background-color:{{ grid_item_five_deatils[1] }};color:{{ grid_item_five_deatils[2] }};"> 
+                    <h3 style="color:{{ grid_item_five_deatils[2] }};">{{ grid_item_five_deatils[3] }} </h3>
+                    <img width="120" height="120" src=" {{ grid_item_five_deatils[4] }}"></div>
+          </div>
+                 {% endif %}
+          </div>
+        
+          <div class="second_grid_main grid_m">
+             {% if grid_item_six_deatils != blank %}
+            <div onclick="window.location.href = '{{ grid_item_six_deatils[0] }}'" class="sec_grid_third" style="background-color:{{ grid_item_six_deatils[1] }};color:{{ grid_item_six_deatils[2] }};">
+             <h3 style="color:{{ grid_item_six_deatils[2] }};">{{ grid_item_six_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_six_deatils[4] }}"> 
+            </div>
+               {% endif %}
+            
+            <div class="second_grid"> 
+                     {% if grid_item_seven_deatils != blank %}
+              <div onclick="window.location.href = '{{ grid_item_seven_deatils[0] }}'" class="seco_grid_one" style="background-color:{{ grid_item_seven_deatils[1] }};color:{{ grid_item_seven_deatils[2] }};">
+             <h3 style="color:{{ grid_item_seven_deatils[2] }};">{{ grid_item_seven_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_seven_deatils[4] }}"> 
+            </div>
+                       {% endif %}
+                     {% if grid_item_eight_deatils != blank %}
+              <div onclick="window.location.href = '{{ grid_item_eight_deatils[0] }}'" class="secon_gri_ywo" style="background-color:{{ grid_item_eight_deatils[1] }};color:{{ grid_item_eight_deatils[2] }};">
+             <h3 style="color:{{ grid_item_eight_deatils[2] }};">{{ grid_item_eight_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_eight_deatils[4] }}"> 
+            </div>
+                       {% endif %}
+          </div>
+        
+        </div>
+          
+          <div class="second_grid_main  {% if grid_item_nine_deatils == blank %}empty_gr{% endif %}">
+            <div class="second_grid"> 
+              {% if grid_item_nine_deatils != blank %}
+              <div onclick="window.location.href = '{{ grid_item_nine_deatils[0] }}'" class="seco_grid_one" style="background-color:{{ grid_item_nine_deatils[1] }};color:{{ grid_item_nine_deatils[2] }};">
+             <h3 style="color:{{ grid_item_nine_deatils[2] }};">{{ grid_item_nine_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_nine_deatils[4] }}"> 
+            </div>
+                {% endif %}
+              {% if grid_item_ten_deatils != blank %}
+              <div onclick="window.location.href = '{{ grid_item_ten_deatils[0] }}'" class="secon_gri_ywo" style="background-color:{{ grid_item_ten_deatils[1] }};color:{{ grid_item_ten_deatils[2] }};">
+             <h3 style="color:{{ grid_item_ten_deatils[2] }};">{{ grid_item_ten_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_ten_deatils[4] }}"> 
+            </div>
+                {% endif %}
+          </div>
+             {% if grid_item_eleven_deatils != blank %}
+            <div onclick="window.location.href = '{{ grid_item_eleven_deatils[0] }}'" class="sec_grid_third" style="background-color:{{ grid_item_eleven_deatils[1] }};color:{{ grid_item_eleven_deatils[2] }};">
+             <h3 style="color:{{ grid_item_eleven_deatils[2] }};">{{ grid_item_eleven_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_eleven_deatils[4] }}"> 
+            </div>
+               {% endif %}
+        </div>
+        
+          <div class="main_first_grid_one {% if grid_item_twelve_deatils == blank %}empty_gr{% endif %}">
+            
+             <div class="first_gri_two">
+                 {% if grid_item_twelve_deatils != blank %}
+               <div onclick="window.location.href = '{{ grid_item_twelve_deatils[0] }}'" class="grid_third" style="background-color:{{ grid_item_twelve_deatils[1] }};color:{{ grid_item_twelve_deatils[2] }};">
+             <h3 style="color:{{ grid_item_twelve_deatils[2] }};">{{ grid_item_twelve_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_twelve_deatils[4] }}"> 
+            </div>
+                   {% endif %}
+               <div class="frist_st_gird_two">
+                   {% if grid_item_thirteen_deatils != blank %}
+                    <div onclick="window.location.href = '{{ grid_item_thirteen_deatils[0] }}'" class="grid_one_two one_mor" style="background-color:{{ grid_item_thirteen_deatils[1] }};color:{{ grid_item_thirteen_deatils[2] }};">
+             <h3 style="color:{{ grid_item_thirteen_deatils[2] }};">{{ grid_item_thirteen_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_thirteen_deatils[4] }}"> 
+            </div>
+                     {% endif %}
+                   {% if grid_item_fourteen_deatils != blank %}
+                    <div onclick="window.location.href = '{{ grid_item_fourteen_deatils[0] }}'" class="grid_two_two" style="background-color:{{ grid_item_fourteen_deatils[1] }};color:{{ grid_item_fourteen_deatils[2] }};">
+             <h3 style="color:{{ grid_item_fourteen_deatils[2] }};">{{ grid_item_fourteen_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_fourteen_deatils[4] }}"> 
+            </div>
+                     {% endif %}
+                  </div>
+                  
+             </div>
+             <div class="first_gri {% if grid_item_fifteen_deatils == blank %}empty_gr{% endif %}">
+                   {% if grid_item_fifteen_deatils != blank %}
+                  <div onclick="window.location.href = '{{ grid_item_fifteen_deatils[0] }}'" class="grid_third last_on_gr" style="background-color:{{ grid_item_fifteen_deatils[1] }};color:{{ grid_item_fifteen_deatils[2] }};">
+             <h3 style="color:{{ grid_item_fifteen_deatils[2] }};">{{ grid_item_fifteen_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_fifteen_deatils[4] }}"> 
+            </div>
+                     {% endif %}
+                  <div class="frist_st_gird">
+                     {% if grid_item_sixteen_deatils != blank %}
+                    <div onclick="window.location.href = '{{ grid_item_sixteen_deatils[0] }}'" class="grid_one" style="background-color:{{ grid_item_sixteen_deatils[1] }};color:{{ grid_item_sixteen_deatils[2] }};">
+             <h3 style="color:{{ grid_item_sixteen_deatils[2] }};">{{ grid_item_sixteen_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_sixteen_deatils[4] }}"> 
+            </div>
+                       {% endif %}
+                     {% if grid_item_seventeen_deatils != blank %}
+                    <div onclick="window.location.href = '{{ grid_item_seventeen_deatils[0] }}'" class="grid_two" style="background-color:{{ grid_item_seventeen_deatils[1] }};color:{{ grid_item_seventeen_deatils[2] }};">
+             <h3 style="color:{{ grid_item_seventeen_deatils[2] }};">{{ grid_item_seventeen_deatils[3] }}</h3>
+                    <img width="120" height="120" src="{{ grid_item_seventeen_deatils[4] }}"> 
+            </div>
+                       {% endif %}
+                  </div>
+            </div>
+           <div>
+        
+            </div>
+             </div>
+    </div>
+  </div>
+<style>
+  
+.all_grid_main_part {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+}
+  h2.haead_main_part {
+        padding-top: 10px !important;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 5px 0px;
+}
+  p.para_mainpart {
+    font-weight: normal;
+    font-size: 14px;
+        padding-bottom: 10px;
+}
+  p.count_main_part {
+        font-weight: 700;
+    font-size: 16px;
+    border-radius: 50%;
+    padding: 5px;
+    background: #ad683f;
+    text-align: center;
+    margin: 0 auto;
+    display: inline-block;
+    color: white;
+    height: 31px;
+    width: 31px;
+}
+  .all_grid_main_part_two .main_with_line{
+     display: inline-block;
+  }
+   
+  .container.main_part_icon_head {
+    padding: 60px 0px;
+}
+  h2.headin_main {
+      font-weight: bold;
+    color: #939393;
+    text-align: center;
+    font-size: 50px;
+    padding: 30px 0px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  .all_grid_main_part_two {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+  }
+  .all_grid_main_part_two div {
+    width: 25%;
+  }
+  .vl_one {
+    height: 50px;
+    border-left: 2px solid #ad683f;
+    position: absolute;
+    left: 49.5%;
+}
+    .main_with_line {
+    position: relative;
+}
+  .all_grid_main_part_two .vl_one {
+    top: -150%;
+}
+  .main_part_icon_head_mobile{
+             display:none !important;
+           } 
+   @media (max-width:760px){
+     .empty_gr{
+       display:none;
+     }
+     body .all_grid_main_part{
+       width: max-content;
+     }
+     body p.para_mainpart{
+           font-size: 10px;
+           padding-bottom: 20px !important;
+     }
+     body h2.haead_main_part{
+           font-size: 14px;
+           padding-top: 0px !important;
+     }
+  .container.main_part_icon_head {
+      display:none;
+  }
+           .main_part_icon_head_mobile{
+             display:block !important;
+           } 
+    .grid_mob_one img {
+    width: 80px !important;
+    height: 80px !important;
+}
+     body .vl_one {
+           height: auto;
+    top: 50% !important;
+    border-top: 2px solid #ad683f;
+    position: absolute;
+    left: 97.5%;
+    width: 30px !important;
+}
+       body .main_grid_one_for_all {
+    width: 60%;
+}
+.head_and_grid {
+      justify-content: center;
+display: flex;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+
+      flex-direction: row;
+}
+     body .all_grid_main_part_two, body .all_grid_main_part{
+           flex-direction: column;
+     }
+     body .all_grid_main_part_two div {
+    width: auto;
+}
+     body .all_grid_main_part_two{
+       width: 173px;
+           padding-top: 30px;
+
+     }
+     body .one_gir_main_part {
+    width: 173px !important;
+    display: flex;
+           gap: 20px;
+    align-items: center;
+}
+     body .all_grid_main_part_two .one_gir_main_part {
+    flex-direction: row-reverse;
+}
+     body h2.headin_main {
+           white-space: break-spaces;
+    display: block;
+    width: 31%;
+           height: auto;
+    text-align: left;
+    font-size: 31px;
+    text-wrap: wrap;
+           line-height: 45px;
+}
+    }
+  </style>
+<!-- Desktop Heading icon seciton strat -->
+    {% assign details_viw = collection.metafields.custom.headline_with_borders_content | split: "<br />" %}
+    {% assign detils_view_one = details_viw[0] | split: ", " %}
+
+        {% assign detils_view_two = details_viw[1] | split: ", " %}
+
+        {% assign detils_view_three = details_viw[2] | split: ", " %}
+
+        {% assign detils_view_four = details_viw[3] | split: ", " %}
+
+        {% assign detils_view_five = details_viw[4] | split: ", " %}
+    
+        {% assign detils_view_six = details_viw[5] | split: ", " %}
+
+        {% assign detils_view_seven = details_viw[6] | split: ", " %}
+
+    
+<div class="container main_part_icon_head">
+  <div class="all_grid_main_part">
+      <div class="one_gir_main_part">
+        <img style="height:100px;width:100px;" src="{{ detils_view_one[0] }}">
+        <h2 class="haead_main_part">{{ detils_view_one[1] }}</h2>
+        <p class="para_mainpart">{{ detils_view_one[2] }}</p>
+       <div class="main_with_line">
+        <p class="count_main_part">1</p>
+        <div class="vl_one"></div>
+       </div>
+      </div>
+     <div class="one_gir_main_part">
+         <img style="height:100px;width:100px;" src="{{ detils_view_two[0] }}">
+        <h2 class="haead_main_part">{{ detils_view_two[1] }}</h2>
+        <p class="para_mainpart">{{ detils_view_two[2] }}</p>
+         <div class="main_with_line">
+        <p class="count_main_part">2</p>
+        <div class="vl_one"></div>
+       </div>
+      </div>
+     <div class="one_gir_main_part">
+          <img style="height:100px;width:100px;" src="{{ detils_view_three[0] }}">
+        <h2 class="haead_main_part">{{ detils_view_three[1] }}</h2>
+        <p class="para_mainpart">{{ detils_view_three[2] }}</p>
+         <div class="main_with_line">
+        <p class="count_main_part">3</p>
+        <div class="vl_one"></div>
+       </div>
+      </div>
+     <div class="one_gir_main_part">
+         <img style="height:100px;width:100px;" src="{{ detils_view_four[0] }}">
+        <h2 class="haead_main_part">{{ detils_view_four[1] }}</h2>
+        <p class="para_mainpart">{{ detils_view_four[2] }}</p>
+  <div class="main_with_line">
+        <p class="count_main_part">4</p>
+        <div class="vl_one"></div>
+       </div>
+      </div>
+  </div>
+  <h2 class="headin_main">From Field to Formula: Our Clean and Authentic Journey</h2>
+ <div class="all_grid_main_part_two">
+      <div class="one_gir_main_part">
+          <div class="main_with_line">
+            <div class="vl_one"></div>
+        <p class="count_main_part">5</p>
+        
+       </div>
+        <h2 class="haead_main_part">{{ detils_view_five[1] }}</h2>
+        <p class="para_mainpart">{{ detils_view_five[2] }}</p>
+        <img style="height:100px;width:100px;" src="{{ detils_view_five[0] }}">
+      
+      </div>
+     <div class="one_gir_main_part">
+    <div class="main_with_line">
+         <div class="vl_one"></div>
+        <p class="count_main_part">6</p>
+     
+       </div>
+            <h2 class="haead_main_part">{{ detils_view_six[1] }}</h2>
+        <p class="para_mainpart">{{ detils_view_six[2] }}</p>
+        <img style="height:100px;width:100px;" src="{{ detils_view_six[0] }}">
+       
+      </div>
+     <div class="one_gir_main_part">
+         <div class="main_with_line">
+              <div class="vl_one"></div>
+        <p class="count_main_part">7</p>
+     
+       </div>
+            <h2 class="haead_main_part">{{ detils_view_seven[1] }}</h2>
+        <p class="para_mainpart">{{ detils_view_seven[2] }}</p>
+        <img style="height:100px;width:100px;" src="{{ detils_view_seven[0] }}">
+      </div>
+ </div>
+  
+</div>
+
+    
+    <!-- Desktop Heading icon seciton end -->
+
+    <!-- Mobile heading icon section strat -->
+
+    <div class="container main_part_icon_head_mobile">
+      <div class="head_and_grid">
+        <div class="main_grid_one_for_all">
+          <div class="all_grid_main_part">
+        <div class="one_gir_main_part">
+        <div class="grid_mob_one">
+          <img style="height:100px;width:100px;" src="{{ detils_view_one[0] }}">
+          <h2 class="haead_main_part">{{ detils_view_one[1] }}</h2>
+          <p class="para_mainpart">{{ detils_view_one[2] }}</p>
+        </div>
+               <div class="main_with_line">
+                <p class="count_main_part">1</p>
+                <div class="vl_one"></div>
+               </div>
+        </div>
+       <div class="one_gir_main_part">
+          <div class="grid_mob_one">
+           <img style="height:100px;width:100px;" src="{{ detils_view_two[0] }}">
+          <h2 class="haead_main_part">{{ detils_view_two[1] }}</h2>
+          <p class="para_mainpart">{{ detils_view_two[2] }}</p>
+          </div>
+         
+           <div class="main_with_line">
+          <p class="count_main_part">2</p>
+          <div class="vl_one"></div>
+         </div>
+        </div>
+       <div class="one_gir_main_part">
+          <div class="grid_mob_one">
+            <img style="height:100px;width:100px;" src="{{ detils_view_three[0] }}">
+          <h2 class="haead_main_part">{{ detils_view_three[1] }}</h2>
+          <p class="para_mainpart">{{ detils_view_three[2] }}</p>
+          </div>
+           <div class="main_with_line">
+          <p class="count_main_part">3</p>
+          <div class="vl_one"></div>
+         </div>
+        </div>
+       <div class="one_gir_main_part">
+          <div class="grid_mob_one">
+           <img style="height:100px;width:100px;" src="{{ detils_view_four[0] }}">
+          <h2 class="haead_main_part">{{ detils_view_four[1] }}</h2>
+          <p class="para_mainpart">{{ detils_view_four[2] }}</p>
+          </div>
+    <div class="main_with_line">
+          <p class="count_main_part">4</p>
+          <div class="vl_one"></div>
+         </div>
+        </div>
+    </div>
+          <div class="all_grid_main_part_two">
+        <div class="one_gir_main_part">
+            <div class="main_with_line">
+              <div class="vl_one"></div>
+          <p class="count_main_part">5</p>
+          
+         </div>
+        <div class="grid_mob_one">
+              <img style="height:100px;width:100px;" src="{{ detils_view_five[0] }}">
+          <h2 class="haead_main_part">{{ detils_view_five[1] }}</h2>
+          <p class="para_mainpart">{{ detils_view_five[2] }}</p>
+      
+        </div>
+        
+        </div>
+       <div class="one_gir_main_part">
+      <div class="main_with_line">
+           <div class="vl_one"></div>
+          <p class="count_main_part">6</p>
+       
+         </div>
+          <div class="grid_mob_one">
+            <img style="height:100px;width:100px;" src="{{ detils_view_six[0] }}">
+              <h2 class="haead_main_part">{{ detils_view_six[1] }}</h2>
+          <p class="para_mainpart">{{ detils_view_six[2] }}</p>
+          
+          </div>
+        </div>
+       <div class="one_gir_main_part">
+           <div class="main_with_line">
+                <div class="vl_one"></div>
+          <p class="count_main_part">7</p>
+       
+         </div>
+          <div class="grid_mob_one">
+             <img style="height:100px;width:100px;" src="{{ detils_view_seven[0] }}">
+              <h2 class="haead_main_part">{{ detils_view_seven[1] }}</h2>
+          <p class="para_mainpart">{{ detils_view_seven[2] }}</p>
+         
+          </div>
+        </div>
+   </div>
+        </div>
+      
+         <h2 class="headin_main">From Field to Formula: Our Clean and Authentic Journey</h2>
+    </div>
+</div>
+
+    <!-- mobile heading seciton end -->
+   {% comment %}
+            <section class="collection-grid container-wrap" data-collection-wrapper>
+              <div class="container">
+                {%- if enable_filters -%}
+                {%- assign file_extension = 'png' -%}
+                {%- assign position_filters = section.settings.position_filters -%}
+                {%- unless collection.sort_by == '' -%}
+                {%- assign sort_by = '?sort_by=' | append: collection.sort_by -%}
+                {%- endunless -%}
+        
+                {%- capture filter_tags -%}
+                {%- assign tags_list = '' -%}
+        
+                {%- case filter_mode -%}
+                {%- when 'tag' -%}
+                {%- assign is_active = false -%}
+                {%- assign selected_filters_count = 0 -%}
+        
+                {%- for tag in collection.all_tags -%}
+                {%- assign tag_url = tag | handle -%}
+                {%- if current_tags contains tag  -%}
+                {%- assign is_active = true -%}
+                {%- assign tag_url = '' -%}
+                {%- assign selected_filters_count =  selected_filters_count | plus: 1 -%}
+                {%- endif -%}
+        
+                {%- unless tags_list contains tag or tag contains 'badge' or tag contains '__tab' -%}
+                {%- capture temp_list -%}{{ tags_list | append: tag | append: ' ' }}{%- endcapture -%}
+                {%- assign tags_list = tempList -%}
+                <li class="{{ tag_url }} sing{{ forloop.index }} collection__filter-tag collection__filter-tag--default {% if current_tags contains tag %}is-active{% endif %}" data-collection-filter-tag>
+                  <a href="{{- collection.url | append: '/' | append: tag_url | append: sort_by -}}" class="collection__filter-tag-btn" data-tag="{{ tag | handle }}" data-collection-filter-tag-button>
+                    {{- tag -}}
+                    {%- render 'icon-check' -%}
+                  </a>
+                </li>
+                {%- endunless -%}
+                {%- endfor -%}
+        
+                {%- when 'group' -%}
+                {%- assign groups = '' -%}
+        
+                {%- for tag in collection.all_tags -%}
+                {%- assign tag_parts = tag | split: '_' -%}
+        
+                {%- if tag_parts.size == 2 -%}
+                {%- assign groups = groups | append: tag_parts.first | append: ',' -%}
+                {%- endif -%}
+                {%- endfor -%}
+        
+                {%- assign groups = groups | split: ',' | compact | uniq -%}
+                {%- assign color_label = 'color,colour,couleur,colore,farbe,색,色,färg,farve' | split: ',' -%}
+        
+                {%- for group in groups -%}
+                {%- assign is_active = false -%}
+                {%- assign selected_filters_count = 0 -%}
+                {%- assign group_label = group | downcase -%}
+        
+                {%- for tag in current_tags -%}
+                {%- if tag contains group -%}
+                {%- assign is_active = true -%}
+                {%- assign selected_filters_count = selected_filters_count | plus: 1 -%}
+                {%- endif -%}
+                {%- endfor -%}
+        
+                {%- comment -%} Don't show "badge" and empty tag label as a filter {%- endcomment -%}
+                {%- unless group_label == 'badge' or group_label == '' -%}
+        
+                {%- if color_label contains group_label and settings.enable_color_swatches -%}
+                {%- assign is_color_swatch = true -%}
+                {%- else -%}
+                {%- assign is_color_swatch = false -%}
+                {%- endif -%}
+        
+                <div class="collection__filter{% if is_active %} collection__filter--accordion-expanded{% endif %}" data-collection-filter>
+                  <button class="collection__filter-title" tabindex="0" data-collection-filter-title>
+                    <span class="collection__filter-group">{{ group }}</span>
+                    <span class="collection__filter-count" data-count="{{ selected_filters_count }}" data-collection-filter-count></span>
+                    {%- render 'icon-arrow' -%}
+                  </button>
+                  <div class="collection__filter-container">
+                    <ul class="collection__filter-tags{% if is_color_swatch %} collection__filter-tags--swatches{% endif %}">
+                      {%- for tag in collection.all_tags -%}
+                      {%- assign tag_parts = tag | split: '_' -%}
+                      {%- assign group_tag = tag_parts.last -%}
+        
+                      {%- assign tag_url = tag | handle -%}
+                      {%- if current_tags contains tag  -%}
+                      {%- assign tag_url = '' -%}
+                      {%- endif -%}
+        
+                      {%- if tag_parts.first == group -%}
+                      {%- if is_color_swatch -%}
+                      <li class="collection__filter-tag collection__filter-tag--swatch swatch swatch--{{ settings.color_swatches_style }}{% if current_tags contains tag %} is-active{% endif %}"
+                          data-collection-filter-tag>
+                        <a href="{{- collection.url | append: '/' | append: tag_url | append: sort_by -}}"
+                           class="swatch__element swatch__element--{{ group_tag | handle }} collection__filter-tag-btn"
+                           data-value="{{ group_tag }}"
+                           data-tag="{{ tag | handle }}"
+                           data-collection-filter-tag-button>
+                          <div class="swatch__label">
+                            <span class="swatch__color swatch__color--{{ group_tag | handle }}" style="background-color: {{ group_tag | split: ' ' | last | handle }}; background-image: url({{ group_tag | handle | append: '.' | append: file_extension | asset_url }})"></span>
+                            <span class="swatch__color-name">{{ group_tag }}</span>
+                          </div>
+                        </a>
+                      </li>
+                      {%- else -%}
+        
+                      {% comment %} Check if the tag value is a number {% endcomment %}
+                      {%- capture tag_value -%}{{ group_tag | abs }}{%- endcapture -%}
+        
+                      {%- if tag_value == group_tag -%}
+                      {%- assign is_number = true -%}
+                      {%- else -%}
+                      {%- assign is_number = false -%}
+                      {%- endif -%}
+        
+                      <li class="collection__filter-tag{% if is_number %} collection__filter-tag--number{% else %} collection__filter-tag--default{% endif %}{% if current_tags contains tag %} is-active{% endif %}"
+                          data-collection-filter-tag>
+                        <a href="{{- collection.url | append: '/' | append: tag_url | append: sort_by -}}" data-tag="{{ tag | handle }}" class="collection__filter-tag-btn" data-collection-filter-tag-button>
+                          {{- group_tag -}}
+                          {%- unless is_number -%}
+                          {%- render 'icon-check' -%}
+                          {%- endunless -%}
+                        </a>
+                      </li>
+                      {%- endif -%}
+                      {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                </div>
+        
+                {%- endunless -%}
+                {%- endfor -%}
+        
+                {%- endcase -%}
+                {%- endcapture -%}
+        
+                {%- endif -%}
+                <div class="collection-grid__wrappers">
+                  <div class="containerfluid">
+                    <div class="collection-grid__nav collection-grid__row row inline">
+        
+                      {%- if settings.show_breadcrumbs -%}
+                      <div class="breadcrumbsrow">
+                        <div class="breadcrumbs block">
+                          {%- render 'site-breadcrumbs' -%}
+                        </div>
+                      </div>
+                      {%- endif -%}
+        
+                      <div class="grid-sort block">
+                        {%- if show_sort_filter -%}
+                        <div class="collection-grid__sort block">
+                          <div class="selector-wrapper">
+                            <label for="collectionSort">{{ 'collections.sorting_dropdown.label' | t }}</label>
+                            {%- render 'icon-arrow' -%}
+                            {%- assign sort_by = collection.sort_by -%}
+                            <select class="sort" id="collectionSort" data-collection-sort>
+                              <option value="">{{ 'collections.sorting_dropdown.all' | t }}</option>
+                              <option value="best-selling" {% if sort_by == "best-selling" %}selected{% endif %}>{{ 'collections.sorting_dropdown.best_selling' | t }}</option>
+                              <option value="price-ascending" {% if sort_by == "price-ascending" %}selected{% endif %}>{{ 'collections.sorting_dropdown.price_ascending' | t }}</option>
+                              <option value="price-descending" {% if sort_by == "price-descending" %}selected{% endif %}>{{ 'collections.sorting_dropdown.price_descending' | t }}</option>
+                              <option value="title-ascending" {% if sort_by == "title-ascending" %}selected{% endif %}>{{ 'collections.sorting_dropdown.title_ascending' | t }}</option>
+                              <option value="title-descending" {% if sort_by == "title-descending" %}selected{% endif %}>{{ 'collections.sorting_dropdown.title_descending' | t }}</option>
+                              <option value="created-ascending" {% if sort_by == "created-ascending" %}selected{% endif %}>{{ 'collections.sorting_dropdown.created_ascending' | t }}</option>
+                              <option value="created-descending" {% if sort_by == "created-descending" %}selected{% endif %}>{{ 'collections.sorting_dropdown.created_descending' | t }}</option>
+                            </select>
+                          </div>
+                        </div>
+                        {%- endif -%}
+                      </div>
+        
+                {%- if filter_tags != blank -%}
+                 <div class="custom_filter">  
+           
+                <div class="Collection_custom_filter Coll_fill collection__filtersmy collection__filters collection__filters--{{ position_filters }} {% if current_tags != blank %}collection__filters--has-tags-selected{% endif %}" data-collection-filters>
+                  <div class="containersfluid">
+                    
+                    <div class="collection__filters-list">
+                      <div class="collection__filters-reset">
+                        <a href="{{- collection.url -}}" class="collection__filters-reset-btn{% if current_tags != blank %} is-visible{% endif %}"{% if current_tags == blank %} style="display: none;"{% endif %} data-collection-filters-reset-button>
+                          {%- render 'icon-close' -%}
+                          <span class="collection__filters-reset-btn-text">{{ 'collections.tag_filtering.reset' | t }}</span>
+                          <span class="products-found" data-products-found-label>- {{ 'collections.products_with_count' | t: count: collection.products_count }}</span>
+                        </a>
+                      </div>
+        
+                      {%- case filter_mode -%}
+                      {%- when 'tag' -%}
+                      
+                      <div class="collection__filter" data-collection-filter>
+                       
+                        <button class="collection__filter-title" data-collection-filter-title>
+                          <span>Category</span>
+                          <span class="collection__filter-count" data-count="{{ selected_filters_count }}" data-collection-filter-count></span>
+                          {%- render 'icon-arrow' -%}
+                        </button>
+                        <div class="collection__filter-container">
+                          <ul class="collection__filter-tags">
+                            {{- filter_tags -}}
+                          </ul>
+                        </div>
+                      </div>
+                      {%- when 'group' -%}
+                      {{- filter_tags -}}
+                      {%- endcase -%}
+                    </div>
+                  </div>
+                </div>
+                 </div>
+                {%- endif -%}
+                    </div>
+                    <div class="collection-grid__load icon-load-more" data-icon-load-more></div>
+        
+                    {%- if collection.all_products_count == 0 -%}
+                    <div class="collection-no-products">
+                      <div class="container">
+                        <h4>{{ 'collections.errors.no_products' | t }}</h4>
+                        <div class="button-wrapper">
+                          <a class="button" href="{{ routes.all_products_collection_url }}">{{ 'collections.errors.continue_shopping' | t }}</a>
+                        </div>
+                      </div>
+                    </div>
+                    {%- endif -%}
+                  </div>
+        
+                  {%- if collection.all_products_count > 0 -%}
+                  {%- paginate collection.products by products_limit -%}
+        
+                  <div class="js-collection-grid collection-grid__row collection-grid__row--grid{% if settings.enable_infinity_scroll %} EndlessScroll{% endif %}"
+                       data-section-id="{{ section.id }}"
+                       data-show_quantity="{{ settings.show_quantity }}"
+                       data-tags='{% if selected_tags != blank %}{{ selected_tags | split: '+' | json }}{% else %}[]{% endif %}'
+                       data-sort="{{ collection.sort_by | default: collection.default_sort_by }}"
+                       data-collection="{{ collection.url | default: routes.all_products_collection_url }}"
+                       data-collection-products>
+                    {%- if show_featured_image and paginate.current_page == 1 and collection.products_count > 0 -%}
+                    {% comment %} Featured Content Settings {% endcomment %}
+                    {%- assign featuredImage = section.settings.featured_image -%}
+                    {%- assign featuredHeading = section.settings.featured_heading -%}
+                    {%- assign featuredText = section.settings.featured_text | replace: '<p>', '' | replace: '</p>', '<br>' -%}
+                    {%- assign featuredButtonText = section.settings.featured_button_text -%}
+                    {%- assign featuredButtonLink = section.settings.featured_button_link -%}
+                    {%- assign featuredButtonStyle = section.settings.featured_button_style -%}
+                    {%- assign featuredColorText = section.settings.featured_color_text -%}
+                    {%- assign featuredColorOverlay = section.settings.featured_color_overlay -%}
+                    {%- assign featuredOverlayOpacity = section.settings.featured_overlay_opacity | times: 0.01 | round: 2 -%}
+        
+                    {%- style -%}
+                    .featured-block__content { color: {{ featuredColorText }}; }
+                    .featured-block__image::before { background-color: {{ featuredColorOverlay }}; opacity: {{ featuredOverlayOpacity }}; }
+                    {%- endstyle -%}
+        
+                    <div class="product-block featured-block featured-block--mobile-{{ products_columns_mobile }} block {{ grid_block_size }} {{ grid_block_size_mobile }}{% if settings.transition_grid_items %} will-animate{% endif %}"{% if settings.transition_grid_items %} data-animation="moFadeInUp"{% endif %} data-collection-featured-block>
+                      <div class="featured-block__container">
+                        <div class="featured-block__wrapper">
+                          {%- unless featuredImage == blank -%}
+                          <div class="featured-block__image lazyload"
+                               data-bgset="{% render 'bgset', image: featuredImage %}"
+                               data-sizes="auto"
+                               data-parent-fit="cover"
+                               data-aspectratio="{{ featuredImage.aspect_ratio }}"></div>
+                          <noscript>
+                            <div class="featured-block__image no-js-image" style="background-image: url({{ section.settings.featured_image | img_url: '1024x' }});"></div>
+                          </noscript>
+                          {%- else -%}
+                          <div class="featured-block__image svg-placeholder">
+                            {{- 'image' | placeholder_svg_tag -}}
+                          </div>
+                          {%- endunless -%}
+        
+                          {%- if featuredHeading != blank or featuredText != blank or featuredButtonText != blank -%}
+                          <div class="featured-block__content">
+                            {%- if featuredHeading -%}
+                            <h2 class="featured-block__content__heading">{{ featuredHeading }}</h2>
+                            {%- endif -%}
+        
+                            {%- if featuredText -%}
+                            <p class="featured-block__content__text">{{- featuredText -}}</p>
+                            {%- endif -%}
+        
+                            {%- if featuredButtonText != blank -%}
+                            {%- if featuredButtonLink == blank -%}
+                            {%- assign featuredButtonLink = "#!" -%}
+                            {%- endif -%}
+                            <a href="{{ featuredButtonLink }}" title="{{ featuredButtonText }}" class="button button--{{ featuredButtonStyle }}">{{ featuredButtonText }}</a>
+                            {%- endif -%}
+                          </div>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                    {%- endif -%}
+        
+                    {%- if collection.products_count > 0 -%}
+        
+                    {%- for product in collection.products -%}
+                    {%- render 'product-grid-itemcollection', product: product, grid_block_size: grid_block_size, grid_block_size_mobile: grid_block_size_mobile, index: forloop.index -%}
+                    {%- endfor -%}
+        
+                    {%- else -%}
+                    <div class="collection-no-products">
+                      <div class="container">
+                        <p>{{ 'collections.errors.no_products_by_filter' | t : products_count: collection.products_count }}</p>
+        
+                        {%- if enable_filters and current_tags != blank -%}
+                        <a href="{{- collection.url -}}" class="collection__filters-reset-btn{% if current_tags != blank %} is-visible{% endif %}"{% if current_tags == blank %} style="display: none;"{% endif %} data-collection-filters-reset-button>
+                          {%- render 'icon-close' -%}
+                          <span class="collection__filters-reset-btn-text">{{ 'collections.tag_filtering.reset' | t }}</span>
+                          <span class="products-found" data-products-found-label>- {{ 'collections.products_with_count' | t: count: collection.products_count }}</span>
+                        </a>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                    {%- endif -%}
+        
+                    {%- render 'pagination', paginate: paginate -%}
+        
+                  </div>
+                  {%- endpaginate -%}
+                  {%- endif -%}
+                </div>
+              </div>
+            </section>
+         
+{% endcomment %}
+{%- render 'product-quick-view' -%}
+
+    
+<!-- new sectio strat -->
+      {% if collection.metafields.custom.content_for_video_section != blank %}
+           {%- assign smalldata = collection.metafields.custom.content_for_video_section | split: ",_"%}
+          {%- assign smalldatastrong = smalldata[1]  | split: "&& "%}
+       
+              {%- assign video = collection.metafields.custom.video_url -%}
+          {%- assign smalldata = collection.metafields.custom.content_for_video_section | split: ",_"%}
+                        {%- assign smalldatastrong = smalldata[1]  | split: "&& "%}
+      <div class="whyusbmodern hpimagecontentblock mobile+desktop">
+        <div class="container">
+          <div class="text-box show-500">
+                       <h2 class="show-500"><span class="smhead">{{ smalldata[0] }}</span>      {{ smalldatastrong[0] }}<strong>{{ smalldatastrong[1]}}</strong> </h2>
+      
+          </div>  
+          <div class="hpvideolock show-500">
+             {% if collection.metafields.custom.video_url contains 'files' %}
+          <img src="{{ collection.metafields.custom.video_url }}">
+{% elsif collection.metafields.custom.video_url contains 'videos' %}
+            {%- assign video =  collection.metafields.custom.video_url -%}
+                <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%"  poster="{{ block.settings.image | img_url: 'master'}}">
+                  <source src="{{ video }}" type="video/mp4">
+                </video>    
+               {% endif %}
+          </div>
+          <div class="flex-box">
+            <div class="col-50">
+              <div class="hpimagecntnt">
+                <div class="text-box hpimagecntntinnr">
+      
+                 {%- assign smalldata = collection.metafields.custom.content_for_video_section | split: ",_"%}
+                        {%- assign smalldatastrong = smalldata[1]  | split: "&& "%}
+                      
+                      <h2 class="hide-500"><span class="smhead"> {{ smalldata[0] }}</span>
+                      {{ smalldatastrong[0] }} 
+                        <strong>{{ smalldatastrong[1]}}</strong></h2>
+                  <p> {{ smalldata[2] }}</p>
+                
+                </div>
+              </div>
+            </div>
+            <div class="col-50">
+         
+             <div class="hpvideolock hide-500 product_only">
+               {% if collection.metafields.custom.video_url contains 'files' %}
+          <img src="{{ collection.metafields.custom.video_url }}">
+{% elsif collection.metafields.custom.video_url contains 'videos' %}
+                {%- assign video = collection.metafields.custom.video_url -%}
+                <video preload="auto" autoplay="" playsinline="" muted="" loop="" width="100%"  poster="{{ block.settings.image | img_url: 'master'}}">
+                  <source src="{{ video }}" type="video/mp4">
+                </video>       
+                 {% endif %}
+              </div>
+               
+            </div>
+          </div>
+        </div>
+      </div>   
+      <style>
+        .desktopbanner_collection {
+    background-size: cover;
+    background-position: right;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+      @media (max-width:760px){
+        body .metafield-rich_text_field {
+    text-align: left;
+    padding: 0px 15px;
+}
+        body .main_col_grid_cl .container{
+          padding:5rem 0rem !important;
+        }
+       body a.learn_col_grid, body a.shop_col_grid{
+          padding: 12px 16px;
+          font-size: 20px;
+        }
+        body .left_conet_col{
+          padding: 2rem;
+        }
+        body p.descrptio_col_grid{
+          font-size:15px;
+        }
+        body h2.head_col_grid {
+    font-size: 29px;
+        }
+        body .hpvideolock{
+          margin-bottom: 20px !important;
+        }
+        body .collectiontempmy .collectiontempmyinnr{
+          padding-top:0px;
+        }
+        body .img_abnen img{
+              height: unset;
+        }
+        
+      .whyusbmodern .hpimagecntnt{
+        padding-top:0px !important;
+      }
+        .whyusbmodern.hpimagecontentblock{
+          padding-bottom:4rem;
+        }
+      }
+        
+      </style>
+      {% endif %}
+<!-- new section end -->
+
+<style>
+  .whymultipurposetreatment {
+    padding: 10rem 0rem;
+}
+  .main_col_grid_cl .container {
+    display: flex;
+        padding: 10rem 0px;
+    gap: 50px;
+}
+  
+  .bottom_links {
+        padding: 50px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    gap: 17%;
+}
+  a.shop_col_grid {
+         font-weight: bold;
+    width: 100%;
+    border-radius: 10px;
+    padding: 16px 16px;
+    color: #ad683f;
+    font-size: 28px;
+    background: #faf3e5;
+    border: 1px solid #ad683f;
+}
+  a.learn_col_grid {
+        font-weight: bold;
+    width: 100%;
+    border-radius: 10px;
+    padding: 16px 16px;
+    color: #ad683f;
+    font-size: 28px;
+    background: #faf3e5;
+    border: 1px solid #ad683f;
+}
+  h2.head_col_grid {
+    font-size: 45px;
+    color: #ad683f;
+    text-align: left;
+    padding: 20px 0px;
+        font-weight: 700;
+}
+  p.descrptio_col_grid {
+        font-size: 18px;
+    text-align: left;
+    font-weight: 300;
+    line-height: 1.6;
+    letter-spacing: -.02em;
+}
+  
+.main_con_col {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+        max-width: 100%;
+
+    text-align: center;
+}
+  .left_conet_col {
+    width: 50%;
+        padding: 5rem;
+}
+  .right_col_content{
+        width: 50%;
+  }
+</style>
+
+{% schema %}
+   {
+  "name": "Collection pages",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Filters"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort_filter",
+      "label": "Show Sort By filter",
+      "default": true
+    },
+    {
+      "type": "select",
+      "label": "Filter mode",
+      "id": "filter_mode",
+      "info": "Filters by group requires specific tag formatting. [Learn more](https://modular.helpscoutdocs.com/article/178-product-tag-and-group-filtering)",
+      "default": "tag",
+      "options": [
+        { "label": "Hidden", "value": "hidden" },
+        { "label": "By tag", "value": "tag" },
+        { "label": "By group", "value": "group" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "position_filters",
+      "label": "Position",
+      "default": "left",
+      "options": [
+        { "label": "Top", "value": "top" },
+        { "label": "Left", "value": "left" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Catalog image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_banner",
+      "label": "Show collection image as a banner",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Default image",
+      "info": "Will be shown on collections/all"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "default": "center-center",
+      "options": [
+        { "label": "Top", "value": "top-center" },
+        { "label": "Right", "value": "right-center" },
+        { "label": "Center", "value": "center-center" },
+        { "label": "Left", "value": "left-center" },
+        { "label": "Bottom", "value": "bottom-center" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "banner_height",
+      "label": "Height",
+      "options": [
+        {
+          "value": "one-hundred",
+          "label": "Full screen height"
+        },
+        {
+          "value": "original-height",
+          "label": "Image height"
+        },
+        {
+          "value": "big",
+          "label": "750px"
+        },
+        {
+          "value": "normal",
+          "label": "650px"
+        },
+        {
+          "value": "small",
+          "label": "550px"
+        }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "select",
+      "id": "banner_text_position",
+      "label": "Text position",
+      "default": "center",
+      "options": [
+        { "label": "Left", "value": "left" },
+        { "label": "Center", "value": "center" },
+        { "label": "Right", "value": "right" },
+        { "label": "Bottom left", "value": "bottom-left" },
+        { "label": "Bottom right", "value": "bottom-right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "banner_color_text",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "banner_color_overlay",
+      "label": "Overlay",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "banner_overlay_opacity",
+      "label": "Overlay opacity",
+      "step": 5,
+      "max": 95,
+      "min": 0,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Featured image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_image",
+      "label": "Show featured image",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "featured_heading",
+      "label": "Heading",
+      "default":"Use this image showcase promotional content."
+    },
+    {
+      "type": "richtext",
+      "id": "featured_text",
+      "label": "Text",
+      "default":"<p>Elaborate on it with rich text</p>"
+    },
+    {
+      "type": "text",
+      "id": "featured_button_text",
+      "label": "Button label",
+      "default":"Learn More"
+    },
+    {
+      "type": "url",
+      "id": "featured_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "featured_button_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        { "label": "Primary", "value": "primary" },
+        { "label": "Secondary", "value": "secondary" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "featured_color_text",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "featured_color_overlay",
+      "label": "Overlay",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "featured_overlay_opacity",
+      "label": "Overlay opacity",
+      "step": 5,
+      "max": 95,
+      "min": 0,
+      "unit": "%",
+      "default": 30
+    }
+  ]
+}
+{% endschema %}

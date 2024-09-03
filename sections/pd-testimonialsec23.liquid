@@ -1,0 +1,122 @@
+<section class="testimonial-sec">
+  <div class="wrapper">
+    <div class="text-box common-heading-color">
+      <h3>{{ section.settings.main-sub-heading }}</h3>
+      <h2>{{ section.settings.main-heading }}</h2>
+    </div>
+      <div class="testimonial-wrapper testimonial-slider">
+        {% for block in section.blocks %}
+        <div class="testimonial-box text-box">
+          <h4>{{ block.settings.testimonial-heading }}</h4>
+          {{ block.settings.testimonial-description }}
+          <div class="client-info-box flex-box">
+            <span class="client-short-name">{{ block.settings.client-name | first }}</span>
+            <div class="client-info">
+              <h5>{{ block.settings.client-name }}</h5>
+              {% comment %}
+<!--               <h6>{{ block.settings.client-profile }}</h6> -->
+              {% endcomment %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+  </div>
+</section>
+<script>
+    $('.testimonial-slider').slick({
+            dots: false,
+            arrows: true,
+            infinite: true,
+            slidesToShow: 2,
+            autoplay: false,
+            autoplaySpeed: 3000,
+            slidesToScroll: 1,
+            responsive: [{
+                breakpoint: 991,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }, {
+                breakpoint: 767,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }, {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }]
+        });
+
+</script>
+{% schema %}
+  {
+    "name": "Testimonial",
+	"settings": [
+
+	{
+      "type": "text",
+      "id": "main-sub-heading",
+      "label": "Sub Heading",
+      "default": "Know what"
+    },
+
+	{
+      "type": "text",
+      "id": "main-heading",
+      "label": "Heading",
+      "default": "Our Client Speak"
+    }
+],
+"blocks": [
+            {
+              "type": "testimonial-slide",
+              "name": "Testimonial Slide",			  
+              "settings": [
+                  
+				{
+                  "id": "testimonial-heading",
+                  "type": "text",
+                  "label": "Heading",
+				  "default": "Awesome Quality"
+                },
+				{
+                  "id": "testimonial-description",
+                  "type": "richtext",
+                  "label": "Description",
+				  "default": "<p>Quality Ayurveda is a platform exclusively designed to cater to the specific needs of today's time. The modern generation is putting their health at stake by adopting an unhealthy lifestyle and posing several serious threats for good health.</p>"
+                },
+				{
+                  "id": "short-name",
+                  "type": "text",
+                  "label": "Short Name",
+				  "default": "D"
+                },
+				{
+                  "id": "client-name",
+                  "type": "text",
+                  "label": "Name",
+				  "default": "Divya Kajaria"
+                },
+				{
+                  "id": "client-profile",
+                  "type": "text",
+                  "label": "Profile",
+				  "default": "Panchakarma (Classical)"
+                }
+              ]
+            }
+          ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

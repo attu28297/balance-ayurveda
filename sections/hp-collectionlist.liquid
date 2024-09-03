@@ -1,0 +1,102 @@
+<div class="hpproductcollection">
+  <div class="container">
+    <div class="collectiontitle headingBox text-box common-heading-color">
+      <h2>{{ section.settings.heading }}</h2>          
+    </div>
+    <ul class="flex-box collectionlist">
+      {%- liquid
+					for block in section.blocks
+						assign collection = collections[block.settings.collection]
+						assign image = block.settings.image
+						assign image_position = block.settings.image_position
+
+						if image == blank
+							unless collection.image == blank
+								assign image = collection.image
+							else
+								assign image = collection.products.first.featured_media.preview_image
+							endunless
+						endif
+
+						render 'hpcollectionlist', collection: collection, image: image, image_position: image_position, unique: block.id
+					endfor
+				-%}
+    </ul>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Our Featured <strong>Catrgories</strong>"
+      }	
+	],
+	"blocks": [
+		{
+			"type": "collection",
+			"name": "Collection",
+			"settings": [
+				{
+					"type": "collection",
+					"id": "collection",
+					"label": "Collection"
+				},
+				{
+					"type": "image_picker",
+					"id": "image",
+					"label": "Replacement image"
+				},
+				{
+					"type": "select",
+					"id": "image_position",
+					"label": "Image position",
+					"default": "center-center",
+					"options": [
+						{ "label": "Top", "value": "top-center" },
+						{ "label": "Right", "value": "right-center" },
+						{ "label": "Center", "value": "center-center" },
+						{ "label": "Left", "value": "left-center" },
+						{ "label": "Bottom", "value": "bottom-center" }
+					]
+				},
+				{
+					"type": "header",
+					"content": "Colors"
+				},
+				{
+					"type": "color",
+					"id": "overlay_color",
+					"label": "Overlay",
+					"default": "#333333"
+				},
+				{
+					"type": "range",
+					"id": "overlay_opacity",
+					"label": "Overlay opacity",
+					"step": 5,
+					"max": 95,
+					"min": 0,
+					"unit": "%",
+					"default": 0
+				}
+			]
+		}
+	],
+	"presets": [
+      {
+      "name": "Our Collection List",
+      "category": "ADVANCED LAYOUT"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

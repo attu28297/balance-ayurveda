@@ -1,0 +1,79 @@
+
+
+<section class="pl-faqs com-padding">
+  
+  <div class="wrapper">
+    <div class="text-box faq-top-heading text-center">
+      <h3>{{ section.settings.faq-sub-heading }}</h3>
+      <h2>{{ section.settings.faq-heading}}</h2>
+    </div>
+    <div class="faq-wrapper">
+      {% for block in section.blocks %}
+            {% case block.type %}
+          {% when 'faq-group-box' %}
+      		<div class="faq-group text-box">
+              <h5>{{ block.settings.faq-question }}</h5>
+              {{ block.settings.faq-answer }}
+            </div>
+          {% endcase %}
+         {% endfor %}
+    </div>
+  </div>
+</section>
+{% schema %}
+  {
+    "name": "Faq Box",
+	"max_blocks": 5,
+	"settings": [
+
+	{
+		"type" : "text",
+		"id" : "faq-sub-heading",
+		"label": "Sub Heading",
+		"default" : "Need Help ?"
+	},
+
+	{
+		"type" : "text",
+		"id" : "faq-heading",
+		"label": "Heading",
+		"default" : "Frequently Asked Question"
+	}
+],
+	"presets": [
+    {
+    "name": "Faq Box",
+    "category": "ADVANCED LAYOUT"
+    }
+],
+"blocks": [
+            {
+              "type": "faq-group-box",
+              "name": "Question & Answer",
+			  
+              "settings": [
+                  
+				{
+                  "id": "faq-question",
+                  "type": "text",
+                  "label": "Heading",
+				  "default": "Question : Do you sell any Medication or Supplements over-the-counter?"
+                },
+				{
+                  "id": "faq-answer",
+                  "type": "richtext",
+                  "label": "Description",
+				  "default": "<p>Answer : No. We do NOT operate a Storefront or a Pharmacy like setting where general public can purchase products. As a Holistic Practice, we provide many services including consultations and therapies to improve general well-being.</p>"
+                }
+              ]
+            }
+          ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
