@@ -115,12 +115,10 @@
               >
                 {%- for value in option.values -%}
                   {% assign price_dis_aim = product.metafields.custom.prices_of_products | split: ', ' %}
-                  {% assign secon_lin_sep = product.metafields.custom.second_line_text_area | split: ', ' %}
                   {% assign price_dis = product.metafields.custom.prices_of_products | split: '|' %}
 
                   {% assign beatles = product.metafields.custom.quantity_of_variant | split: ', ' %}
                   <div class="final_parent {% if first_variant.options[option_index] == value %}CSS_proper{% endif %}">
-                    <img class="img_tick" src="https://cdn.shopify.com/s/files/1/0578/5078/9945/files/Tick2.png?v=1720024573">
                     <div class="parent_vl_di">
                       <div class="variant-field Loop_0{{ forloop.index }}">
                         <input
@@ -144,15 +142,12 @@
 
                         {% if product.metafields.custom.quantity_of_variant != blank %}
                           {% if forloop.index == 1 %}
-                            <p class="incr_p"><span class="sinle_hide"></span>{{ beatles[0] }}</p>
-                            <p>{{ secon_lin_sep[0] }}</p>
+                            <p class="incr_p"><span class="sinle_hide">Quantity: </span>{{ beatles[0] }}</p>
 
                           {% elsif forloop.index == 2 %}
-                            <p class="incr_p">{{ beatles[1] }}</p>
-                                 <p>{{ secon_lin_sep[1] }}</p>
+                            <p class="incr_p">Quantity: {{ beatles[1] }}</p>
                           {% elsif forloop.index == 3 %}
-                            <p class="incr_p"> {{ beatles[2] }}</p>
-                                 <p>{{ secon_lin_sep[2] }}</p>
+                            <p class="incr_p">Quantity: {{ beatles[2] }}</p>
                           {% endif %}
                         {% endif %}
                       </div>
@@ -165,15 +160,6 @@
                       <div class="center_di">
                         {% if product.metafields.custom.nodiscount != blank %}
                           <style>
-                            .final_parent:hover {
-    background: unset !important;
-}
-                            .final_parent.CSS_proper {
-    border: unset;
-                            }
-                            img.img_tick {
-    display: none !important;
-}
                                    @media only screen and (max-width: 600px) {
                                      .variant-field.Loop_01::after{
                                        width:2.5px !important;
